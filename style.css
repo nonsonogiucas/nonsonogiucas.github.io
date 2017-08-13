@@ -1,0 +1,16 @@
+body {
+    background-color: #FFF1E7;
+    font-family: "Roboto", sans-serif;
+    color: #333;
+}
+
+.row {
+    width: 720px;
+    margin: 0 auto;
+
+}
+
+
+h1, h2, h3, h4 {
+    font-family: 'Alegreya Sans SC', sans-serif;
+}
