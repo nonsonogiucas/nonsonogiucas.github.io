@@ -6,6 +6,7 @@
     padding: 0px;
     font-family: "Roboto", sans-serif;
     font-size: 17px;
+    box-shadow: 0 10px 17px -8px #777;
 }
 
 .move-container > h1 {
@@ -52,6 +53,7 @@
 .help-container p {
     background-color: #FFF;
     padding: 15px;
+    box-shadow: 0 7px 17px -8px rgba(0, 0, 0, .5);
 }
 
 .hold {
