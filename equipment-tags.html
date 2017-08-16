@@ -1,0 +1,81 @@
+<html>
+    <head>
+        <title>Dungeon World</title>
+        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Roboto+Condensed" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:400i,600i" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <style>
+            .row {
+                width: 720px;
+                margin: 0 auto;
+            }
+
+            table tbody tr:nth-of-type(odd) {
+                background-color: rgba(0,0,0,0.05);
+            }
+            table tbody tr:nth-of-type(even) {
+                background-color: rgba(255,255,255,0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="row">
+            <h1>Etichette degli Equipaggiamenti</h1>
+        </div>
+        <div class="row principles">
+            <table id="glossary-table">
+                <thead>
+                    <tr><th>Tipo</th><th style="width: 20%">Etichetta</th><th>Note</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>arma</td><td>n munizioni</td><td>Queste sono munizioni per un arma a distanza. n è un indicatore astratto, vedi <a href="/basemoves/volley.html"><b>Tirare a Distanza</b></a></td></tr>
+                    <tr><td>arma</td><td>possente</td><td>Un'arma grande e pesante che trasferisce una notevole quantità di forza. Può spingere indietro, sbilanciare o buttare a terra il bersaglio.</td></tr>
+                    <tr><td>arma</td><td>+n danni</td><td>Modifica il tiro per il danno.</td></tr>
+                    <tr><td>arma</td><td>ignora armatura</td><td>Il danno inflitto non viene assorbito dall'armatura.</td></tr>
+                    <tr><td>arma</td><td>devastante</td><td>Un'arma particolarmente adatta a tagliare arti e frantumare ossa. Gli effetti dei suoi colpi vanno oltre il danno in HP.</td></tr>
+                    <tr><td>arma</td><td>n perforante</td><td>Tratta l'armatura del bersaglio come se fosse minore di n punti.</td></tr>
+                    <tr><td>arma</td><td>precisa</td><td>Un'arma che richiede accuratezza. Usa DES per <a href="/basemoves/hack-and-slash.html"><b>Menare le Mani</b></a> invece di FOR.</td></tr>
+                    <tr><td>arma</td><td>ricarica</td><td>Dopo un attacco è necessario compiere un'azione complessa prima di poter attaccare ancora.</td></tr>
+                    <tr><td>arma</td><td>stordimento</td><td>Infligge danni da stordimento piuttosto che HP.</td></tr>
+                    <tr><td>arma</td><td>lancio</td><td>Lanciala contro qualcuno per fargli male. Se <a href="/basemoves/volley.html"><b>Tiri a Distanza</b></a> usando quest'arma e fai 7-9 non puoi scegliere di ridurre le munizioni.</td></tr>
+                    <tr><td>arma</td><td>corta</td><td>Utile per colpire un nemico che potresti colpire a mani nude.</td></tr>
+                    <tr><td>arma</td><td>media</td><td>Utile per colpire un nemico a distanza di un braccio più un mezzo metro circa.</td></tr>
+                    <tr><td>arma</td><td>lunga</td><td>Utile per colpire un nemico da una certa distanza, a seconda dell'arma fino a 3 metri.</td></tr>
+                    <tr><td>arma</td><td>vicino</td><td>Arma a distanza. Utile per colpire un nemico di cui puoi vedere il bianco degli occhi.</td></tr>
+                    <tr><td>arma</td><td>lontano</td><td>Arma a distanza. Utile per colpire un nemico che ti sentirebbe urlare.</td></tr>
+                    <tr><td>arma</td><td>due mani</td><td>Richiede l'uso di due mani.</td></tr>
+
+                    <tr><td>armatura</td><td>n armatura</td><td>Quando ti infliggono danni, sottrai n punti ai danni.</td></tr>
+                    <tr><td>armatura</td><td>+n armatura</td><td>Ti protegge come fosse armatura. Somma n al valore della tua armatura.</td></tr>
+                    <tr><td>armatura</td><td>ingombrante</td><td>Impedisce i movimenti, tienine conto quando vuoi fare cose come correre, nuotare, arrampicarti, ecc...</td></tr>
+
+                    <tr><td>veleno</td><td>applicato</td><td>Ha effetto solamente se entra in circolo o viene ingerito.</td></tr>
+                    <tr><td>veleno</td><td>contatto</td><td>Ha effetto quando viene a contatto con la pelle.</td></tr>
+
+                    <tr><td>generale</td><td>indossato</td><td>Va indossato per essere utile.</td></tr>
+                    <tr><td>generale</td><td>scomodo</td><td>Difficile da maneggiare e usare.</td></tr>
+                    <tr><td>generale</td><td>n monete</td><td>Il costo in monete.</td></tr>
+                    <tr><td>generale</td><td>pericoloso</td><td>L'oggetto è pericoloso da usare. Maneggiare con cautela.</td></tr>
+                    <tr><td>generale</td><td>razione</td><td>Commestibile. Più o meno.</td></tr>
+                    <tr><td>generale</td><td>lento</td><td>Adoperarlo richiede tempo, minuti o più a seconda dell'oggetto e del contesto.</td></tr>
+                    <tr><td>generale</td><td>peso n</td><td>Quanto pesa. Vedi <a href="/advmoves/encumbrance.html"><b>Sovraccarico</b></a></td></tr>
+                    <tr><td>generale</td><td>n usi</td><td>Può essere usato n volte. E poi basta.</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            jQuery(function($) {
+
+                $('#glossary-table').DataTable({
+                    paging: false
+                });
+
+            });
+        </script>
+    </body>
+</html>
