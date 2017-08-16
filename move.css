@@ -23,20 +23,20 @@
     text-align: justify;
 }
 
-.move-body .move-trigger {
+.move-trigger {
     font-weight: bold;
 }
 
-.move-body .move-roll {
+.move-roll {
     font-weight: bold;
     color: #B51659;
 }
 
-.move-body ul {
+ul {
     margin: 5px 0px 0px 30px;
     padding: 0px;
 }
-.move-body ul.move-roll-results {
+ul.move-roll-results {
     margin: 5px 0px 0px 20px;
 }
 .move-roll-results li {
