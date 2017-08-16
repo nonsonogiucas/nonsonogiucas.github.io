@@ -1,0 +1,87 @@
+<html>
+    <head>
+        <title>Dungeon World</title>
+        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Roboto+Condensed" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:400i,600i" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <style>
+            .row {
+                width: 720px;
+                margin: 0 auto;
+            }
+
+            table tbody tr:nth-of-type(odd) {
+                background-color: rgba(0,0,0,0.05);
+            }
+            table tbody tr:nth-of-type(even) {
+                background-color: rgba(255,255,255,0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="row">
+            <h1>Glossario delle Traduzioni</h1>
+        </div>
+        <div class="row principles">
+            <table id="glossary-table">
+                <thead>
+                    <tr><th>Termine originale</th><th>Traduzione</th><th>Note</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>HP</td><td>HP</td><td>-</td></tr>
+                    <tr><td>XP</td><td>XP</td><td>-</td></tr>
+                    <tr><td>roll</td><td>tira</td><td>-</td></tr>
+                    <tr><td>ability, abilities</td><td>attributo, attributi</td><td>forza, destrezza, costituzione, ecc..</td></tr>
+                    <tr><td>debilities</td><td>afflizioni</td><td>-</td></tr>
+                    <tr><td>weak</td><td>debole</td><td>afflizione (for)</td></tr>
+                    <tr><td>shaky</td><td>scosso</td><td>afflizione (des)</td></tr>
+                    <tr><td>sick</td><td>nauseato</td><td>afflizione (cos)</td></tr>
+                    <tr><td>stunned</td><td>stordito</td><td>afflizione (int)</td></tr>
+                    <tr><td>confused</td><td>confuso</td><td>afflizione (sag)</td></tr>
+                    <tr><td>scarred</td><td>marchiato</td><td>afflizione (car)</td></tr>
+                    <tr><td>load, weight</td><td>carico, peso</td><td>massimo peso trasportabile, peso trasportato</td></tr>
+                    <tr><td>bonds (character)</td><td>legami (del personaggio)</td><td>-</td></tr>
+                    <tr><td>move</td><td>mossa</td><td>-</td></tr>
+                    <tr><td>aid</td><td>aiutare</td><td>mossa base</td></tr>
+                    <tr><td>defend</td><td>difendere</td><td>mossa base</td></tr>
+                    <tr><td>defy danger</td><td>sfidare il pericolo</td><td>mossa base</td></tr>
+                    <tr><td>discern realities</td><td>discernere le realtà</td><td>mossa base</td></tr>
+                    <tr><td>hack & slash</td><td>menare le mani</td><td>mossa base</td></tr>
+                    <tr><td>parley</td><td>negoziare</td><td>mossa base</td></tr>
+                    <tr><td>spout lore</td><td>dispensare sapienza</td><td>mossa base</td></tr>
+                    <tr><td>volley</td><td>tirare a distanza</td><td>mossa base</td></tr>
+                    <tr><td>carouse</td><td>festeggiare</td><td>mossa avanzata</td></tr>
+                    <tr><td>encumbrance</td><td>sovraccarico</td><td>mossa avanzata</td></tr>
+                    <tr><td>level up</td><td>salire di livello</td><td>mossa avanzata</td></tr>
+                    <tr><td>make camp</td><td>accamparsi</td><td>mossa avanzata</td></tr>
+                    <tr><td>oustanding warrants</td><td>conti in sospeso</td><td>mossa avanzata</td></tr>
+                    <tr><td>supply</td><td>rifornire</td><td>mossa avanzata</td></tr>
+                    <tr><td>take watch</td><td>vigilare</td><td>mossa avanzata</td></tr>
+                    <tr><td>undertake a perilous journey</td><td>intraprendere un viaggio pericoloso</td><td>mossa avanzata</td></tr>
+                    <tr><td>recover</td><td>recuperare</td><td>mossa avanzata</td></tr>
+                    <tr><td>recruit</td><td>reclutare</td><td>mossa avanzata</td></tr>
+                    <tr><td>end of session</td><td>fine sessione</td><td>mossa avanzata</td></tr>
+                    <tr><td>last breath</td><td>ultimo respiro</td><td>mossa avanzata</td></tr>
+                    <tr><td>bolster</td><td>temprare</td><td>mossa avanzata</td></tr>
+                    <tr><td>preparation</td><td>preparazione</td><td></td></tr>
+                    <tr><td>hireling</td><td>recluta</td><td></td></tr>
+                    <tr><td>loyalty</td><td>lealtà</td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            jQuery(function($) {
+
+                $('#glossary-table').DataTable({
+                    paging: false
+                });
+
+            });
+        </script>
+    </body>
+</html>
