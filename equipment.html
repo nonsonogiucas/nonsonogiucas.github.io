@@ -9,8 +9,13 @@
         <script type="text/javascript" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
         <style>
             .row {
-                width: 720px;
+                width: 80%;
                 margin: 0 auto;
+            }
+
+            .table-row {
+                background-color: #FFF;
+                padding: 15px;
             }
 
             table tbody tr:nth-of-type(odd) {
@@ -24,9 +29,55 @@
 
     <body>
         <div class="row">
+            <h1>Equipaggiamenti</h1>
+        </div>
+        <div class="row table-row">
+            <table id="equipment-table">
+                <thead>
+                    <tr><th>Tipo</th><th>Nome</th><th>Etichette</th><th>Note</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>arma</td><td>Arco Logoro</td><td>15 monete, peso 2, vicino</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Arco di Qualità</td><td>60 monete, peso 2, vicino, lontano</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Arco da Cacciatore</td><td>100 monete, peso 1, vicino, lontano</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Balestra</td><td>35 monete, peso 3, vicino, ricarica, +1 danno</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Fascio di Frecce</td><td>1 moneta, peso 1, 3 munizioni</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Frecce Elfiche</td><td>20 monete, peso 1, 4 munizioni</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Randello</td><td>1 moneta, peso 1, media</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Staffa</td><td>1 moneta, peso 1, due mani, media</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Pugnale</td><td>2 monete, peso 1, corta</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Pugnale da Lancio</td><td>1 moneta, peso 1, lancio, vicino</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Spada Corta, Ascia, Mazza</td><td>8 monete, peso 1, media</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Spada Lunga, Ascia Danese, Mazza Frusto</td><td>15 monete, peso 2, media, +1 danno</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Lancia</td><td>5 monete, peso 1, lunga, lancio, vicino</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Alabarda</td><td>9 monete, peso 2, due mani, lunga, +1 danno</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Spada da Lato, Striscia</td><td>25 monete, peso 1, media, precisa</td><td>-</td></tr>
+                    <tr><td>arma</td><td>Stocco</td><td>50 monete, peso 2, media, perforante 1, precisa</td><td>-</td></tr>
+
+                    <tr><td>armatura</td><td>Cuoio, Maglia</td><td>10 monete, peso 1, indossato, armatura 1</td><td>-</td></tr>
+                    <tr><td>armatura</td><td>Scaglie</td><td>50 monete, peso 3, indossato, ingombrante, armatura 2</td><td>-</td></tr>
+                    <tr><td>armatura</td><td>Piastre</td><td>350 monete, peso 4, indossato, ingombrante, armatura 3</td><td>-</td></tr>
+                    <tr><td>armatura</td><td>Scudo</td><td>15 monete, peso 2, +1 armatura</td><td>-</td></tr>
+
+                    <tr><td>vari</td><td>Attrezzatura da Avventuriero</td><td>20 monete, peso 1, 5 usi</td><td>Quando hai bisogno di un attrezzo, dillo al GM, aggiungi l'attrezzo al tuo inventario e rimuovi un utilizzo.</td></tr>
+                    <tr><td>vari</td><td>Bende</td><td>5 monete, lento, 3 usi</td><td>Guariscono 4 danni per utilizzo</td></tr>
+                    <tr><td>vari</td><td>Erbe e Unguenti</td><td>10 monete, peso 1, lento, 2 usi</td><td>Guariscono 7 danni per utilizzo</td></tr>
+                    <tr><td>vari</td><td>Pozione Curativa</td><td>50 monete</td><td>Guarisci 10 danni o rimuovi un'afflizione</td></tr>
+                    <tr><td>vari</td><td>Birra Nanica</td><td>10 monete, peso 4</td><td>Dai da bere Birra Nanica a tutti e ottieni +1 al tiro di <b>Festeggiare</b></td></tr>
+                    <tr><td>vari</td><td>Borsa di Libri</td><td>10 monete, peso 2, 5 usi</td><td>Quando <b>Dispensi Sapienza</b> nomina un libro dalla borsa e spiega in che modo è attinente. Rimuovi un utilizzo e prendi +1 al tiro.</td></tr>
+                    <tr><td>vari</td><td>Antidoto</td><td>10 monete</td><td>Quando bevi l'antidoto rimuovi un veleno che ti affligge.</td></tr>
+                    <tr><td>vari</td><td>Razioni da Dungeon</td><td>3 monete, peso 1, razione, 5 usi</td><td>Non fa schifo, ma non te lo consiglio.</td></tr>
+                    <tr><td>vari</td><td>Banchetto per Uno</td><td>10 monete, peso 1, razione, 1 uso</td><td>Esibizionista...</td></tr>
+                    <tr><td>vari</td><td>Gallette Naniche</td><td>3 monete, peso 1, razione, solo nani, 7 usi</td><td>I nani dicono che ha il sapore di casa. Tutti gli altri dicono che ha il sapore di casa, se la tua casa è un porcile in fiamme.</td></tr>
+                    <tr><td>vari</td><td>Pane degli Elfi</td><td>10 monete, peso 1, razione, 7 usi</td><td>Solo i più grandi amici degli Elfi ricevono doni del genere.</td></tr>
+                    <tr><td>vari</td><td>Erba Pipa</td><td>5 monete, 6 usi</td><td>Quando offri Erba Pipa a qualcuno, rimuovi 2 usi e prendi +1 per <b>Negoziare</b> con loro.</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
             <h1>Etichette degli Equipaggiamenti</h1>
         </div>
-        <div class="row principles">
+        <div class="row table-row">
             <table id="glossary-table">
                 <thead>
                     <tr><th>Tipo</th><th style="width: 20%">Etichetta</th><th>Note</th></tr>
@@ -37,7 +88,7 @@
                     <tr><td>arma</td><td>+n danni</td><td>Modifica il tiro per il danno.</td></tr>
                     <tr><td>arma</td><td>ignora armatura</td><td>Il danno inflitto non viene assorbito dall'armatura.</td></tr>
                     <tr><td>arma</td><td>devastante</td><td>Un'arma particolarmente adatta a tagliare arti e frantumare ossa. Gli effetti dei suoi colpi vanno oltre il danno in HP.</td></tr>
-                    <tr><td>arma</td><td>n perforante</td><td>Tratta l'armatura del bersaglio come se fosse minore di n punti.</td></tr>
+                    <tr><td>arma</td><td>perforante n</td><td>Tratta l'armatura del bersaglio come se fosse minore di n punti.</td></tr>
                     <tr><td>arma</td><td>precisa</td><td>Un'arma che richiede accuratezza. Usa DES per <a href="/basemoves/hack-and-slash.html"><b>Menare le Mani</b></a> invece di FOR.</td></tr>
                     <tr><td>arma</td><td>ricarica</td><td>Dopo un attacco è necessario compiere un'azione complessa prima di poter attaccare ancora.</td></tr>
                     <tr><td>arma</td><td>stordimento</td><td>Infligge danni da stordimento piuttosto che HP.</td></tr>
@@ -49,7 +100,7 @@
                     <tr><td>arma</td><td>lontano</td><td>Arma a distanza. Utile per colpire un nemico che ti sentirebbe urlare.</td></tr>
                     <tr><td>arma</td><td>due mani</td><td>Richiede l'uso di due mani.</td></tr>
 
-                    <tr><td>armatura</td><td>n armatura</td><td>Quando ti infliggono danni, sottrai n punti ai danni.</td></tr>
+                    <tr><td>armatura</td><td>armatura n</td><td>Quando ti infliggono danni, sottrai n punti ai danni.</td></tr>
                     <tr><td>armatura</td><td>+n armatura</td><td>Ti protegge come fosse armatura. Somma n al valore della tua armatura.</td></tr>
                     <tr><td>armatura</td><td>ingombrante</td><td>Impedisce i movimenti, tienine conto quando vuoi fare cose come correre, nuotare, arrampicarti, ecc...</td></tr>
 
@@ -70,6 +121,10 @@
 
         <script>
             jQuery(function($) {
+
+                $('#equipment-table').DataTable({
+                    paging: false
+                });
 
                 $('#glossary-table').DataTable({
                     paging: false
