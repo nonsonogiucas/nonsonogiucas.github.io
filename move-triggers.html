@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <title>Dungeon World</title>
+        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Roboto+Condensed" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:400i,600i" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <style>
+            .row {
+                width: 80%;
+                margin: 0 auto;
+            }
+
+            .sheet {
+                padding: 15px;
+                background: #FFF;
+            }
+
+            table tbody tr:nth-of-type(odd) {
+                background-color: rgba(0,0,0,0.05);
+            }
+            table tbody tr:nth-of-type(even) {
+                background-color: rgba(255,255,255,0.1);
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="row">
+            <h1>Eventi e Mosse</h1>
+        </div>
+        <div class="row sheet">
+            <table id="events-table">
+                <thead>
+                    <tr><th>Tipo</th><th>Quando...</th><th>Mossa</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>base</td><td>agisci a dispetto del pericolo incombente</td>
+                        <td><a href="/basemoves/defy-danger.html">Sfidare il Pericolo</a></td></tr>
+                    <tr><td>base</td><td>hai influenza su un personaggio del GM e la usi per manipolarlo</td>
+                        <td><a href="/basemoves/parley.html">Negoziare</a></td></tr>
+                    <tr><td>base</td><td>aggredisci il nemico in mischia</td>
+                        <td><a href="/basemoves/hack-and-slash.html">Menare le Mani</a></td></tr>
+                    <tr><td>base</td><td>prendi la mira e tiri su un nemico a distanza</td>
+                        <td><a href="/basemoves/volley.html">Tirare a Distanza</a></td></tr>
+                    <tr><td>base</td><td>ti prepari a difendere una persona, un oggetto o un luogo</td>
+                        <td><a href="/basemoves/defend.html">Difendere</a></td></tr>
+                    <tr><td>base</td><td>aiuti un alleato a portare a termine un compito</td>
+                        <td><a href="/basemoves/aid.html">Aiutare</a></td></tr>
+                    <tr><td>base</td><td>attingi dalla tua conoscenza di un argomento</td>
+                        <td><a href="/basemoves/spout-lore.html">Dispensare Sapienza</a></td></tr>
+                    <tr><td>base</td><td>studi attentamente una situazione o una persona</td>
+                        <td><a href="/basemoves/discern-realities.html">Discernere la Realtà</a></td></tr>
+                    <tr><td>avanzata</td><td>vai per comprare qualcosa, soldi alla mano</td>
+                        <td><a href="/advmoves/supply.html">Rifornire</td></tr>
+                    <tr><td>avanzata</td><td>fai una mossa mentre trasporti pesi</td>
+                        <td><a href="/advmoves/encumbrance.html">Sovraccarico</td></tr>
+                    <tr><td>avanzata</td><td>attraversi un territorio ostile</td>
+                        <td><a href="/advmoves/undertake-a-perilous-journey.html">Intraprendere un Viaggio Pericoloso</td></tr>
+                    <tr><td>avanzata</td><td>ti fermi per riposare</td>
+                        <td><a href="/advmoves/make-camp.html">Accamparsi</td></tr>
+                    <tr><td>avanzata</td><td>hai del tempo (ore o giorni) ed hai accumulato XP pari al tuo livello+7</td>
+                        <td><a href="/advmoves/level-up.html">Salire di Livello</td></tr>
+                    <tr><td>avanzata</td><td>sei di guardia e qualcosa si avvicina all'accampamento</td>
+                        <td><a href="/advmoves/take-watch.html">Vigilare</td></tr>
+                    <tr><td>avanzata</td><td>stai morendo</td>
+                        <td><a href="/advmoves/last-breath.html">Ultimo Respiro</td></tr>
+                    <tr><td>avanzata</td><td>torni trionfante e organizzi i festeggiamenti</td>
+                        <td><a href="/advmoves/carouse.html">Festeggiare</td></tr>
+                    <tr><td>avanzata</td><td>fai ritorno in un centro abitato nel quale hai causato disturbo in passato</td>
+                        <td><a href="/advmoves/outstanding-warrants.html">Conti in Sospeso</td></tr>
+                    <tr><td>avanzata</td><td>non fai altro che riposare in sicurezza e comodità</td>
+                        <td><a href="/advmoves/recover.html">Recuperare</td></tr>
+                    <tr><td>avanzata</td><td>spendi il tuo tempo libero applicandoti a studio, meditazione o pratica</td>
+                        <td><a href="/advmoves/bolster.html">Temprare</td></tr>
+                    <tr><td>avanzata</td><td>fai sapere in giro che cerchi aiutanti da assoldare</td>
+                        <td><a href="/advmoves/recruit.html">Reclutare</td></tr>
+                    <tr><td>avanzata</td><td>una recluta si trova in una situazione pericolosa, degradante o semplicemente assurda a causa dei tuoi ordini</td>
+                        <td><a href="/advmoves/order-hireling.html">Comandare Reclute</td></tr>
+                    <tr><td>avanzata</td><td>la sessione di gioco volge al termine</td>
+                        <td><a href="/advmoves/end-of-session.html">Fine Sessione</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <script>
+            jQuery(function($) {
+
+                $('#events-table').DataTable({
+                    paging: false
+                });
+
+            });
+        </script>
+    </body>
+</html>
