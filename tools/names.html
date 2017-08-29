@@ -1,0 +1,370 @@
+<html>
+    <head>
+        <title>Dungeon World</title>
+        <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Roboto+Condensed" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:400i,600i" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+        <script type="text/javascript" src="//cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <style>
+            .row {
+                width: 960px;
+                margin: 0 auto;
+            }
+
+            table tbody tr:nth-of-type(odd) {
+                background-color: rgba(0,0,0,0.05);
+            }
+            table tbody tr:nth-of-type(even) {
+                background-color: rgba(255,255,255,0.1);
+            }
+
+            .names {
+                display: flex;
+            }
+            .names .dataTables_wrapper {
+                flex-basis: 30%;
+                padding: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="row">
+            <h1>Glossario delle Traduzioni</h1>
+        </div>
+        <div class="row names">
+            <table>
+                <thead>
+                    <tr><th>tags</th><th>Nomi maschili</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>english</td><td>Dean</td></tr>
+                    <tr><td>english</td><td>Edward</td></tr>
+                    <tr><td>english</td><td>Thedore</td></tr>
+                    <tr><td>english</td><td>Earl</td></tr>
+                    <tr><td>english</td><td>Clifford</td></tr>
+                    <tr><td>english</td><td>Jalen</td></tr>
+                    <tr><td>english</td><td>Adrian</td></tr>
+                    <tr><td>english</td><td>Harvey</td></tr>
+                    <tr><td>english</td><td>Allen</td></tr>
+                    <tr><td>english</td><td>Clarence</td></tr>
+                    <tr><td>english</td><td>Wyatt</td></tr>
+                    <tr><td>english</td><td>Hector</td></tr>
+                    <tr><td>english</td><td>Dwight</td></tr>
+                    <tr><td>english</td><td>Dalton</td></tr>
+                    <tr><td>english</td><td>Clifton</td></tr>
+                    <tr><td>english</td><td>Dillon</td></tr>
+                    <tr><td>english</td><td>Wilbur</td></tr>
+                    <tr><td>english</td><td>Leroy</td></tr>
+                    <tr><td>english</td><td>Craig</td></tr>
+                    <tr><td>english</td><td>Lowel</td></tr>
+                    <tr><td>english</td><td>Harold</td></tr>
+                    <tr><td>english</td><td>Bradley</td></tr>
+                    <tr><td>english</td><td>Edwin</td></tr>
+                    <tr><td>english</td><td>Brett</td></tr>
+
+                    <tr><td>welsh</td><td>Gareth</td></tr>
+                    <tr><td>welsh</td><td>Morlais</td></tr>
+                    <tr><td>welsh</td><td>Reese</td></tr>
+                    <tr><td>welsh</td><td>Llywelyn</td></tr>
+                    <tr><td>welsh</td><td>Seith</td></tr>
+                    <tr><td>welsh</td><td>Gwayne</td></tr>
+                    <tr><td>welsh</td><td>Cled</td></tr>
+                    <tr><td>welsh</td><td>Cynbel</td></tr>
+                    <tr><td>welsh</td><td>Meilyr</td></tr>
+                    <tr><td>welsh</td><td>Gwilym</td></tr>
+                    <tr><td>welsh</td><td>Heddwyn</td></tr>
+                    <tr><td>welsh</td><td>Preece</td></tr>
+                    <tr><td>welsh</td><td>Ergyriad</td></tr>
+                    <tr><td>welsh</td><td>Oswallt</td></tr>
+                    <tr><td>welsh</td><td>Maelgwyn</td></tr>
+                    <tr><td>welsh</td><td>Gwri</td></tr>
+                    <tr><td>welsh</td><td>Gwent</td></tr>
+                    <tr><td>welsh</td><td>Gwern</td></tr>
+                    <tr><td>welsh</td><td>Deiniol</td></tr>
+                    <tr><td>welsh</td><td>Bradwen</td></tr>
+                    <tr><td>welsh</td><td>Maredudd</td></tr>
+                    <tr><td>welsh</td><td>Iestyn</td></tr>
+                    <tr><td>welsh</td><td>Arnall</td></tr>
+                    
+                    <tr><td>scottish</td><td>Popkin</td></tr>
+                    <tr><td>scottish</td><td>Torcall</td></tr>
+                    <tr><td>scottish</td><td>Asgall</td></tr>
+                    <tr><td>scottish</td><td>Raghnall</td></tr>
+                    <tr><td>scottish</td><td>Deorsa</td></tr>
+                    <tr><td>scottish</td><td>Iomhair</td></tr>
+                    <tr><td>scottish</td><td>Peadar</td></tr>
+                    <tr><td>scottish</td><td>Ianatan</td></tr>
+                    <tr><td>scottish</td><td>Tearlach</td></tr>
+                    <tr><td>scottish</td><td>Faolan</td></tr>
+                    <tr><td>scottish</td><td>Ringean</td></tr>
+                    <tr><td>scottish</td><td>Cailean</td></tr>
+                    <tr><td>scottish</td><td>Raild</td></tr>
+                    <tr><td>scottish</td><td>Arailt</td></tr>
+                    <tr><td>scottish</td><td>Caomhainn</td></tr>
+                    <tr><td>scottish</td><td>Laomann</td></tr>
+                    <tr><td>scottish</td><td>Eoin</td></tr>
+                    <tr><td>scottish</td><td>Tomaidh</td></tr>
+                    <tr><td>scottish</td><td>Uisdean</td></tr>
+                    <tr><td>scottish</td><td>Ualraig</td></tr>
+
+                    <tr><td>irish</td><td>Risteard</td></tr>
+                    <tr><td>irish</td><td>Tierney</td></tr>
+                    <tr><td>irish</td><td>Aengus</td></tr>
+                    <tr><td>irish</td><td>Lithgen</td></tr>
+                    <tr><td>irish</td><td>Laserian</td></tr>
+                    <tr><td>irish</td><td>Lorcan</td></tr>
+                    <tr><td>irish</td><td>Laughlin</td></tr>
+                    <tr><td>irish</td><td>Darragh</td></tr>
+                    <tr><td>irish</td><td>Naithi</td></tr>
+                    <tr><td>irish</td><td>Breasal</td></tr>
+                    <tr><td>irish</td><td>Ior</td></tr>
+                    <tr><td>irish</td><td>Ardghar</td></tr>
+                    <tr><td>irish</td><td>Nuadu</td></tr>
+                    <tr><td>irish</td><td>Maolorain</td></tr>
+                    <tr><td>irish</td><td>Agastas</td></tr>
+                    <tr><td>irish</td><td>Eireamhon</td></tr>
+                    <tr><td>irish</td><td>Naoise</td></tr>
+                    <tr><td>irish</td><td>Domhnall</td></tr>
+                    <tr><td>irish</td><td>Luchaidh</td></tr>
+                    <tr><td>irish</td><td>Conlao</td></tr>
+                    <tr><td>irish</td><td>Miach</td></tr>
+                    <tr><td>irish</td><td>Cruinn</td></tr>
+                    <tr><td>irish</td><td>Ceallachan</td></tr>
+                    <tr><td>irish</td><td>Acobhran</td></tr>
+
+                </tbody>
+            </table>
+
+
+            <table>
+                    <thead>
+                        <tr><th>tags</th><th>Nomi femminili</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>english</td><td>Estella</td></tr>
+                        <tr><td>english</td><td>Arlene</td></tr>
+                        <tr><td>english</td><td>Sarah</td></tr>
+                        <tr><td>english</td><td>Mabel</td></tr>
+                        <tr><td>english</td><td>Deanna</td></tr>
+                        <tr><td>english</td><td>Ruby</td></tr>
+                        <tr><td>english</td><td>Edith</td></tr>
+                        <tr><td>english</td><td>Sadie</td></tr>
+                        <tr><td>english</td><td>Felicia</td></tr>
+                        <tr><td>english</td><td>Madelyn</td></tr>
+                        <tr><td>english</td><td>Constance</td></tr>
+                        <tr><td>english</td><td>Muriel</td></tr>
+                        <tr><td>english</td><td>Bonnie</td></tr>
+                        <tr><td>english</td><td>Eleanor</td></tr>
+                        <tr><td>english</td><td>Erika</td></tr>
+                        <tr><td>english</td><td>Eunice</td></tr>
+                        <tr><td>english</td><td>Marcia</td></tr>
+                        <tr><td>english</td><td>Winifred</td></tr>
+                        <tr><td>english</td><td>Ethel</td></tr>
+                        <tr><td>english</td><td>Amber</td></tr>
+                        <tr><td>english</td><td>Joyce</td></tr>
+                        <tr><td>english</td><td>Cassandra</td></tr>
+                        <tr><td>english</td><td>Dawn</td></tr>
+                        <tr><td>english</td><td>Rosie</td></tr>
+                        
+                        <tr><td>welsh</td><td>Hafwen</td></tr>
+                        <tr><td>welsh</td><td>Meredydd</td></tr>
+                        <tr><td>welsh</td><td>Gwenfrewy</td></tr>
+                        <tr><td>welsh</td><td>Gwylan</td></tr>
+                        <tr><td>welsh</td><td>Eiluned</td></tr>
+                        <tr><td>welsh</td><td>Difyr</td></tr>
+                        <tr><td>welsh</td><td>Glain</td></tr>
+                        <tr><td>welsh</td><td>Nerys</td></tr>
+                        <tr><td>welsh</td><td>Callwen</td></tr>
+                        <tr><td>welsh</td><td>Ceinwen</td></tr>
+                        <tr><td>welsh</td><td>Gwendoline</td></tr>
+                        <tr><td>welsh</td><td>Awen</td></tr>
+                        <tr><td>welsh</td><td>Heledd</td></tr>
+                        <tr><td>welsh</td><td>Annest</td></tr>
+                        <tr><td>welsh</td><td>Derwen</td></tr>
+                        <tr><td>welsh</td><td>Glenda</td></tr>
+                        <tr><td>welsh</td><td>Aeres</td></tr>
+                        <tr><td>welsh</td><td>Aelwen</td></tr>
+                        <tr><td>welsh</td><td>Dafina</td></tr>
+                        <tr><td>welsh</td><td>Olwina</td></tr>
+                        <tr><td>welsh</td><td>Terrwyn</td></tr>
+                        <tr><td>welsh</td><td>Glynnis</td></tr>
+                        <tr><td>welsh</td><td>Gweddan</td></tr>
+                        <tr><td>welsh</td><td>Eira</td></tr>
+    
+                        <tr><td>scottish</td><td>Ciorstag</td></tr>
+                        <tr><td>scottish</td><td>Mildread</td></tr>
+                        <tr><td>scottish</td><td>Deoiridh</td></tr>
+                        <tr><td>scottish</td><td>Marsaili</td></tr>
+                        <tr><td>scottish</td><td>Ailis</td></tr>
+                        <tr><td>scottish</td><td>Nansaidh</td></tr>
+                        <tr><td>scottish</td><td>Muireall</td></tr>
+                        <tr><td>scottish</td><td>Diorbhail</td></tr>
+                        <tr><td>scottish</td><td>Giorsail</td></tr>
+                        <tr><td>scottish</td><td>Doirin</td></tr>
+                        <tr><td>scottish</td><td>Mòrag</td></tr>
+                        <tr><td>scottish</td><td>Flòraidh</td></tr>
+                        <tr><td>scottish</td><td>Sìleas</td></tr>
+                        <tr><td>scottish</td><td>Sìle</td></tr>
+                        <tr><td>scottish</td><td>Eimhir</td></tr>
+                        <tr><td>scottish</td><td>Siùbhan</td></tr>
+                        <tr><td>scottish</td><td>Lili</td></tr>
+                        <tr><td>scottish</td><td>Beitidh</td></tr>
+                        <tr><td>scottish</td><td>Eubha</td></tr>
+                        <tr><td>scottish</td><td>Mairi</td></tr>
+
+                        <tr><td>irish</td><td>Moirne</td></tr>
+                        <tr><td>irish</td><td>Clidna</td></tr>
+                        <tr><td>irish</td><td>Eimer</td></tr>
+                        <tr><td>irish</td><td>Beibhinn</td></tr>
+                        <tr><td>irish</td><td>Ailish</td></tr>
+                        <tr><td>irish</td><td>Geileis</td></tr>
+                        <tr><td>irish</td><td>Orla</td></tr>
+                        <tr><td>irish</td><td>Ainnir</td></tr>
+                        <tr><td>irish</td><td>Peig</td></tr>
+                        <tr><td>irish</td><td>Brighid</td></tr>
+                        <tr><td>irish</td><td>Eimhear</td></tr>
+                        <tr><td>irish</td><td>Bronach</td></tr>
+                        <tr><td>irish</td><td>Sibeal</td></tr>
+                        <tr><td>irish</td><td>Ailleann</td></tr>
+                        <tr><td>irish</td><td>Mairead</td></tr>
+                        <tr><td>irish</td><td>Caireach</td></tr>
+                        <tr><td>irish</td><td>Mairghread</td></tr>
+                        <tr><td>irish</td><td>Fodhla</td></tr>
+                        <tr><td>irish</td><td>Dairile</td></tr>
+                        <tr><td>irish</td><td>Blanaid</td></tr>
+                        <tr><td>irish</td><td>Noirin</td></tr>
+                        <tr><td>irish</td><td>Aghna</td></tr>
+                        <tr><td>irish</td><td>Grainne</td></tr>
+                        <tr><td>irish</td><td>Catriona</td></tr>
+                        <tr><td>irish</td><td>Dairbhile</td></tr>
+                    </tbody>
+                </table>
+
+
+                <table>
+                        <thead>
+                            <tr><th>tags</th><th>Soprannomi</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>english</td><td>Montgomery</td></tr>
+                            <tr><td>english</td><td>Hatfield</td></tr>
+                            <tr><td>english</td><td>Holt</td></tr>
+                            <tr><td>english</td><td>Vaughan</td></tr>
+                            <tr><td>english</td><td>Hodge</td></tr>
+                            <tr><td>english</td><td>Farley</td></tr>
+                            <tr><td>english</td><td>Dudley</td></tr>
+                            <tr><td>english</td><td>Williamson</td></tr>
+                            <tr><td>english</td><td>Nicholson</td></tr>
+                            <tr><td>english</td><td>Bowers</td></tr>
+                            <tr><td>english</td><td>Lowery</td></tr>
+                            <tr><td>english</td><td>Byrd</td></tr>
+                            <tr><td>english</td><td>Carlson</td></tr>
+                            <tr><td>english</td><td>Townsend</td></tr>
+                            <tr><td>english</td><td>Alston</td></tr>
+                            <tr><td>english</td><td>Jacobson</td></tr>
+                            <tr><td>english</td><td>Briggs</td></tr>
+                            <tr><td>english</td><td>Gentry</td></tr>
+                            <tr><td>english</td><td>Harper</td></tr>
+                            <tr><td>english</td><td>Hart</td></tr>
+                            <tr><td>english</td><td>Woodward</td></tr>
+                            <tr><td>english</td><td>Ballard</td></tr>
+                            <tr><td>english</td><td>Hayden</td></tr>
+        
+                            <tr><td>welsh</td><td>Prothro</td></tr>
+                            <tr><td>welsh</td><td>Rhys</td></tr>
+                            <tr><td>welsh</td><td>Llewellyn</td></tr>
+                            <tr><td>welsh</td><td>Brodrick</td></tr>
+                            <tr><td>welsh</td><td>Bevans</td></tr>
+                            <tr><td>welsh</td><td>Pumphrey</td></tr>
+                            <tr><td>welsh</td><td>Erwood</td></tr>
+                            <tr><td>welsh</td><td>Watkins</td></tr>
+                            <tr><td>welsh</td><td>Gethin</td></tr>
+                            <tr><td>welsh</td><td>Protheroe</td></tr>
+                            <tr><td>welsh</td><td>Powell</td></tr>
+                            <tr><td>welsh</td><td>Moore</td></tr>
+                            <tr><td>welsh</td><td>Mostyn</td></tr>
+                            <tr><td>welsh</td><td>Pritchards</td></tr>
+                            <tr><td>welsh</td><td>Dew</td></tr>
+                            <tr><td>welsh</td><td>Brice</td></tr>
+                            <tr><td>welsh</td><td>Hennion</td></tr>
+                            <tr><td>welsh</td><td>Clough</td></tr>
+                            <tr><td>welsh</td><td>Cardwallader</td></tr>
+                            <tr><td>welsh</td><td>Poyner</td></tr>
+                            <tr><td>welsh</td><td>Pembroke</td></tr>
+                            <tr><td>welsh</td><td>Stant</td></tr>
+                            <tr><td>welsh</td><td>Evanson</td></tr>
+                            <tr><td>welsh</td><td>Beddow</td></tr>
+                            <tr><td>welsh</td><td>Popkin</td></tr>
+        
+                            <tr><td>scottish</td><td>Lobhdain</td></tr>
+                            <tr><td>scottish</td><td>MacThamhais</td></tr>
+                            <tr><td>scottish</td><td>MacGaradh</td></tr>
+                            <tr><td>scottish</td><td>MacMhorgain</td></tr>
+                            <tr><td>scottish</td><td>MacRiocaird</td></tr>
+                            <tr><td>scottish</td><td>MacIllebrath</td></tr>
+                            <tr><td>scottish</td><td>Brun</td></tr>
+                            <tr><td>scottish</td><td>MacGuire</td></tr>
+                            <tr><td>scottish</td><td>MacIllechatain</td></tr>
+                            <tr><td>scottish</td><td>MacRideinn</td></tr>
+                            <tr><td>scottish</td><td>MacAbhra</td></tr>
+                            <tr><td>scottish</td><td>MacComhainn</td></tr>
+                            <tr><td>scottish</td><td>MacGillethain</td></tr>
+                            <tr><td>scottish</td><td>MacCnaimhin</td></tr>
+                            <tr><td>scottish</td><td>MacFherghais</td></tr>
+                            <tr><td>scottish</td><td>MacRusachainn</td></tr>
+                            <tr><td>scottish</td><td>MacDhaibhid</td></tr>
+                            <tr><td>scottish</td><td>MacCnaimhin</td></tr>
+                            <tr><td>scottish</td><td>MacIosaig</td></tr>
+                            <tr><td>scottish</td><td>MacPhairce</td></tr>
+                            <tr><td>scottish</td><td>MacMhathain</td></tr>
+                            <tr><td>scottish</td><td>MacAdhaimh</td></tr>
+                            <tr><td>scottish</td><td>MacUsbaig</td></tr>
+                            <tr><td>scottish</td><td>MacDiarmaid</td></tr>
+                            <tr><td>scottish</td><td>MacCrain</td></tr>
+                            <tr><td>scottish</td><td>MacLathagain</td></tr>
+                            <tr><td>scottish</td><td>MacSual</td></tr>
+                            <tr><td>scottish</td><td>Gordan</td></tr>
+                            <tr><td>scottish</td><td>Ceallac</td></tr>
+        
+                            <tr><td>irish</td><td>O Ruanaidh</td></tr>
+                            <tr><td>irish</td><td>O Mathuna</td></tr>
+                            <tr><td>irish</td><td>O Murnain</td></tr>
+                            <tr><td>irish</td><td>O Bradaigh</td></tr>
+                            <tr><td>irish</td><td>O Cathal</td></tr>
+                            <tr><td>irish</td><td>Mac Eathain</td></tr>
+                            <tr><td>irish</td><td>Mac Phaidin</td></tr>
+                            <tr><td>irish</td><td>Mac Seanlaoich</td></tr>
+                            <tr><td>irish</td><td>O Suairt</td></tr>
+                            <tr><td>irish</td><td>O Tonnaigh</td></tr>
+                            <tr><td>irish</td><td>O Meidhir</td></tr>
+                            <tr><td>irish</td><td>O Conaill</td></tr>
+                            <tr><td>irish</td><td>O Midhir</td></tr>
+                            <tr><td>irish</td><td>O Belloain</td></tr>
+                            <tr><td>irish</td><td>O Diomasaigh</td></tr>
+                            <tr><td>irish</td><td>O Donnghaile</td></tr>
+                            <tr><td>irish</td><td>O Duilleain</td></tr>
+                            <tr><td>irish</td><td>O Maolduin</td></tr>
+                            <tr><td>irish</td><td>Mac Crabhain</td></tr>
+                            <tr><td>irish</td><td>O Dubhuir</td></tr>
+                            <tr><td>irish</td><td>O Duinnin</td></tr>
+                            <tr><td>irish</td><td>Ui Eachthairn</td></tr>
+                            <tr><td>irish</td><td>Nic Cuilinn</td></tr>
+                            <tr><td>irish</td><td>Nic Angluinn</td></tr>
+                        </tbody>
+                    </table>
+        </div>
+
+        <script>
+            jQuery(function($) {
+
+                $('table').DataTable({
+                    paging: false
+                });
+
+            });
+        </script>
+    </body>
+</html>
