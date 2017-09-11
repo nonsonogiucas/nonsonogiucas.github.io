@@ -1,0 +1,258 @@
+<html>
+
+<head>
+    <title>Dungeon World</title>
+    <link href="https://fonts.googleapis.com/css?family=Alegreya+Sans+SC|Roboto+Condensed" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond:400i,600i" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <style>
+        .row {
+            width: 720px;
+            margin: 0 auto;
+        }
+
+        .boxed {
+            padding: 5px 15px 10px;
+            background: #FFF;
+            box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .fc {
+            display: flex;
+        }
+
+        .boxed .col {
+            flex-grow: 1;
+            padding: 0 10px;
+        }
+
+        h2 {
+            font-weight: bold;
+            font-size: 19px;
+            margin-top: 5px;
+        }
+
+        p {
+            padding: 5px 20px;
+        }
+
+        .objectives p {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            text-align: center;
+            font-size: 22px;
+            margin: 5px;
+        }
+
+        .guidelines p {
+            text-align: center;
+        }
+
+        .moves .moves-move p,
+        .moves .moves-move ul {
+            margin: 5px;
+        }
+
+        p.highlight {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 19px;
+            border-bottom: 1px solid #E1E1E1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="row">
+        <h1>Introduzione</h1>
+    </div>
+    <div class="row boxed moves">
+        <h2>Cos'è DungeonWorld</h2>
+        <p class="highlight">
+            DungeonWorld non è un gioco di ruolo...
+        </p>
+        <p>
+            Se "GDR" (o "RPG") ti fa pensare a <i>D&D</i>, <i>Pathfinder</i> o <i>Vampire: The Masquerade</i> allora è meglio
+            se approcci DungeonWorld (DW) con la convinzione che non sia un "GDR". Il fatto è che DW, pur mirando a produrre
+            per te e i tuoi amici lo stesso risultato, guida i giocatori e il GM in maniera molto diversa dai manuali dei
+            GDR classici. Dove D&D ti fornisce una gran quantità di strumenti atti a rappresentare e simulare, lasciando
+            poi uno spazietto ai consigli su come comportarsi al tavolo da gioco, DW fa il contrario.
+        </p>
+        <p class="highlight">
+            ...DungeonWorld è un sistema di tecniche per la narrazione collaborativa
+        </p>
+    </div>
+
+
+
+
+    <div class="row boxed moves">
+        <h2>Meccanismo Base</h2>
+        <p>
+            La base delle regole di DW è la <b>Mossa</b>. Esistono due categorie principali di Mosse:
+            <i>Mosse del Giocatore</i> e <i>Mosse del GM</i>.
+        </p>
+        <h2>Mosse del Giocatore</h2>
+        <p>
+            Le Mosse del Giocatore sono divise per convenienza in Mosse di Base, Mosse Avanzate e Mosse di Classe, ma in sostanza hanno
+            tutte in comune gli stessi elementi:
+            <ul>
+                <li>un evento scatenante</li>
+                <li>un meccanismo di risoluzione basato sul tiro di dadi (opzionale)</li>
+                <li>uno o più effetti sulla narrazione</li>
+                <li>raramente informazioni aggiuntive su <b>come</b> apportare gli effetti sulla narrazione</li>
+            </ul>
+        </p>
+
+        <p class="highlight">
+            Tutte le Mosse Nascono nella Narrazione e Finiscono nella Narrazione
+        </p>
+
+        <h2>Mosse: Evento Scatenante</h2>
+        <p>
+            Le Mosse del Giocatore non possono essere messe in gioco direttamente. Non sono pulsanti sul joypad o carte nella mano che
+            il giocatore possa azionare per far muovere i personaggi sullo schermo.
+            <br/><b>Una Mossa viene invocata da un evento che accade nella narrazione</b>. Quando la storia messa in atto
+            dai giocatori include una scena corrispondente all'evento scatenante di una Mossa, questa è chiamata in causa.
+            Quando ciò avviene i giocatori interrompono la narrazione per risolvere la Mossa, quindi ne applicano il risultato
+            alla storia e proseguono. Il GM vorrà tenere a mente quali sono gli eventi in grado di scatenrare specifiche
+            Mosse in modo da riconoscerli in gioco e aiutare i giocatori a risolere le Mosse nel modo corretto.
+        </p>
+
+        <p class="highlight">
+            Non pensare alle Mosse, pensa alla storia
+        </p>
+
+        <h2>Mosse: Tirare i Dadi</h2>
+        <p>
+            Alcune Mosse richiedono il tiro di dadi. Ogni volta che una mossa dice <b>tira+/-<i>qualcosa</i></b> il giocatore
+            tirerà 2d6 e aggiungerà o sottrarrà dal risultato il modificatore appropriato. In DW non ci sono soglie numeriche
+            da raggiungere, non c'è AC o DR. Il testo della Mossa indica come interpretare il risultato del tiro. In genere
+            il risultato è interpretato secondo la seguente divisione:
+            <ul>
+                <li>Se il risultato è <b>10 o più</b>: Pieno successo, il giocatore mantiene il controllo narrativo.</li>
+                <li>
+                    Se il risultato è tra <b>7 e 9</b> (inclusi): Successo è parziale oppure c'è un costo o una conseguenza
+                    inattesa, il GM prende parte del controllo narrativo.
+                </li>
+                <li>Se il risultato è <b>6 o meno</b>: Il GM ha il pieno controllo sugli eventi.</li>
+            </ul>
+        </p>
+        <p>
+            Molto spesso il testo delle Mosse non menziona il risultato <i>6-</i>, in questi casi avviene quanto detto sopra:
+            il controllo sulla narrazione passa al GM, il quale può mettere in atto una <i>Mossa del GM</i>. Questo non significa
+            necessariamente che il personaggio abbia totalmente fallito in ciò che voleva fare, ma semplicemente che in qualche
+            modo sarà il GM a decidere come portare avanti la storia.
+        </p>
+    </div>
+
+
+    <div class="row boxed moves">
+        <h2>Mosse del GM</h2>
+        <p>
+            Le Mosse del GM sono diverse da quelle del Giocatore in quanto:
+            <ul>
+                <li>non menzionano l'evento scatenante</li>
+                <li>non includono mai un tiro</li>
+            </ul>
+        </p>
+        <p>
+            In DW il GM non tira dadi. Tutte le volte che un evento casuale ha un effetto sui personaggi, sono i giocatori dei rispettivi
+            personaggi a tirare i dadi corrispondenti.
+        </p>
+        <p>
+            L'evento scatenante per le Mosse del GM è sempre uno di questi tre:
+            <ol>
+                <li><b>Quando un giocatore tira un 6-</b></li>
+                <li><b>Quando tutti guardano il GM per sapere cosa succederà</b></li>
+                <li><b>Quando si presenta un'occasione d'oro.</b></li>
+            </ol>
+        </p>
+        <p>
+            Il primo è già stato discusso parlando delle Mosse del Giocatore. Tirare un 6- significa perdere il controllo sulla narrazione,
+            di conseguenza il GM fa una Mossa. Il secondo è semplicemente naturale. I giocatori potrebbero passare del tempo
+            a parlare tra di loro "in character" ma ad un certo punto faranno una domanda o si fermeranno e aspetterano per
+            <b>vedere cosa succede dopo</b>. A quel punto il GM prende la parola e fa una Mossa.
+        </p>
+        <p>
+            Il terzo evento include tutte quelle volte in cui un giocatore descive il suo PG mentre compie una azione tale che l'universo
+            e le leggi che lo regolano non possono ignorare. Ragnar si butta dal ciglio del burrone? Occasione d'oro: Ragnar
+            cade. Melvin bastona un alveare? Occasione d'oro: Melvin è inseguito da uno sciame di api iraconde. Xanatus maledice
+            urlando la divinità del tuono? Occasione d'oro: Xanatus è colpito da un fulmine.
+        </p>
+        <p>
+            Non ci sono regole ferree su <b>come</b> il GM debba rispondere ad ogni evenienza. Tuttavia questi è guidato
+            da varie cose. Prima di tutto il <b>buon senso</b>, le regole di base della logica regnano sovrane su DW e possono,
+            se necessario, invalidare ogni tiro, mossa o attributo. In secondo luogo il GM ha la responsabilità di tenere
+            a mente il <b>genere narrativo</b>, ciò che ha senso in una storia "high fantasy" potrebbe non avere senso in
+            una "grim dark" o "horror". Terzo, il GM farà a bene a tenere presente i <b>desideri dei giocatori</b>, se hanno
+            chiesto un'avventura brutale piena di scelte difficili, ammorbidire le conseguenze delle loro azioni e trattanere
+            la furia dei mostri non conseguirà il risultato atteso. Se invece desiderano un'ambientazione più "cartoon",
+            può avere perfettamente senso per Ragnar sbracciare e calciare a mezz'aria stile "Vile Coyote" per ritornare
+            verso il ciglio del burrone.
+        </p>
+    </div>
+
+
+    <div class="row boxed moves">
+        <h2>I Principi Guida</h2>
+
+        <p class="highlight">
+            Dungeon World è una <b>Conversazione</b>
+        </p>
+        <p>
+            Ricorda sempre che il gioco di ruolo non è uno sport competitivo, avvaliti dell'aiuto di tutti i presenti per rendere la
+            storia più interessante e coinvolgente possibile. Allo stesso tempo cerca di non prevaricare sugli altri e di
+            non uscire troppo dal coro. Anche se il GM ha la maggiore responsabilità, tutti quanti devono cercare di attenersi
+            al genere e al tono concordati all'inizio del gioco. Nel caso questi non siano di tuo gradimento parlane con
+            sincerità agli altri giocatori e cercate un modo di accontentare tutti.
+        </p>
+        <p>
+            Non avere paura di parlare "in meta". La <i>Conversazione</i> riguarda mondi e storie di fantasia, certo, ma
+            sono persone reali che partecipano a questa conversazione. Alle volte è necessario e utile discostarsi dagli
+            avvenimenti narrati e osservare la storia con sguardo critico per poi indirizzarla in luoghi nuovi ed entusiasmanti.
+            Se hai voglia di giocare (o "girare", come in uno studio cinematografico) una scena in particolare, ma non riesci
+            ad ottenere quello che vuoi "in character", parlane in meta al GM e agli altri giocatori. Magari qualcuno ha
+            un'idea su come arrivare a quella scena in un modo che soddisfa tutti.
+        </p>
+        <p>
+            DW è <i>sempre</i> una conversazione. Non fare il monologo. Non aspettare il tuo turno... Non ci sono turni!
+            Quando un gruppo di amici partecipa in una conversazione non stabiliscono chi deve parlare in anticipo. Tutto
+            si svolge in modo fluido e naturale. 
+        </p>
+
+        <p class="highlight">
+            <b>Agisci</b> per ottenere un Risultato
+        </p>
+        <p>
+            Pensare in termini di Mosse ("quale Mossa posso attivare ora?") non aiuta a giocare bene a Dungeon World. La cosa di gran
+            lunga migliore è pensare alla storia: se fossi il mio personaggio, cosa vedrei? Cosa sentirei? Cosa proverei?
+            Cosa vorrei? Cosa farei?
+            <br/> Se il tuo sentiero è interrotto da un profondo burrone non chiederti: "Quale mossa può portarmi dall'altra
+            parte?". Pensa piuttosto a come raggiungere il tuo obiettivo: "Come posso attraversare questo burrone?". Quando
+            hai elaborato un piano, mettilo in atto. Se non ti viene in mente nulla ricorda che hai degli amici fidati che
+            fanno il tifo per te, chiedi loro un consiglio, quindi agisci.
+        </p>
+
+        <p class="highlight">
+            Gioca per <b>Scoprire</b> Cosa Accadrà
+        </p>
+        <p>
+            Dungeon World dà il meglio di se quando si improvvisa. In generale però, anche se il GM sta prendendo spunto
+            da un modulo scritto o se ti sei fatto un'idea di come il tuo personaggio si evolverà, è meglio non colmare 
+            tutti gli spazi in anticipo. Sarebbe molto difficile per 4-6 persone scrivere autonomamente altrettante storie
+            diverse e poi prendere che queste si incastrino tra loro alla perfezione. E' di gran lunga più semplice costruire
+            la storia assieme, costruendo ciascuno sugli elementi contribuiti dagli altri.
+        </p>
+        <p>
+            Esistono molti giochi di ruolo che permettono di rispondere a domande tipo: "In che modo gli eroi salveranno il regno?"
+            <br/>Dungeon World però è molto più adatto a rispondere alla domanda: "Il regno sarà salvato, o ne rimarrà solo un
+            mucchio di fumanti macerie?"
+            <br/>Quindi invece di cercare di piegare gli eventi alla tua volontà per realizzare una storia già scritta,
+            rilassati e goditi lo spettacolo. Il risultato potrebbe sorprenderti.
+        </p>
+    </div>
+</body>
+
+</html>
