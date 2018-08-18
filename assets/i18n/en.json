@@ -1,0 +1,264 @@
+{
+  "PAGE": {
+    "HOME": {
+      "TITLE": "Dungeon World - Unchained"
+    },
+    "BASIC_MOVES": {
+      "TITLE": "Basic Moves"
+    },
+    "SPECIAL_MOVES": {
+      "TITLE": "Special Moves"
+    }
+  },
+  "TAG": {
+    "BASEMOVE": "base move",
+    "SPECIALMOVE": "special move",
+    "PLAYERMOVE": "player move",
+    "UNCHAINED": "unchained"
+  },
+  "ATTRIBUTE": {
+    "WIS": "Wisdom",
+    "INT": "Intelligence",
+    "CHA": "Charisma",
+    "STR": "Strength",
+    "CON": "Constitution",
+    "DEX": "Dexterity",
+    "BONDS": "Bonds"
+  },
+  "MOVE": {
+    "UI": {
+      "ROLL": "roll"
+    },
+    "ADVANTAGE": {
+      "NAME": "Roll with Advantage",
+      "TRIGGER": "When you roll for a move while having Advantage",
+      "EFFECT": "Roll 3 six-sided dice and discard the one with the lowest value."
+    },
+    "DISADVANTAGE": {
+      "NAME": "Roll with Disadvantage",
+      "TRIGGER": "When you roll for a move while having Disadvantage",
+      "EFFECT": "Roll 3 six-sided dice and discard the one with the highest value."
+    },
+    "DISCERN_REALITIES": {
+      "NAME": "Discern Realities",
+      "TRIGGER": "When you closely study a situation or person",
+      "EFFECT": "Take +1 forward when acting on the answers.",
+      "RES": {
+        "10+": "Ask the GM 3 questions from the list below.",
+        "7-9": "Ask the GM 1 questions from the list below."
+      },
+      "DETAILS": "<ul><li>What happened here recently?</li><li>What is about to happen?</li><li>What should I be on the lookout for?</li><li>What here is useful or valuable to me?</li><li>Who’s really in control here?</li><li>What here is not what it appears to be?</li></ul> The GM always describes what the player characters experience honestly.",
+      "COMMENT": {
+        "1": "To discern realities you must closely observe your target. That usually means interacting with it or watching someone else do the same. You can’t just stick your head in the doorway and discern realities about a room. You’re not merely scanning for clues—you have to look under and around things, tap the walls, and check for weird dust patterns on the bookshelves..",
+        "2": "Discerning realities isn’t just about noticing a detail, it’s about figuring out the bigger picture.",
+        "3": "Unless a move says otherwise players can only ask questions from the list. If a player asks a question not on the list the GM can tell them to try again or answer a question from the list that seems equivalent.",
+        "4": "Recollecting all the known facts about past experiences, for example relating to things happened in previous sessions, is a valid way of Discerning Realities about things you might have failed to notice at the time."
+      }
+    },
+    "SPOUT_LORE": {
+      "NAME": "Spout Lore",
+      "TRIGGER": "When you consult your accumulated knowledge about something",
+      "RES": {
+        "10+": "The GM will tell you something interesting and useful about the subject relevant to your situation.",
+        "7-9": "The GM will only tell you something interesting—it’s on you to make it useful."
+      },
+      "DETAILS": "The GM might ask you “How do you know this?” Tell them the truth, now.",
+      "COMMENT": {
+        "1": "You spout lore any time you want to search your memory for knowledge or facts about something. You take a moment to ponder the things you know about the Orcish Tribes or the Tower of Ul’dammar and then reveal that knowledge.",
+        "2": "The knowledge you get is like consulting a bestiary, travel guide, or library. You get facts about the subject matter. On a 10+ the GM will show you how those facts can be immediately useful, on a 7–9 they’re just facts."
+      }
+    },
+    "DEFY_DANGER": {
+      "NAME": "Defy Danger",
+      "TRIGGER": "When you act despite an imminent threat or suffer a calamity",
+      "EFFECT": "Say how you deal with it and roll. If you do it<ul><li>by powering through, +Strength</li><li>by getting out of the way or acting fast, +Dexterity</li><li>by enduring, +Constitution</li><li>with quick thinking, +Intellingence</li><li>through mental fortitude, +Wisdom</li><li>using charm and social grace, +Charisma</li></ul>",
+      "RES": {
+        "10+": "You do what you set out to, the threat doesn’t come to bear.",
+        "7-9": "You stumble, hesitate, or flinch: the GM will offer you a worse outcome, hard bargain, or ugly choice."
+      },
+      "COMMENT": {
+        "1": "You defy danger when you do something in the face of impending peril. This may seem like a catch-all. It is! Defy danger is for those times when it seems like you clearly should be rolling but no other move applies."
+      }
+    },
+    "AID_OR_INTERFERE": {
+      "NAME": "Aid or Interfere",
+      "TRIGGER": "When you help or hinder someone",
+      "ROLL_MODIFIER": "Bonds you have with him",
+      "RES": {
+        "10+": "they take +1 or -2 to their roll, your choice.",
+        "7-9": "they still get a modifier, but you also expose yourself to danger, retribution, or cost."
+      },
+      "COMMENT": {
+        "1": "Any time you feel like two players should be rolling against each other, the defender should be interfering with the attacker. This doesn’t always mean sabotaging them. It can mean anything from arguing against a parley to just being a shifty person who’s hard to discern. It’s about getting in the way of another players’ success.",
+        "2": "No matter how many people aid or interfere with a given roll, the target only gets the +1 or -2 once. Even if a whole party of adventurers aid in attacking an ogre, the one who makes the final attack only gets +1."
+      }
+    },
+    "ASSIST": {
+      "NAME": "Assist",
+      "TRIGGER": "When you assist someone in their endeavour",
+      "EFFECT": "Describe what you do and then roll choosing a modifier as per the Defy Danger move",
+      "RES": {
+        "10+": "The other rolls with advantage",
+        "7-9": "Same as above, but you introduce a disturbance: the GM will offer you a worse outcome, hard bargain, or ugly choice, to you or the other."
+      },
+      "DETAILS": "Regardless of how the two rolls go, both you and the other will be targeted by any consequence of the main move.",
+      "COMMENT": {
+        "1": ""
+      }
+    },
+    "PARLEY": {
+      "NAME": "Parley",
+      "TRIGGER": "When you have leverage on a GM Character and manipulate them",
+      "EFFECT": "Leverage is something they need or want.",
+      "RES": {
+        "10+": "They do what you ask if you first promise what they ask of you.",
+        "7-9": "They will do what you ask, but need some concrete assurance of your promise, right now."
+      },
+      "COMMENT": {
+        "1": "Parley covers a lot of ground including old standbys like intimidation and diplomacy. You know you’re using parley when you’re trying to get someone to do something for you by holding a promise or threat over them. Your leverage can be nasty or nice, the tone doesn’t matter.",
+        "2": "What you promise them must be something they value. You can't bribe a hermit with gold nor threaten a ghost with your fists."
+      }
+    },
+    "HACK_AND_SLASH": {
+      "NAME": "Hack and Slash",
+      "TRIGGER": "When you attack an enemy in melee",
+      "RES": {
+        "10+": "You deal your damage to the enemy and avoid their attack. At your option, you may choose to do +1d6 damage but expose yourself to the enemy’s attack.",
+        "7-9": "You deal your damage to the enemy and the enemy makes an attack against you."
+      },
+      "COMMENT": {
+        "1": "If the action that triggers the move could reasonably hurt multiple targets roll once and apply damage to each target (they each get their armor).",
+        "2": "Hack and slash is for attacking a prepared enemy plain and simple. If the enemy isn’t prepared for your attack—if they don’t know you’re there or they’re restrained and helpless—then that’s not hack and slash. You just deal your damage or murder them outright, depending on the situation. Nasty stuff.",
+        "3": "The enemy’s counterattack can be any GM move made directly with that creature. A goblin might just attack you back, or they might jam a poisoned needle into your veins. Life’s tough, isn’t it?",
+        "4": "Note that an “attack” is some action that a player undertakes that has a chance of causing physical harm to someone else. Attacking a dragon with inch-thick metal scales full of magical energy using a typical sword is like swinging a meat cleaver at a tank: it just isn’t going to cause any harm, so hack and slash doesn’t apply. Note that circumstances can change that: if you’re in a position to stab the dragon on its soft underbelly (good luck with getting there) it could hurt, so it’s an attack."
+      }
+    },
+    "VOLLEY": {
+      "NAME": "Volley",
+      "TRIGGER": "When you take aim and shoot at an enemy at range",
+      "RES": {
+        "10+": "You have a clear shot—deal your damage.",
+        "7-9": "You deal your damage, but choose one from the list."
+      },
+      "DETAILS": "<ul><li>You have to move to get the shot placing you in danger as described by the GM</il><li>You have to take what you can get: -1d6 damage</il><li>You have to take several shots, reducing your ammo by one</il></ul>",
+      "COMMENT": {
+        "1": "Volley covers the entire act of drawing, aiming, and firing a ranged weapon or throwing a thrown weapon. The advantage to using a ranged weapon over melee is that the attacker is less likely to be attacked back. Of course they do have to worry about ammunition and getting a clear shot though.",
+        "2": "If you’re throwing something that doesn’t have ammo (maybe you’ve got a move that makes your shield throwable) you can’t choose to mark off ammo. Choose from the other two options instead."
+      }
+    },
+    "DEFEND": {
+      "NAME": "Defend",
+      "TRIGGER": "When you stand in defense of a person, item, or location under attack",
+      "RES": {
+        "10+": "Hold 3.",
+        "7-9": "Hold 1."
+      },
+      "DETAILS": "As long as you stand in defense, when you or the thing you defend is attacked you may spend hold, 1 for 1, to choose an option:<ul><li>Redirect an attack from the thing you defend to yourself</il><li>Halve the attack’s effect or damage</il><li>Open up the attacker to an ally giving that ally +1 forward against the attacker</il><li>Deal damage to the attacker equal to your level</il></ul>",
+      "COMMENT": {
+        "1": "Defending something means standing nearby and focusing on preventing attacks against that thing or stopping anyone from getting near it. When you’re no longer nearby or you stop devoting your attention to incoming attacks then you lose any hold you might have had.",
+        "2": "You can only spend hold when someone makes an attack on you or the thing you’re defending. The choices you can make depend on the attacker and the type of attack. In particular, you can’t deal damage to an attacker who you can’t reach with your weapon."
+      }
+    },
+    "LAST_BREATH": {
+      "NAME": "Last Breath",
+      "TRIGGER": "When you’re dying",
+      "EFFECT": "You catch a glimpse of the Black Gates of Death’s Kingdom and what lies beyond.",
+      "RES": {
+        "10+": "You’ve cheated Death—you’re in a bad spot but you’re still alive.",
+        "7-9": "Death himself will offer you a bargain. Take it and stabilize or refuse and pass beyond the Black Gates into whatever fate awaits you.",
+        "6-": "Your fate is sealed. You’re marked as Death’s own and you’ll cross the threshold soon. The GM will tell you when."
+      }
+    },
+    "ENCUMBRANCE": {
+      "NAME": "Encumbrance",
+      "TRIGGER": "When you make a move while carrying weight",
+      "EFFECT": "You may be encumbered.",
+      "DETAILS": "If your weight carried is:<ul><li>Equal to or less than your load, you suffer no penalty</li><li>Less than or equal to your load+2, you take -1 ongoing until you lighten your burden</li><li>Greater than your load+2, you have a choice: drop at least 1 weight and roll at -1, or automatically fail</li></ul>"
+    },
+    "MAKE_CAMP": {
+      "NAME": "Make Camp",
+      "TRIGGER": "When you settle in to rest",
+      "EFFECT": "Consume a ration. If you’re somewhere dangerous decide the watch order as well. If you have enough XP you may level up. When you wake from at least a few uninterrupted hours of sleep heal damage equal to half your max HP.",
+      "COMMENT": {
+        "1": "You usually make camp so that you can do other things, like prepare spells or commune with your god. Or, you know, sleep soundly at night. Whenever you stop to catch your breath for more than an hour or so, you’ve probably made camp.",
+        "2": "Staying a night in an inn or house is making camp, too. Regain your hit points as usual, but only mark off a ration if you’re eating from the food you carry, not paying for a meal or receiving hospitality."
+      }
+    },
+    "TAKE_WATCH": {
+      "NAME": "Take Watch",
+      "TRIGGER": "When you’re on watch and something approaches the camp",
+      "RES": {
+        "10+": "You’re able to wake the camp and prepare a response, everyone in the camp takes +1 forward.",
+        "7-9": "You react just a moment too late; your companions in camp are awake but haven’t had time to prepare. They have weapons and armor but little else.",
+        "6-": "Whatever lurks outside the campfire’s light has the drop on you."
+      }
+    },
+    "UAPJ": {
+      "NAME": "Undertake a Perilous Journey",
+      "TRIGGER": "When you travel through hostile territory",
+      "EFFECT": "Choose one member of the party to act as <i>trailblazer</i>, one to <i>scout</i> ahead, and one to be <i>quartermaster</i>. Each character with a job rolls.",
+      "RES": {
+        "10+": "<ul><li>the <i>quartermaster</i> reduces the number of rations required by one</li><li>the <i>trailblazer</i> reduces the amount of time it takes to reach your destination (the GM will say by how much)</li><li>The <i>scout</i> will spot any trouble quick enough to let you get the drop on it</li></ul>",
+        "7-9": "each role performs their job as expected: the normal number of rations are consumed, the journey takes about as long as expected, no one gets the drop on you but you don’t get the drop on them either."
+      },
+      "COMMENT": {
+        "1": "You can’t assign more than one job to a character. If you don’t have enough party members, or choose not to assign a job, treat that job as if it had been assigned and the responsible player had rolled a 6.",
+        "2": "Distances in Dungeon World are measured in rations. A ration is the amount of supplies used up in a day. Journeys take more rations when they are long or when travel is slow.",
+        "3": "A perilous journey is the whole way between two locations. You don’t roll for one day’s journey and then make camp only to roll for the next day’s journey, too. Make one roll for the entire trip."
+      }
+    },
+    "CAROUSE": {
+      "NAME": "Carouse",
+      "TRIGGER": "When you return triumphant and throw a big party",
+      "EFFECT": "Spend 100 coins.",
+      "ROLL_MODIFIER": "1 for every extra 100 coins spent",
+      "RES": {
+        "10+": "Choose 3.",
+        "7-9": "Choose 1",
+        "6-": "You still choose 1, but things get really out of hand."
+      },
+      "DETAILS": "<ul><li>You befriend a useful NPC.</li><li>You hear rumors of an opportunity.</li><li>You gain useful information.</li><li>You are not entangled, ensorcelled, or tricked.</li></ul>"
+    },
+    "SUPPLY": {
+      "NAME": "Supply",
+      "TRIGGER": "When you go to buy something with gold on hand",
+      "EFFECT": "If it’s something readily available in the settlement you’re in, you can buy it at market price. If it’s something special, beyond what’s usually available here, or non-mundane, roll.",
+      "RES": {
+        "10+": "You find what you’re looking for at a fair price.",
+        "7-9": "You’ll have to pay more or settle for something that’s not exactly what you wanted, but close. The GM will tell you what your options are."
+      },
+      "DETAILS": "If you look for something readily available in the settlement you’re in, you can buy it at market price without rolling.<br/>If it’s something special, beyond what’s usually available here, or non-mundane, roll."
+    },
+    "RECOVER": {
+      "NAME": "Recover",
+      "TRIGGER": "When you do nothing but rest in comfort and safety",
+      "EFFECT": "After a day of rest you recover all your HP. After three days of rest you remove one debility of your choice. If you’re under the care of a healer (magical or otherwise) you heal a debility for every two days of rest instead."
+    },
+    "BOLSTER": {
+      "NAME": "Bolster",
+      "TRIGGER": "When you spend your leisure time in study, meditation, or hard practice",
+      "EFFECT": "You gain preparation. If you prepare for a week or more, take 1 preparation. If you prepare for a month or longer, take 3 instead.",
+      "DETAILS": "<b><i>When your preparation pays off</i></b> spend 1 preparation for +1 to any roll. You can only spend one preparation per roll."
+    },
+    "RECRUIT": {
+      "NAME": "Recruit",
+      "TRIGGER": "When you put out word that you’re looking to hire help",
+      "EFFECT": ", roll <ul><li>+1 if you make it known that your pay is generous</li><li>+1 if you make it known what you’re setting out to do</li><li>+1 if you make it known that they’ll get a share of whatever you find</li><li>+1 if you have a useful reputation around these parts</li></ul>",
+      "RES": {
+        "10+": "You’ve got your pick of a number of skilled applicants, your choice who you hire, no penalty for not taking them along.",
+        "7-9": "You’ll have to settle for someone close to what you want or turn them away.",
+        "6-": "Someone influential and ill-suited declares they’d like to come along (a foolhardy youth, a loose-cannon, or a veiled enemy, for example), bring them and take the consequences or turn them away."
+      },
+      "DETAILS": "If you turn away applicants, and rolled less than 10, you take -1 forward to recruit."
+    },
+    "OUTSTANDING_WARRANTS": {
+      "NAME": "Outstanding Warrants",
+      "TRIGGER": "When you return to a civilized place in which you’ve caused trouble before",
+      "RES": {
+        "10+": "Word has spread of your deeds and everyone recognizes you.",
+        "7-9": "As above, and the GM chooses a complication."
+      },
+      "DETAILS": "<ul><li>The local constabulary has a warrant out for your arrest.</li><li>Someone has put a price on your head.</li><li>Someone important to you has been put in a bad spot as a result of your actions.</li></ul>"
+    }
+  }
+}

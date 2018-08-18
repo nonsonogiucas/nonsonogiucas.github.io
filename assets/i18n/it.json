@@ -1,0 +1,265 @@
+{
+  "PAGE": {
+    "HOME": {
+      "TITLE": "Dungeon World - Unchained"
+    },
+    "BASIC_MOVES": {
+      "TITLE": "Mosse Base"
+    },
+    "SPECIAL_MOVES": {
+      "TITLE": "Mosse Speciali"
+    }
+  },
+  "TAG": {
+    "BASEMOVE": "mossa base",
+    "SPECIALMOVE": "mossa speciale",
+    "PLAYERMOVE": "mossa del giocatore",
+    "UNCHAINED": "unchained"
+  },
+  "ATTRIBUTE": {
+    "WIS": "Saggezza",
+    "INT": "Intelligenza",
+    "CHA": "Carisma",
+    "STR": "Forza",
+    "CON": "Costituzione",
+    "DEX": "Destrezza",
+    "BONDS": "Legami"
+  },
+  "MOVE": {
+    "UI": {
+      "ROLL": "tira"
+    },
+    "ADVANTAGE": {
+      "NAME": "Tirare in Vantaggio",
+      "TRIGGER": "Quando un mossa ti chiede di fare un tiro e sei in Vantaggio",
+      "EFFECT": "Tira 3 dadi a sei facce e scarta il dado con il valore minore."
+    },
+    "DISADVANTAGE": {
+      "NAME": "Tirare in Svantaggio",
+      "TRIGGER": "Quando un mossa ti chiede di fare un tiro e sei in Svantaggio",
+      "EFFECT": "Tira 3 dadi a sei facce e scarta il dado con il valore maggiore."
+    },
+    "DISCERN_REALITIES": {
+      "NAME": "Discernere il Vero",
+      "TRIGGER": "Quando esamini attentamente qualcosa o qualcuno",
+      "EFFECT": "Prendi +1 al prossimo tiro quando sfrutti ciò che hai appreso.",
+      "RES":{
+        "10+": "Fai al GM 3 domande dalla lista.",
+        "7-9": "Fai al GM 1 domanda dalla lista."
+      },
+      "DETAILS": "<ul><li>Cosa c'è di utile o di prezioso?</li><li>Cosa è accaduto di recente?</li><li>Cosa sta per accadere?</li><li>Di cosa dovrei preoccuparmi?</li><li>Chi sta conducendo le danze in realtà?</li><li>Cosa c'è di diverso da come appare?</li></ul> Il GM risponderà sempre onestamente.",
+      "COMMENT": {
+        "1": "A meno che un'altra mossa non dica esplicitamente il contrario, puoi fare solo le domande nella lista.Se non sei sicuro, chiedi al GM quale si avvicina di più a quello che avevi in mente.",
+        "2": "Per Discernere il Vero è necessario studiare il soggetto in modo attivo. Non si tratta di dare un rapido sguardo intorno ma piuttosto di aprire cassetti, sollevare tappeti e tastare superfici. Se il soggetto è una creatura ti devi prendere del tempo per osservarne il comportamento.",
+        "3": "Discernere il Vero non è solo notare dettagli ma farsi un quadro generale più chiaro della situazione corrente.",
+        "4": "Puoi Discernere il Vero ragionando su ricordi di eventi passati, farlo può aiutarti a collegare dettagli in modo inaspettato."
+      }
+    },
+    "SPOUT_LORE": {
+      "NAME": "Sgorgare Sapienza",
+      "TRIGGER": "Quando attingi alla tua conoscenza intorno a un soggetto",
+      "RES": {
+        "10+": "Il GM ti riferirà un fatto interessante e utile nelle tue circostanze.",
+        "7-9": "Il GM ti riferirà solo un fatto interessante, sta a te renderlo utile."
+      },
+      "DETAILS": "Il GM potrebbe chiederti come sei venuto a saperlo. Avanti, di la verità.",
+      "COMMENT": {
+        "1": "Che sia solo un fatto interessante o interessante e utile, il GM non ti riferirà qualcosa di falso. Ricordalo, potrebbe tornarti utile in seguito.",
+        "2": "Per Sgorgare Saggezza non è necessario che descrivi il tuo personaggio immerso nei suoi ricordi. Puoi chiedere direttamente al GM: 'Cosa so riguardo a ... ?'."
+      }
+    },
+    "DEFY_DANGER": {
+      "NAME": "Sfidare il Pericolo",
+      "TRIGGER": "Quando agisci a dispetto del pericolo incombente o sei vittima di una calamità",
+      "EFFECT": "Descrivi la tua reazione e tira. Se...<ul><li>ti imponi con la forza, +Forza</li><li>ti togli di mezzo o agisci alla svelta, +Destrezza</li><li>perduri o ti opponi con tenacia, +Costituzione</li><li>agisci con prontezza di spirito, +Intelligenza</li><li>fai scudo della tua forza d'animo, +Saggezza</li><li>sfrutti il tuo ascendente, +Carisma</li></ul>",
+      "RES": {
+        "10+": "Fai esattamente quello che intendevi e il pericolo è scongiurato.",
+        "7-9": "Inciampi, esiti, o vacilli: il GM ti proporrà un risultato inferiore, un cattivo affare o una scelta difficile."
+      },
+      "COMMENT": {
+        "1": "Sfidi il Pericolo tutte le volte che fai qualcosa mentre un pericolo sta per abbattersi su di te. Sfidare il Pericolo serve tutte le volte che hai la sensazione che serva fare un tiro ma nessun'altra mossa sembra essere adatta."
+      }
+    },
+    "AID_OR_INTERFERE": {
+      "NAME": "Aiutare o Interferire",
+      "TRIGGER": "Quando aiuto o ostacoli un altro PG",
+      "ROLL_MODIFIER": "Legami che vi uniscono",
+      "RES": {
+        "10+": "l'altro prende +1 o -2 al tiro, a tua scelta.",
+        "7-9": "come sopra, ma ti esponi ad un pericolo, costo o castigo."
+      },
+      "COMMENT": {
+        "1": "Quando pensi che due personaggio debbano fare tiri contrapposti fa tirare il difensore per Interferire con l'attaccante. Questo non si applica solamente alle aggressioni. It’s about getting in the way of another players’ success.",
+        "2": "No matter how many people aid or interfere with a given roll, the target only gets the +1 or -2 once. Even if a whole party of adventurers aid in attacking an ogre, the one who makes the final attack only gets +1."
+      }
+    },
+    "ASSIST": {
+      "NAME": "Assistere",
+      "TRIGGER": "Quando assisti qualcuno",
+      "EFFECT": "Descrivi quello che fai e tira scegliendo un modificatore come per la mossa Sfidare il Pericolo.",
+      "RES": {
+        "10+": "Colui che assisti tira con vantaggio.",
+        "7-9": "Come sopra, ma introduci un disturbo: il GM proporrà un risultato inferiore, un cattivo affare o una scelta difficile, a te o all'assistito."
+      },
+      "DETAILS": "Comunque vada il tiro, a discrezione del GM, puoi essere coinvolto nelle conseguenze della mossa che hai assistito.",
+      "COMMENT": {
+        "1": ""
+      }
+    },
+    "PARLEY": {
+      "NAME": "Negoziare",
+      "TRIGGER": "Quando influenzi un personaggio del GM facendo leva su desideri o paure",
+      "EFFECT": "",
+      "RES": {
+        "10+": "Ti accontentarà se gli prometti di fare la tua parte.",
+        "7-9": "Ti accontenterà, ma vuole subito una prova tangibile che farai la tua parte."
+      },
+      "DETAILS": "Regardless of how the two rolls go, both you and the other will be targeted by any consequence of the main move.",
+      "COMMENT": {
+        "1": "Negoziare include sia l'approccio diplomatico che le minacce. Sai che stai Negoziando quando provi a convincere qualcuno a fare qualcosa per te promettendo in cambio qualcosa, sia questo un regalo o la promessa di una ritorsione in caso non ti accontenti.",
+        "2": "Quello che prometti deve avere valore per il personaggio che cerchi di manipolare. Non puoi negoziare offrendo gioielli ad un eremita o minacciando di prendere a pungi un fantasma."
+      }
+    },
+    "HACK_AND_SLASH": {
+      "NAME": "Menare le Mani",
+      "TRIGGER": "Quando aggredisci i nemici in mischia",
+      "RES": {
+        "10+": "Infliggi il tuo danno. Se scegli di farlo, puoi infliggere +1d6 di danno aggiuntivo ma ti esponi all'attacco dei nemici.",
+        "7-9": "Infliggi il tuo danno ai nemici e subisci un attacco da parte loro."
+      },
+      "COMMENT": {
+        "1": "In base al contesto, Menare le Mani può avere come bersaglio una o più creature. Se i giocatori concordano che l'azione scatenante costituisce un'aggressione verso più creature, tira una volta sola e applica il tuo danno per intero a ciascuna creatura bersaglio (ciascuna beneficerà della propria armatura). Nel caso il personaggio del giocatore debba subire i danni dei nemici, subirà il danno cumulativo calcolato così: tira il danno del nemico più forte e aggiungi +1 al totale per ciascun altro nemico coinvolto.",
+        "2": "Aggredire nemici in 'mischia' significa che entrambe le parti lottano attivamente, a distanza ravvicinata. L'aggressione di nemici non preparati (ignari della tua presenza, incapacitati o alla tua mercè) non scatena Menare le Mani. In quel caso infliggi il tuo danno o li uccidi direttamente, a seconda delle circostanze.",
+        "3": "L'attacco dei nemici può essere qualsiasi mossa del GM fatta attraverso quelle creature. Un goblin potrebbe infliggere il suo danno, chiamare rinforzi, o infilzarti con uno spillo avvelenato.",
+        "4": "Nota che una 'aggressione' è un'azione di un personaggio che ha il potenziale di causare danni alla creatura bersaglio. Attaccare con una spada un drago rivestito di scaglie di metallo spesse due dita e protette magicamente è come colpire un carro armato con un bastone: non ha alcuna possibilità di infliggere danni, perciò non scatena Menare le Mani. Nel caso però ti trovassi vicino all'addome del drago e lo colpissi in un punto debole (sarebbe interessante sapere come sei arrivato lì), potresti riuscire a danneggiarlo, quindi conterebbe come aggressione."
+      }
+    },
+    "VOLLEY": {
+      "NAME": "Bersagliare",
+      "TRIGGER": "Quando prendi la mira e tiri contro un nemico a distanza",
+      "RES": {
+        "10+": "Centri il bersaglio, infliggi il tuo danno.",
+        "7-9": "Infliggi il tuo danno, ma scegli una opzione dalla lista."
+      },
+      "DETAILS": "<ul><li>Per avere una linea di tiro devi spostarti, esponendoti a un pericolo scelto dal GM.</il><li>Devi accontentarti, -1d6 al danno inflitto.</il><li>Devi tirare più volte, riduci le munizioni di 1.</il></ul>",
+      "COMMENT": {
+        "1": "Bersagliare copre l'intero atto di caricare, mirare e tirare o di scagliare un'arma da lancio. Il vantaggio di usare armi a distanza piuttosto che da mischia sta nel fatto che è più difficile subire un contrattacco. Devi comunque preoccuparti dell'uso di munizioni e di mantenere la linea di tiro.",
+        "2": "Se scagli un'arma da lancio, cioè una che non ha munizioni, non puoi scegliere la terza opzione. Scegli una delle altre due, e in ogni caso dovrai recuperare l'arma dal posto in cui l'hai lanciata."
+      }
+    },
+    "DEFEND": {
+      "NAME": "Difendere",
+      "TRIGGER": "Quando difendi un personaggio, un oggetto o un luogo dagli attacchi dei nemici",
+      "RES": {
+        "10+": "Ottieni 3 Presa.",
+        "7-9": "Ottieni 1 Presa."
+      },
+      "DETAILS": "Finché rimani in difesa, quando viene lanciato un attacco verso di te o il tuo protetto puoi spendere Presa per scegliere una o più opzioni dalla lista, una opzione per Presa:<ul><li>Subisci l'attacco al posto di ciò che proteggi.</il><li>Dimezzi l'effetto dell'attacco.</il><li>Esponi l'attaccante ad un alleato, questi può attaccarlo con vantaggio.</il><li>Infliggi all'attaccante danno pari al tuo livello.</il></ul>",
+      "COMMENT": {
+        "1": "Difendere qualcosa significa stargli accanto e concentrarsi sul prevenire attacchi ad essa diretti o impedire ad altri di avvicinarvisi. Quando non sei più nelle vicinanze o rivolgi l'attenzione ad altro perdi tutta la Presa rimasta.",
+        "2": "Puoi spendere Presa solo qundo un attacco è diretto verso di te o ciò che difendi. Le opzioni che puoi scegliere dipendono dal contesto. In particolare, non puoi infliggere danni ad un nemico che non puoi raggiungere con la tua arma."
+      }
+    },
+    "LAST_BREATH": {
+      "NAME": "L'Ultimo Respiro",
+      "TRIGGER": "Quando stai per morire",
+      "EFFECT": "Intravedi il Cancello Nero del Reame delLa Morte e ciò è al di là.",
+      "RES": {
+        "10+": "Hai ingannato La Morte. Sei messo male ma sei ancora vivo.",
+        "7-9": "La Morte in persona ti propone un accordo. Accetta e resta tra i vivi o rifiuta e attraversa il Cancello Nero.",
+        "6-": "Il tuo destino è segnato. La Morte ti ha annoverato tra i suoi e presto reclamerà la tua anima. Il GM ti dirà quando."
+      }
+    },
+    "ENCUMBRANCE": {
+      "NAME": "Fardello",
+      "TRIGGER": "Quando fai una mossa mentre sei carico di pesi",
+      "EFFECT": "Potresti essere appesantito.",
+      "DETAILS": "Se il peso che trasporti è:<ul><li>Inferiore o pari al tuo Carico Massimo, non subisci penalità.</li><li>Inferiore o pari al tuo Carico Massimo+2, prendi -1 al tiro.</li><li>Maggiore del tuo Carico Massimo+2, scegli: lascia qualcosa, o fallisci automaticamente.</li></ul>"
+    },
+    "MAKE_CAMP": {
+      "NAME": "Piantare le Tende",
+      "TRIGGER": "Quando ti accingi a riposare",
+      "EFFECT": "Consuma una razione di cibo. Se il luogo è pericoloso stabilisci i turni di guardia. Se hai abbastanza XP puoi salire di livello. Se ti concedi almeno qualche ora di sonno tranquillo, quando ti svegli recuperi HP pari alla metà del tuo massimo.",
+      "COMMENT": {
+        "1": "Solitamente si Pianta le Tende per fare cose come preparare incantesimi o invocare il proprio dio e concedersi una notta di riposo. Ogni volta che ti fermi a riposare per qualche ora, probabilmente stai Piantando le Tende.",
+        "2": "Alloggiare in una taverna o in una abitazione è un altro modo di Piantare le Tende. Recuperi HP e puoi salire di livello normalmente ma se ordini un pasto caldo o sei ospite di qualcuno non consumi una delle tue razioni."
+      }
+    },
+    "TAKE_WATCH": {
+      "NAME": "Fare la Guardia",
+      "TRIGGER": "Quando sei di guardia e qualcosa si avvicina",
+      "RES": {
+        "10+": "Riesci ad avvertire i tuoi compagni e organizzare una risposta, tutti nell'accampamento prendono +1 al prossimo tiro.",
+        "7-9": "Reagisci con un attimo di ritardo; i tuoi compagni sono svegli ma non hanno tempo di organizzarsi. Hanno armi e armature ma poco altro.",
+        "6-": "L'accampamento è preso alla sprovvista."
+      }
+    },
+    "UAPJ": {
+      "NAME": "Intraprendere un Viaggio Pericoloso",
+      "TRIGGER": "Quando ti metti in viaggio attraverso territori ostili",
+      "EFFECT": "Tra i membri del gruppo, nomina un <i>apripista</i>, un <i>esploratore</i> e un <i>dispensiere</i>. Ciascuno tira separatamente.",
+      "RES": {
+        "10+": "<ul><li>il <i>dispensiere</i> riduce il numero di razioni di cibo necessarie di uno</li><li>l'<i>apripista</i> riduce il tempo impiegato a raggiungere la destinazione (il GM decide di quanto)</li><li>l'<i>esploratore</i> individua i pericoli abbastanza in fretta da permetterti di evitarli o coglierli di sorpresa</li></ul>",
+        "7-9": "Ciascuno svolge il suo compito come ci si aspetterebbe: si consuma il numero normale di razioni, il viaggio richiede più o meno quanto ci si aspettava, nessun pericolo ti coglie di sorpresa ma nemmeno tu cogli di sorpresa alcuno."
+      },
+      "COMMENT": {
+        "1": "Non puoi assegnare più di un compito allo stesso personaggio. Se non hai abbastanza membri nel gruppo scegli quali compiti assegnare e quali no: i compiti non assegnati falliscono automaticamente.",
+        "2": "In Dungeon World le distanze sono misurate in razioni di cibo. Una razione corrisponde alla quantità di cibo e acqua consumata in un giorno. I viaggi richiedono il consumo di razioni multiple quando sono lunghi o ti obbligano a procedere lentamente.",
+        "3": "Un Viaggio Pericoloso comprende l'intero tragitto fino a destinazione. Non tirare per ciascun giorno di cammino separatamente e non preoccuparti di Piantare le Tende ogni sera. Fa un unica serie di tiri per l'intero tragitto."
+      }
+    },
+    "CAROUSE": {
+      "NAME": "Fare Baldoria",
+      "TRIGGER": "Quando torni trionfante e organizzi una grande festa",
+      "EFFECT": "Spendi almeno 100 monete.",
+      "ROLL_MODIFIER": "1 per ogni 100 monete extra spese",
+      "RES": {
+        "10+": "Scegli 3 opzioni.",
+        "7-9": "Scegli 1 opzione.",
+        "6-": "Scegli comunque 1 opzione, ma le cose ti sfuggono decisamente di mano."
+      },
+      "DETAILS": "<ul><li>Fai amicizia con un PNG utile.</li><li>Ti giunge voce di una occasione.</li><li>Raccogli informazioni utili.</li><li>Non resti invischiato, ammaliato o ingannato.</li></ul>"
+    },
+    "SUPPLY": {
+      "NAME": "Fare Acquisti",
+      "TRIGGER": "Quando vai a comprare qualcosa, denaro alla mano",
+      "EFFECT": "Se cerchi un bene disponibile nell'insediamento in cui ti trovi compralo a prezzo di mercato. Se cerchi una cosa fuori dal normale, rara o difficilmente reperibile da queste parti, tira.",
+      "RES": {
+        "10+": "Trovi quello che cerchi a un prezzo onesto.",
+        "7-9": "Dovrai pagare profumatamente o accontentarti di una cosa simile ma non proprio all'altezza. Il GM ti dirà quali sono le alternative."
+      },
+      "DETAILS": "Se cerchi un bene ragionevolmente disponibile nell'insediamento in cui ti trovi compralo a prezzo di mercato senza tirare.<br/>Se cerchi una cosa fuori dal normale, rara o difficilmente reperibile da queste parti, tira come indicato."
+    },
+    "RECOVER": {
+      "NAME": "Recuperare le Forze",
+      "TRIGGER": "Quando non fai altro che riposare in un luogo confortevole e sicuro",
+      "EFFECT": "<ul><li>Dopo un giorno di riposo recuperi tutti i tuoi HP.</li><li>Dopo tre giorni di riposo rimuovi un'afflizione a scelta.</li><li>Se sei assistito da un guaritore (con o senza magia), rimuovi un'afflizione ogni due giorni.</li></ul>"
+    },
+    "BOLSTER": {
+      "NAME": "Prepararsi",
+      "TRIGGER": "Quando usi il tuo tempo libero per studiare, meditare o allenarti",
+      "EFFECT": "Ottieni Addestramento. Se ti prepari per almeno una settimana, ottieni 1 Addestramento. Se ti prepari per almeno un mese, ottieni 3 Addestramento.",
+      "DETAILS": "<b><i>Quando l'allenamento dà i suoi frutti</i></b> spendi 1 Addestramento e aggiungi +1 al tiro. Puoi spender al massimo 1 Addestramento per tiro."
+    },
+    "RECRUIT": {
+      "NAME": "Assoldare",
+      "TRIGGER": "Quando metti in giro la voce che cerchi reclute",
+      "EFFECT": ", spiega cosa cerchi e tira<ul><li>+1 se fai sapere che la paga è generosa</li><li>+1 se fai sapere qual'è la destinazione</li><li>+1 se sei disposto a dividere il bottino</li><li>+1 se hai una buona reputazione da queste parti</li></ul>",
+      "RES": {
+        "10+": "Si presenta un certo numero di candidati. Puoi scegliere chi assoldare senza penalità.",
+        "7-9": "I candidati non sono esattamente quello che cercavi ma ci vanno vicino. Devi accontentarti o mandarli via.",
+        "6-": "Un personaggio influente o inadeguato dichiara di volerti accompagnare (ad esempio: un giovane avventato, una testa calda, o un nemico sotto mentite spoglie). Prenditi la responsabilità di assoldarli o mandarli via."
+      },
+      "DETAILS": "Se rifiuti tutti i candidati, e non hai tirato 10+, prendi -1 al prossimo tiro di Assoldare."
+    },
+    "OUTSTANDING_WARRANTS": {
+      "NAME": "Conti in Sospeso",
+      "TRIGGER": "Quando torni in un insediamento nel quale hai causato problemi in passato",
+      "RES": {
+        "10+": "Si è sparsa voce dei tuoi misfatti e tutti ti riconoscono.",
+        "7-9": "Come sopra, ma il GM sceglie una complicazione:"
+      },
+      "DETAILS": "<ul><li>Le autorità locali hanno emesso un mandato d'arresto nei tuoi confronti.</li><li>Qualcuno ha messo una taglia sulla tua testa.</li><li>Una persona a te cara se la sta passando male a causa tua.</li></ul>"
+    }
+  }
+}
