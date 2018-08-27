@@ -1,29 +1,97 @@
 {
   "PAGE": {
     "HOME": {
-      "TITLE": "Dungeon World - Unchained"
+      "TITLE": "Dungeon World - Unchained",
+      "NAV": {
+        "PLAYER": "Giocatore",
+        "GM": "Game Master"
+      },
+      "ATTRIBUTION": {
+        "DW": "Basato su <a href=\"www.dungeon-world.com\">Dungeon World di Sage LaTorra e Adam Koebel</a>. Quest'opera è distribuita sotto la licenza Creative Commons Attribution 3.0 Unported License. Per vedere una copia della licenza, visita http://creativecommons.org/licenses/by/3.0/ o contatta a mezzo lettera Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA."
+      }
+    },
+    "PLAYER": {
+      "NAV": {
+        "INTRO": "Intro",
+        "BASIC_MOVES": "Mosse Base",
+        "SPECIAL_MOVES": "Mosse Speciali",
+        "PLAYBOOKS": "Playbooks",
+        "HERITAGES": "Retaggi"
+      }
     },
     "BASIC_MOVES": {
       "TITLE": "Mosse Base"
     },
     "SPECIAL_MOVES": {
       "TITLE": "Mosse Speciali"
+    },
+    "EQUIPMENT": {
+      "EQUIPMENT": "Equipaggiamento",
+      "WEAPONS": "Armi",
+      "ARMOR": "Armature"
     }
   },
   "TAG": {
     "BASEMOVE": "mossa base",
     "SPECIALMOVE": "mossa speciale",
     "PLAYERMOVE": "mossa del giocatore",
-    "UNCHAINED": "unchained"
+    "UNCHAINED": "unchained",
+    "HERITAGEMOVE": "mossa del retaggio",
+    "FIGHTER_STARTING": "mossa iniziale del guerriero",
+    "GEAR": {
+      "REACH_HAND": "misura stretta",
+      "REACH_CLOSE": "misura di affondo",
+      "REACH_LONG": "misura camminando",
+      "REACH_NEAR": "vicino",
+      "REACH_FAR": "lontano",
+      "PIERCING": "perforante {{value}}",
+      "PRECISE": "precisa",
+      "MESSY": "atroce",
+      "FORCEFUL": "dirompente",
+      "RELOAD": "ricarica",
+      "AMMO": "munizioni",
+      "THROWN": "lancio",
+      "WORN": "indossato",
+      "CLUMSY": "ingombrante",
+      "ARMOR": "armatura {{value}}",
+      "WEIGHT": "peso {{value}}",
+      "COIN": "{{value}} monete",
+      "APPLIED": "crudo",
+      "AWKWARD": "sbilanciato",
+      "DANGEROUS": "pericoloso",
+      "RATION": "diaria",
+      "SLOW": "lento",
+      "TOUCH": "contatto",
+      "TWOHANDED": "due mani",
+      "DAMAGE": "danno {{ sign }}{{ value }}"
+    }
   },
-  "ATTRIBUTE": {
-    "WIS": "Saggezza",
-    "INT": "Intelligenza",
-    "CHA": "Carisma",
-    "STR": "Forza",
-    "CON": "Costituzione",
-    "DEX": "Destrezza",
-    "BONDS": "Legami"
+  "CHARACTER": {
+    "ATTRIBUTE": {
+      "WIS": "Saggezza",
+      "INT": "Intelligenza",
+      "CHA": "Carisma",
+      "STR": "Forza",
+      "CON": "Costituzione",
+      "DEX": "Destrezza",
+      "BONDS": "Legami",
+      "LEVEL": "Livello",
+      "HERITAGE": "Retaggio",
+      "DAMAGE": "Danno",
+      "LOAD": "Carico",
+      "STARTING_MOVES": "Mosse iniziali",
+      "ADVANCED_MOVES": "Mosse avanzate",
+      "MAX_HP": "Max HP"
+    },
+    "CLASS": {
+      "FIGHTER": "Guerriero"
+    },
+    "ASPECT": {
+      "EYES": "occhi",
+      "HAIR": "capelli",
+      "SKIN": "pelle",
+      "BODY": "corporatura"
+    }
   },
   "MOVE": {
     "UI": {
@@ -43,7 +111,7 @@
       "NAME": "Discernere il Vero",
       "TRIGGER": "Quando esamini attentamente qualcosa o qualcuno",
       "EFFECT": "Prendi +1 al prossimo tiro quando sfrutti ciò che hai appreso.",
-      "RES":{
+      "RES": {
         "10+": "Fai al GM 3 domande dalla lista.",
         "7-9": "Fai al GM 1 domanda dalla lista."
       },
@@ -244,7 +312,7 @@
     "RECRUIT": {
       "NAME": "Assoldare",
       "TRIGGER": "Quando metti in giro la voce che cerchi reclute",
-      "EFFECT": ", spiega cosa cerchi e tira<ul><li>+1 se fai sapere che la paga è generosa</li><li>+1 se fai sapere qual'è la destinazione</li><li>+1 se sei disposto a dividere il bottino</li><li>+1 se hai una buona reputazione da queste parti</li></ul>",
+      "EFFECT": "spiega cosa cerchi e tira<ul><li>+1 se fai sapere che la paga è generosa</li><li>+1 se fai sapere qual'è la destinazione</li><li>+1 se sei disposto a dividere il bottino</li><li>+1 se hai una buona reputazione da queste parti</li></ul>",
       "RES": {
         "10+": "Si presenta un certo numero di candidati. Puoi scegliere chi assoldare senza penalità.",
         "7-9": "I candidati non sono esattamente quello che cercavi ma ci vanno vicino. Devi accontentarti o mandarli via.",
@@ -260,6 +328,140 @@
         "7-9": "Come sopra, ma il GM sceglie una complicazione:"
       },
       "DETAILS": "<ul><li>Le autorità locali hanno emesso un mandato d'arresto nei tuoi confronti.</li><li>Qualcuno ha messo una taglia sulla tua testa.</li><li>Una persona a te cara se la sta passando male a causa tua.</li></ul>"
+    },
+    "CLASS": {
+      "FIGHTER": {
+        "STARTING": {
+          "BBLG": {
+            "NAME": "Piegare Sbarre, Spezzare Catene",
+            "TRIGGER": "Quando impieghi la forza bruta per distruggere o rimuovere un oggetto inanimato",
+            "RES": {
+              "10+": "Scegli 3 opzioni.",
+              "7-9": "Scegli 1 opzione."
+            },
+            "DETAILS": "<ul><li>Non porta via molto tempo</li><li>Non vengono danneggiate cose di valore</li><li>Non fai un gran baccano</li><li>Puoi aggiustarlo in seguito senza troppi problemi</li></ul>"
+          },
+          "ARMORED": {
+            "NAME": "Corazzato",
+            "TRIGGER": "Quando indossi armature",
+            "EFFECT": "ne ignori l'etichetta <i>ingombrante</i>"
+          },
+          "SIGNATURE_WEAPON": {
+            "NAME": "Arma Caratteristica",
+            "EFFECT": "Questa è la tua arma. Magari altre le assomigliano, ma solo questa è la tua. È la tua compagna. È la tua vita. Cresce con a te. Senza di te, è inutile. Senza di essa, sei perso. Usala bene.",
+            "DETAILS": "<p>Scegli il tipo di arma (es: spada, ascia, martello, lancia, becco di corvo, guanto chiodato, catene a rasoio, etc).<br/>Scegli la sua misura: <i>misura stretta</i>, <i>misura allungo</i> o <i>misura camminando</i>.<br/>Di base, la tua arma ha peso 2.</p>Scegli 2 miglioramenti:<ul><li>Spuntoni o uncini. peso +1 e danno +1.</li><li>Affilata. <i>Perforante 2</i>.</li><li>Perfettamente bilanciata. <i>Precisa</i>.</li><li>Bordi seghettati. Danno +1.</li><li>Reagisce alla presenza di un tipo di creatura di tua scelta (es: vibra, rifulge di blu, si fredda, etc).</li><li>Enorme. Peso +2, <i>atroce</i> e <i>dirompente</i>.</li><li>Versatile. Scegli una portata aggiuntiva.</li><li>Ben costruita. Peso -1.</li></ul>"
+          }
+        }
+      }
+    },
+    "HERITAGE": {
+      "FOREST_ELF": {
+        "NAME": "Elfo delle Foreste",
+        "BLEND": "Svanire nella foresta",
+        "BALANCE": "Equilibrio prodigioso"
+      },
+      "MOUNTAIN_DWARF": {
+        "NAME": "Nano di Montagna",
+        "MASON": "Comprendere costruzioni in pietra",
+        "STANCE": "Rimanere saldo come una roccia"
+      },
+      "COUNTRYSIDE_HALFLING": {
+        "NAME": "Mezz'uomo Campagnolo",
+        "AVOID": "Passare inosservato alla gente alta",
+        "THROW": "Lanciare un oggetto con grande precisione"
+      },
+      "HALF_ORC": {
+        "NAME": "Mezz'Orco",
+        "FEARFUL": "Spaventare con un ruggito selvaggio",
+        "FITTEST": "Dare dimostrazione di forza e resistenza"
+      },
+      "WASTES_NOMAD": {
+        "NAME": "Nomade delle Terre Selvagge",
+        "SCAVENGE": "Rimediare cibo o riparo nelle terre selvagge",
+        "READ": "Trovare il punto debole di grandi prede"
+      },
+      "HEDGE_KNIGHT": {
+        "NAME": "Cavaliere Errante",
+        "REPAIRS": "Riparare equipaggiamento con mezzi di fortuna",
+        "INSPIRE": "Ispirare la gente comune"
+      }
+    }
+  },
+  "GEAR": {
+    "ARMOR_LEATHER": {
+      "NAME": "Armatura di cuoio"
+    },
+    "ARMOR_CHAIN": {
+      "NAME": "Cotta di maglia"
+    },
+    "ARMOR_SCALE": {
+      "NAME": "Armatura a scaglie"
+    },
+    "ARMOR_PLATE": {
+      "NAME": "Armatura di piastre"
+    },
+    "SHIELD": {
+      "NAME": "Scudo"
+    },
+    "BOW_RUGGED": {
+      "NAME": "Arco logoro"
+    },
+    "BOW_FINE": {
+      "NAME": "Arco pregiato"
+    },
+    "BOW_HUNTER": {
+      "NAME": "Arco del cacciatore"
+    },
+    "CROSSBOW": {
+      "NAME": "Balestra"
+    },
+    "ARROWS": {
+      "NAME": "Fascio di frecce"
+    },
+    "ARROWS_ELVEN": {
+      "NAME": "Fascio di frecce elfiche"
+    },
+    "CLUB": {
+      "NAME": "Randello"
+    },
+    "STAFF": {
+      "NAME": "Asta"
+    },
+    "DAGGER": {
+      "NAME": "Pugnale"
+    },
+    "DAGGER_THROWING": {
+      "NAME": "Coltello da lancio"
+    },
+    "SWORD_SHORT": {
+      "NAME": "Spada corta"
+    },
+    "AXE_HAND": {
+      "NAME": "Ascia"
+    },
+    "MACE": {
+      "NAME": "Mazza"
+    },
+    "SPEAR": {
+      "NAME": "Lancia"
+    },
+    "SWORD_LONG": {
+      "NAME": "Spada lunga"
+    },
+    "AXE_BATTLE": {
+      "NAME": "Ascia da guerra"
+    },
+    "FLAIL": {
+      "NAME": "Mazzafrusto"
+    },
+    "HALBERD": {
+      "NAME": "Alabarda"
+    },
+    "RAPIER": {
+      "NAME": "Striscia"
+    },
+    "ESTOC": {
+      "NAME": "Stocco"
     }
   }
 }

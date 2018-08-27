@@ -1,29 +1,97 @@
 {
   "PAGE": {
     "HOME": {
-      "TITLE": "Dungeon World - Unchained"
+      "TITLE": "Dungeon World - Unchained",
+      "NAV": {
+        "PLAYER": "Player",
+        "GM": "Game Master"
+      },
+      "ATTRIBUTION": {
+        "DW": "Based on <a href=\"www.dungeon-world.com\">the work of Sage LaTorra and Adam Koebel</a>. This work is licensed under the Creative Commons Attribution 3.0 Unported License. To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/ or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA."
+      }
+    },
+    "PLAYER": {
+      "NAV": {
+        "INTRO": "Intro",
+        "BASIC_MOVES": "Basic Moves",
+        "SPECIAL_MOVES": "Special Moves",
+        "PLAYBOOKS": "Playbooks",
+        "HERITAGES": "Heritages"
+      }
     },
     "BASIC_MOVES": {
       "TITLE": "Basic Moves"
     },
     "SPECIAL_MOVES": {
       "TITLE": "Special Moves"
+    },
+    "EQUIPMENT": {
+      "EQUIPMENT": "Equipment",
+      "WEAPONS": "Weapons",
+      "ARMOR": "Armor"
     }
   },
   "TAG": {
     "BASEMOVE": "base move",
     "SPECIALMOVE": "special move",
     "PLAYERMOVE": "player move",
-    "UNCHAINED": "unchained"
+    "UNCHAINED": "unchained",
+    "HERITAGEMOVE": "heritage move",
+    "FIGHTER_STARTING": "fighter starting move",
+    "GEAR": {
+      "REACH_HAND": "hand",
+      "REACH_CLOSE": "close",
+      "REACH_LONG": "reach",
+      "REACH_NEAR": "near",
+      "REACH_FAR": "far",
+      "PIERCING": "{{value}} piercing",
+      "PRECISE": "precise",
+      "MESSY": "messy",
+      "FORCEFUL": "forceful",
+      "RELOAD": "reload",
+      "AMMO": "ammo",
+      "THROWN": "thrown",
+      "WORN": "worn",
+      "CLUMSY": "clumsy",
+      "ARMOR": "{{value}} armor",
+      "WEIGHT": "{{value}} weight",
+      "COIN": "{{value}} coins",
+      "APPLIED": "applied",
+      "AWKWARD": "awkward",
+      "DANGEROUS": "dangerous",
+      "RATION": "ration",
+      "SLOW": "slow",
+      "TOUCH": "touch",
+      "TWOHANDED": "two-handed",
+      "DAMAGE": "{{ sign }}{{ value }} damage"
+    }
   },
-  "ATTRIBUTE": {
-    "WIS": "Wisdom",
-    "INT": "Intelligence",
-    "CHA": "Charisma",
-    "STR": "Strength",
-    "CON": "Constitution",
-    "DEX": "Dexterity",
-    "BONDS": "Bonds"
+  "CHARACTER": {
+    "ATTRIBUTE": {
+      "WIS": "Wisdom",
+      "INT": "Intelligence",
+      "CHA": "Charisma",
+      "STR": "Strength",
+      "CON": "Constitution",
+      "DEX": "Dexterity",
+      "BONDS": "Bonds",
+      "LEVEL": "Level",
+      "HERITAGE": "Heritage",
+      "DAMAGE": "Damage",
+      "LOAD": "Load",
+      "STARTING_MOVES": "Starting moves",
+      "ADVANCED_MOVES": "Advanced moves",
+      "MAX_HP": "Max HP"
+    },
+    "CLASS": {
+      "FIGHTER": "Fighter"
+    },
+    "ASPECT": {
+      "EYES": "eyes",
+      "HAIR": "hair",
+      "SKIN": "skin",
+      "BODY": "body"
+    }
   },
   "MOVE": {
     "UI": {
@@ -259,6 +327,140 @@
         "7-9": "As above, and the GM chooses a complication."
       },
       "DETAILS": "<ul><li>The local constabulary has a warrant out for your arrest.</li><li>Someone has put a price on your head.</li><li>Someone important to you has been put in a bad spot as a result of your actions.</li></ul>"
+    },
+    "CLASS": {
+      "FIGHTER": {
+        "STARTING": {
+          "BBLG": {
+            "NAME": "Bend Bars, Lift Gates",
+            "TRIGGER": "When you use pure strength to remove an inanimate obstacle",
+            "RES": {
+              "10+": "Choose 3.",
+              "7-9": "Choose 1."
+            },
+            "DETAILS": "<ul><li>It doesn’t take a very long time</li><li>Nothing of value is damaged</li><li>It doesn’t make an inordinate amount of noise</li><li>You can fix the thing again without a lot of effort</li></ul>"
+          },
+          "ARMORED": {
+            "NAME": "Armored",
+            "TRIGGER": "When you wear armor",
+            "EFFECT": "ignore the armor's <i>clumsy</i> tag"
+          },
+          "SIGNATURE_WEAPON": {
+            "NAME": "Signature Weapon",
+            "EFFECT": "This is your weapon. There may be others like it, but this one is yours. Your weapon is your best friend. It is your life. You master it as you master your life. Your weapon, without you, is useless. Without your weapon, you are useless. You must wield your weapon true.",
+            "DETAILS": "<p>Choose your weapon's type (ex: sword, axe, hammer, spear, spiked glove, razor chain, loop blade, etc).<br/>Choose its range: <i>hand</i>, <i>close</i> or <i>reach</i>.<br/>Your weapon's weigth starts at 2.</p>Choose 2 enhancements:<ul><li>Hooks or spikes. +1 weight and +1 damage.</li><li>Sharp. <i>2 piercing</i>.</li><li>Perfectly weighted. <i>Precise</i>.</li><li>Serrated edges. +1 damage.</li><li>Reacts to the presence of a type of creature of your choice (vibrates, glows blue, gets cold, etc).</li><li>Huge. +2 weight, <i>messy</i> and <i>forceful</i></li><li>Versatile. Choose one additional range.</li><li>Well-crafted. -1 weight.</li></ul>"
+          }
+        }
+      }
+    },
+    "HERITAGE": {
+      "FOREST_ELF": {
+        "NAME": "Forest Elf",
+        "BLEND": "Blend into the forest",
+        "BALANCE": "Balance with uncanny grace"
+      },
+      "MOUNTAIN_DWARF": {
+        "NAME": "Mountain Dwarf",
+        "MASON": "Understand stonework",
+        "STANCE": "Keep a rock solid stance"
+      },
+      "COUNTRYSIDE_HALFLING": {
+        "NAME": "Countryside Halfling",
+        "AVOID": "Avoid being noticed by tall people",
+        "THROW": "Throw something with great accuracy"
+      },
+      "HALF_ORC": {
+        "NAME": "Half Orc",
+        "FEARFUL": "Intimidate with a savage expression",
+        "FITTEST": "Pull a feat of strength and tenacity"
+      },
+      "WASTES_NOMAD": {
+        "NAME": "Nomad of the Wastes",
+        "SCAVENGE": "Scavenge for food or shelter in the wilds",
+        "READ": "See the weak spot on a big prey"
+      },
+      "HEDGE_KNIGHT": {
+        "NAME": "Hedge Knight",
+        "REPAIRS": "Make hasty repairs on your gear",
+        "INSPIRE": "Inspire peasants"
+      }
+    }
+  },
+  "GEAR": {
+    "ARMOR_LEATHER": {
+      "NAME": "Leather armor"
+    },
+    "ARMOR_CHAIN": {
+      "NAME": "Chainmail armor"
+    },
+    "ARMOR_SCALE": {
+      "NAME": "Scale armor"
+    },
+    "ARMOR_PLATE": {
+      "NAME": "Plate armor"
+    },
+    "SHIELD": {
+      "NAME": "Shield"
+    },
+    "BOW_RUGGED": {
+      "NAME": "Rugged bow"
+    },
+    "BOW_FINE": {
+      "NAME": "Fine bow"
+    },
+    "BOW_HUNTER": {
+      "NAME": "Hunter's bow"
+    },
+    "CROSSBOW": {
+      "NAME": "Crossbow"
+    },
+    "ARROWS": {
+      "NAME": "Bundle of arrows"
+    },
+    "ARROWS_ELVEN": {
+      "NAME": "Bundle of elven arrows"
+    },
+    "CLUB": {
+      "NAME": "Club"
+    },
+    "STAFF": {
+      "NAME": "Staff"
+    },
+    "DAGGER": {
+      "NAME": "Dagger"
+    },
+    "DAGGER_THROWING": {
+      "NAME": "Throwing knife"
+    },
+    "SWORD_SHORT": {
+      "NAME": "Short sword"
+    },
+    "AXE_HAND": {
+      "NAME": "Axe"
+    },
+    "MACE": {
+      "NAME": "Mace"
+    },
+    "SPEAR": {
+      "NAME": "Spear"
+    },
+    "SWORD_LONG": {
+      "NAME": "Longsword"
+    },
+    "AXE_BATTLE": {
+      "NAME": "Battleaxe"
+    },
+    "FLAIL": {
+      "NAME": "Flail"
+    },
+    "HALBERD": {
+      "NAME": "Halberd"
+    },
+    "RAPIER": {
+      "NAME": "Rapier"
+    },
+    "ESTOC": {
+      "NAME": "Estoc"
     }
   }
 }
