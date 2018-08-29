@@ -71,7 +71,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{ \"PAGE.HOME.TITLE\" | translate }}</h1>\n\n<div class=\"nav\">\n  <div class=\"lang\">\n    <button (click)=\"selectLanguage('it')\">IT</button>\n    <button (click)=\"selectLanguage('en')\">EN</button>\n  </div>\n  <a routerLink=\"player/intro\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.PLAYER\" | translate }}</a>\n  <a routerLink=\"dungeon-master\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.GM\" | translate }}</a>\n  <span class=\"separator\">.</span>\n</div>\n\n<div class=\"main\">\n  <router-outlet></router-outlet>\n</div>\n\n<div class=\"footer\">\n  <div class=\"attribution\" [innerHTML]=\"'PAGE.HOME.ATTRIBUTION.DW' | translate\"></div>\n</div>\n"
+module.exports = "<h1>{{ \"PAGE.HOME.TITLE\" | translate }}</h1>\n\n<div class=\"nav\">\n  <div class=\"lang\">\n    <button (click)=\"selectLanguage('it')\">IT</button>\n    <button (click)=\"selectLanguage('en')\">EN</button>\n  </div>\n  <a routerLink=\"player/intro\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.PLAYER\" | translate }}</a>\n  <a routerLink=\"dungeon-master\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.GM\" | translate }}</a>\n  <!-- <span class=\"separator\">.</span> -->\n</div>\n\n<div class=\"main\">\n  <router-outlet></router-outlet>\n</div>\n\n<div class=\"footer\">\n  <div class=\"attribution\" [innerHTML]=\"'PAGE.HOME.ATTRIBUTION.DW' | translate\"></div>\n</div>\n"
 
 /***/ }),
 
@@ -2163,17 +2163,17 @@ exports.HeritagesComponent = HeritagesComponent;
 
 /***/ }),
 
-/***/ "./src/app/player/intro/intro.component.css":
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
 /***/ "./src/app/player/intro/intro.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  intro works!\n</p>\n"
+module.exports = "<div class=\"rule-section\">\n  <h2>Cos'è Dungeon World - Unchained</h2>\n  <div>\n    <p>\n      Dungeon World - Unchained è un gioco di ruolo per 2 o più<a href=\"#fn1\" class=\"fn\">*</a> giocatori.\n      Per giocare servono questa app, carta e penna, un tavolo e delle sedie o un software di videochiamata.\n    </p>\n    <p>\n      Nella pratica, Dungeon World - Unchained è una conversazione.\n      I giocatori parlano tra loro delle caratteristiche, azioni ed emozioni di personaggi di loro invenzione.\n      Le regole del gioco intervengono nella conversazione tramite le Mosse.\n      Le Mosse aggiungono un pizzico di imprevedibilità tramite il tiro di dadi e rinforzano gli stereotipi del genere fantasy.\n    </p>\n    <p class=\"foot-note\" id=\"fn1\">\n      È consigliato limitare il numero di giocatori a 5-7 massimo per motivi pratici\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Come si gioca</h2>\n  <div>\n    <p>\n      Uno dei giocatori verrà scelto per fare il Game Master (abbreviato GM).\n      Ciascuno degli altri controllerà un personaggio protagonista (abbreviato PG).\n      Il GM si occuperà di guidare la conversazione e di gestire gli antagonisti.\n      È possibile, ma non obbligatorio, interpretare in modo teatrale i personaggi.\n      Incoraggiate sono invece descrizioni ricche di dettagli e dinamismo.\n    </p>\n    <p>\n      Dungeon World non ha un rigida struttura a turni.\n      I giocatori vorranno ricordare che ascoltare è una qualità preziosa in ogni conversazione.\n      Collaborare attivamente facendo domande, dando e accettando suggerimenti di solito porta buoni risultati.\n    </p>\n    <p>\n      Una tipica sessione di gioco si svolge così:\n    </p>\n    <ul style=\"list-style-type: decimal;\">\n      <li>Il GM descrive l'ambiente e la situazione in cui si trovano i PG.</li>\n      <li>Il GM chiede a tutti o alcuni giocatori: 'Cosa fai?'.</li>\n      <li>Il/I giocatori descrivono le azioni/reazioni dei propri PG.</li>\n      <li>Il GM indica se e quali Mosse sono state innescate.</li>\n      <li>Le Mosse innescate vengono risolte e i rispettivi risultati incorporati nella narrazione.</li>\n      <li>Ripeti dall'inizio.</li>\n    </ul>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Le Mosse</h2>\n  <div>\n    <p>\n      Una Mossa è fatta di pochi semplici elementi:\n    </p>\n    <ul style=\"list-style-type: decimal;\">\n      <li>Innesco</li>\n      <li>Tiro e Risoluzione</li>\n      <li>Effetto</li>\n    </ul>\n    <p>\n      Esempio: Negoziare<br/>\n      <i>\n        <b>Quando influenzi un personaggio del GM facendo leva su desideri o paure</b> (innesco),\n        tira+Carisma (tiro):<br/>\n        * 10+ Ti accontentarà se gli prometti di fare la tua parte. (risoluzione)<br/>\n        * 7-9 Ti accontenterà, ma vuole subito una prova tangibile che farai la tua parte. (risoluzione)<br/>\n        * 6- Il GM fa una Mossa a sua scelta.\n      </i>\n    </p>\n    <p>\n      L'<b>innesco</b> è una frase che descrive le circostanze in cui una Mossa interviene nella conversazione.\n      Non è possibile, tranne rare eccezioni, invocare l'uso di una Mossa direttamente.\n      La Mossa <i>Negoziare</i> è innescata quando un PG sta chiaramente cercando di ottenere qualcosa da un personaggio del GM\n      ed è disposto a promettere qualcosa in cambio o minaccia ripercussioni. Interagire con personaggi del GM senza cercare\n      attivamente di manipolarne il comportamente non innesca questa Mossa.\n    </p>\n    <p>\n      Alcune Mosse richiedono di fare un <b>tiro</b> di dadi.\n      Quando una Mossa dice <i>tira+X</i> il giocatore tira 2 dadi a 6 facce e somma il risultato dei due dadi al valore di <i>X</i>.\n      Di solito <i>X</i> è un attributo del PG, in questo caso il valore di <i>Carisma</i>.\n    </p>\n    <p>\n      Il meccanismo di <b>risoluzione</b> di un tiro di dadi è molto semplice.\n      Le opzioni elencate solitamente coprono i casi in cui il valore del tiro risulti essere:\n    </p>\n    <ul>\n      <li>Superiore a 10 (10+). In questo caso l'azione del PG è considerata un successo.</li>\n      <li>Compreso tra 7 e 9 (7-9). Il PG ottiene quello che voleva ma ci sono delle complicazioni.</li>\n      <li>\n        Uguale o inferiore a 6 (6-).\n        In genere il PG non ottiene quello che sperava e, in ogni caso, il GM fa una Mossa.\n        Molto spesso le Mosse non elencano questo risultato esplicitamente.\n      </li>\n    </ul>\n    <p>\n      La Mossa ha <b>effetto</b> quando il giocatore, aiutato dal GM, incorpora le indicazioni della risoluzione della Mossa nel contesto narrativo.\n      Che la Mossa abbia successo o meno, è imperativo fare in modo che le azioni dei PG abbiano conseguenze.\n      In mancanza di conseguenze dirette plausibili, specialmente in caso di 6-, il GM si occuperà di portare avanti la narrazioni per mezzo di una Mossa del GM.\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n    <h2>Mosse del GM</h2>\n    <div>\n      <p>\n        Le Mosse del GM sono un elenco di effetti da applicare direttamente al contesto narrativo.\n        Tuttavia queste Mosse non sono molto diverse dalle altre, hanno infatti un <b>innesco</b>:<br/>\n        <i><b>\n          Quando un giocatore tira un 6-,<br/>\n          Quando i giocatori guardano te per vedere cosa farai,<br/>\n          Quando si presenta un'occasione d'oro\n        </b></i>\n      </p>\n      <p>\n        Nessuna Mossa del GM prevede un <b>tiro</b> di dadi.\n      </p>\n      <p>\n        Il GM non dirà quale Mossa sta usando durante il gioco. Si limiterà ad applicarne l'<b>effetto</b>.\n      </p>\n    </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/player/intro/intro.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".rule-section h2 {\n  color: #FFF;\n  background: #000;\n  font-family: 'Marcellus SC';\n  font-size: 14px;\n  margin-bottom: 0px; }\n\n.rule-section > div {\n  -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n          box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n  background: rgba(255, 255, 255, 0.75);\n  padding: 4px 10px;\n  font-family: 'Roboto Condensed', sans-serif;\n  font-size: 15px; }\n\n.rule-section > div p {\n    margin: 0px 0px 10px; }\n\n.rule-section > div p a {\n      color: #000; }\n"
 
 /***/ }),
 
@@ -2202,7 +2202,7 @@ var IntroComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'app-intro',
             template: __webpack_require__("./src/app/player/intro/intro.component.html"),
-            styles: [__webpack_require__("./src/app/player/intro/intro.component.css")]
+            styles: [__webpack_require__("./src/app/player/intro/intro.component.scss")]
         }),
         __metadata("design:paramtypes", [])
     ], IntroComponent);
@@ -2296,7 +2296,7 @@ module.exports = "<div class=\"player nav\">\n  <a routerLink=\"intro\" routerLi
 /***/ "./src/app/player/player.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".player.nav {\n  display: block;\n  float: none;\n  padding: 9px 0px; }\n"
+module.exports = ".nav {\n  padding: 0px 25px 9px 25px; }\n"
 
 /***/ }),
 
