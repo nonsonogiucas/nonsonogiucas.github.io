@@ -63,7 +63,8 @@
       "SLOW": "slow",
       "TOUCH": "touch",
       "TWOHANDED": "two-handed",
-      "DAMAGE": "{{ sign }}{{ value }} damage"
+      "DAMAGE": "{{ sign }}{{ value }} damage",
+      "USES": "{{ value }} uses"
     }
   },
   "CHARACTER": {
@@ -461,6 +462,9 @@
     },
     "ESTOC": {
       "NAME": "Estoc"
+    },
+    "ADV_EQP": {
+      "NAME": "Adventuring Gear"
     }
   }
 }

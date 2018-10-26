@@ -574,8 +574,12 @@ var MoveDataService = /** @class */ (function (_super) {
     function MoveDataService() {
         return _super.call(this) || this;
     }
+    MoveDataService.prototype.findOneBySlug = function (slug) {
+        var result = this.findAll(function (move) { return move.slug == slug; });
+        return result.length ? result[0] : null;
+    };
     MoveDataService.prototype.findBySlug = function (slug) {
-        return this.findAll(function (move) { return move.slug == slug; });
+        return this.findAll(function (move) { return move.slug.indexOf(slug) == 0; });
     };
     MoveDataService.prototype.findByName = function (name) {
         return this.findAll(function (move) { return move.name == name; });
@@ -744,7 +748,7 @@ var InitBasicMovesService = /** @class */ (function () {
             i18nPrefix: "MOVE.AID_OR_INTERFERE.",
             name: "NAME",
             trigger: "TRIGGER",
-            rollModifier: "ROLL_MODIFIER",
+            rollModifier: "MOVE.AID_OR_INTERFERE.ROLL_MODIFIER",
             rollResultBreakdown: [
                 { range: "10+", effect: "RES.10+" },
                 { range: "7-9", effect: "RES.7-9" }
@@ -991,6 +995,8 @@ var InitGearDataService = /** @class */ (function () {
             this.piercingTag = this.tagDataService.findOneByName("TAG.GEAR.PIERCING");
             this.ammoTag = this.tagDataService.findOneByName("TAG.GEAR.AMMO");
             this.damageTag = this.tagDataService.findOneByName("TAG.GEAR.DAMAGE");
+            this.usesTag = this.tagDataService.findOneByName("TAG.GEAR.USES");
+            this.armorTag = this.tagDataService.findOneByName("TAG.GEAR.ARMOR");
         }
     };
     InitGearDataService.prototype._valueTag = function (value) {
@@ -1015,6 +1021,34 @@ var InitGearDataService = /** @class */ (function () {
     InitGearDataService.prototype._damage = function (d) {
         return Object.assign(this._valueTag(d), this.damageTag);
     };
+    InitGearDataService.prototype._uses = function (u) {
+        return Object.assign(this._valueTag(u), this.usesTag);
+    };
+    InitGearDataService.prototype._armor = function (a) {
+        return Object.assign(this._valueTag(a), this.armorTag);
+    };
+    InitGearDataService.prototype.initEquipment = function () {
+        this.init();
+        var awkward = this.tagDataService.findOneByName("TAG.GEAR.AWKWARD");
+        var dangerous = this.tagDataService.findOneByName("TAG.GEAR.DANGEROUS");
+        var slow = this.tagDataService.findOneByName("TAG.GEAR.SLOW");
+        var applied = this.tagDataService.findOneByName("TAG.GEAR.APPLIED");
+        var touch = this.tagDataService.findOneByName("TAG.GEAR.TOUCH");
+        var ration = this.tagDataService.findOneByName("TAG.GEAR.RATION");
+        var equipmentItem = this.tagDataService.findOneByName("TAG.GEAR.EQUIPMENT_ITEM");
+        this.gearDataService.insert({
+            slug: "shield",
+            name: "GEAR.ADV_EQP.NAME",
+            uses: 5,
+            description: "GEAR.ADV_EQP.DESC",
+            tags: [
+                equipmentItem,
+                this._uses(5),
+                this._weight(1),
+                this._coins(20)
+            ]
+        });
+    };
     InitGearDataService.prototype.initArmor = function () {
         this.init();
         var worn = this.tagDataService.findOneByName("TAG.GEAR.WORN");
@@ -1029,9 +1063,9 @@ var InitGearDataService = /** @class */ (function () {
             tags: [
                 armorItem,
                 worn,
-                Object.assign({ value: 1 }, armor),
-                Object.assign({ value: 1 }, weight),
-                Object.assign({ value: 10 }, coin)
+                this._armor(1),
+                this._weight(1),
+                this._coins(10)
             ]
         });
         this.gearDataService.insert({
@@ -1040,9 +1074,9 @@ var InitGearDataService = /** @class */ (function () {
             tags: [
                 armorItem,
                 worn,
-                Object.assign({ value: 1 }, armor),
-                Object.assign({ value: 1 }, weight),
-                Object.assign({ value: 10 }, coin)
+                this._armor(1),
+                this._weight(1),
+                this._coins(10)
             ]
         });
         this.gearDataService.insert({
@@ -1052,9 +1086,9 @@ var InitGearDataService = /** @class */ (function () {
                 armorItem,
                 worn,
                 clumsy,
-                Object.assign({ value: 2 }, armor),
-                Object.assign({ value: 3 }, weight),
-                Object.assign({ value: 50 }, coin)
+                this._armor(2),
+                this._weight(3),
+                this._coins(50)
             ]
         });
         this.gearDataService.insert({
@@ -1064,9 +1098,9 @@ var InitGearDataService = /** @class */ (function () {
                 armorItem,
                 worn,
                 clumsy,
-                Object.assign({ value: 3 }, armor),
-                Object.assign({ value: 4 }, weight),
-                Object.assign({ value: 350 }, coin)
+                this._armor(3),
+                this._weight(4),
+                this._coins(350)
             ]
         });
         this.gearDataService.insert({
@@ -1074,21 +1108,11 @@ var InitGearDataService = /** @class */ (function () {
             name: "GEAR.SHIELD.NAME",
             tags: [
                 armorItem,
-                Object.assign({ value: 1 }, armor),
-                Object.assign({ value: 2 }, weight),
-                Object.assign({ value: 15 }, coin)
+                this._armor(1),
+                this._weight(2),
+                this._coins(15)
             ]
         });
-    };
-    InitGearDataService.prototype.initEquipment = function () {
-        this.init();
-        var awkward = this.tagDataService.findOneByName("TAG.GEAR.AWKWARD");
-        var dangerous = this.tagDataService.findOneByName("TAG.GEAR.DANGEROUS");
-        var slow = this.tagDataService.findOneByName("TAG.GEAR.SLOW");
-        var applied = this.tagDataService.findOneByName("TAG.GEAR.APPLIED");
-        var touch = this.tagDataService.findOneByName("TAG.GEAR.TOUCH");
-        var ration = this.tagDataService.findOneByName("TAG.GEAR.RATION");
-        var equipmentItem = this.tagDataService.findOneByName("TAG.GEAR.EQUIPMENT_ITEM");
     };
     InitGearDataService.prototype.initWeapons = function () {
         this.init();
@@ -1565,7 +1589,7 @@ var InitSpecialMovesService = /** @class */ (function () {
             name: "NAME",
             trigger: "TRIGGER",
             effect: "EFFECT",
-            rollModifier: "ROLL_MODIFIER",
+            rollModifier: "MOVE.CAROUSE.ROLL_MODIFIER",
             rollResultBreakdown: [
                 { range: "10+", effect: "RES.10+" },
                 { range: "7-9", effect: "RES.7-9" },
@@ -1802,6 +1826,10 @@ var InitTagsService = /** @class */ (function () {
         this.tagData.insert({
             domain: "GEAR",
             name: "TAG.GEAR.PIERCING"
+        });
+        this.tagData.insert({
+            domain: "GEAR",
+            name: "TAG.GEAR.USES"
         });
     };
     InitTagsService = __decorate([
@@ -2166,7 +2194,7 @@ exports.HeritagesComponent = HeritagesComponent;
 /***/ "./src/app/player/intro/intro.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"rule-section\">\n  <h2>Cos'è Dungeon World - Unchained</h2>\n  <div>\n    <p>\n      Dungeon World - Unchained è un gioco di ruolo per 2 o più<a href=\"#fn1\" class=\"fn\">*</a> giocatori.\n      Per giocare servono questa app, carta e penna, un tavolo e delle sedie o un software di videochiamata.\n    </p>\n    <p>\n      Nella pratica, Dungeon World - Unchained è una conversazione.\n      I giocatori parlano tra loro delle caratteristiche, azioni ed emozioni di personaggi di loro invenzione.\n      Le regole del gioco intervengono nella conversazione tramite le Mosse.\n      Le Mosse aggiungono un pizzico di imprevedibilità tramite il tiro di dadi e rinforzano gli stereotipi del genere fantasy.\n    </p>\n    <p class=\"foot-note\" id=\"fn1\">\n      È consigliato limitare il numero di giocatori a 5-7 massimo per motivi pratici\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Come si gioca</h2>\n  <div>\n    <p>\n      Uno dei giocatori verrà scelto per fare il Game Master (abbreviato GM).\n      Ciascuno degli altri controllerà un personaggio protagonista (abbreviato PG).\n      Il GM si occuperà di guidare la conversazione e di gestire gli antagonisti.\n      È possibile, ma non obbligatorio, interpretare in modo teatrale i personaggi.\n      Incoraggiate sono invece descrizioni ricche di dettagli e dinamismo.\n    </p>\n    <p>\n      Dungeon World non ha un rigida struttura a turni.\n      I giocatori vorranno ricordare che ascoltare è una qualità preziosa in ogni conversazione.\n      Collaborare attivamente facendo domande, dando e accettando suggerimenti di solito porta buoni risultati.\n    </p>\n    <p>\n      Una tipica sessione di gioco si svolge così:\n    </p>\n    <ul style=\"list-style-type: decimal;\">\n      <li>Il GM descrive l'ambiente e la situazione in cui si trovano i PG.</li>\n      <li>Il GM chiede a tutti o alcuni giocatori: 'Cosa fai?'.</li>\n      <li>Il/I giocatori descrivono le azioni/reazioni dei propri PG.</li>\n      <li>Il GM indica se e quali Mosse sono state innescate.</li>\n      <li>Le Mosse innescate vengono risolte e i rispettivi risultati incorporati nella narrazione.</li>\n      <li>Ripeti dall'inizio.</li>\n    </ul>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Le Mosse</h2>\n  <div>\n    <p>\n      Una Mossa è fatta di pochi semplici elementi:\n    </p>\n    <ul style=\"list-style-type: decimal;\">\n      <li>Innesco</li>\n      <li>Tiro e Risoluzione</li>\n      <li>Effetto</li>\n    </ul>\n    <p>\n      Esempio: Negoziare<br/>\n      <i>\n        <b>Quando influenzi un personaggio del GM facendo leva su desideri o paure</b> (innesco),\n        tira+Carisma (tiro):<br/>\n        * 10+ Ti accontentarà se gli prometti di fare la tua parte. (risoluzione)<br/>\n        * 7-9 Ti accontenterà, ma vuole subito una prova tangibile che farai la tua parte. (risoluzione)<br/>\n        * 6- Il GM fa una Mossa a sua scelta.\n      </i>\n    </p>\n    <p>\n      L'<b>innesco</b> è una frase che descrive le circostanze in cui una Mossa interviene nella conversazione.\n      Non è possibile, tranne rare eccezioni, invocare l'uso di una Mossa direttamente.\n      La Mossa <i>Negoziare</i> è innescata quando un PG sta chiaramente cercando di ottenere qualcosa da un personaggio del GM\n      ed è disposto a promettere qualcosa in cambio o minaccia ripercussioni. Interagire con personaggi del GM senza cercare\n      attivamente di manipolarne il comportamente non innesca questa Mossa.\n    </p>\n    <p>\n      Alcune Mosse richiedono di fare un <b>tiro</b> di dadi.\n      Quando una Mossa dice <i>tira+X</i> il giocatore tira 2 dadi a 6 facce e somma il risultato dei due dadi al valore di <i>X</i>.\n      Di solito <i>X</i> è un attributo del PG, in questo caso il valore di <i>Carisma</i>.\n    </p>\n    <p>\n      Il meccanismo di <b>risoluzione</b> di un tiro di dadi è molto semplice.\n      Le opzioni elencate solitamente coprono i casi in cui il valore del tiro risulti essere:\n    </p>\n    <ul>\n      <li>Superiore a 10 (10+). In questo caso l'azione del PG è considerata un successo.</li>\n      <li>Compreso tra 7 e 9 (7-9). Il PG ottiene quello che voleva ma ci sono delle complicazioni.</li>\n      <li>\n        Uguale o inferiore a 6 (6-).\n        In genere il PG non ottiene quello che sperava e, in ogni caso, il GM fa una Mossa.\n        Molto spesso le Mosse non elencano questo risultato esplicitamente.\n      </li>\n    </ul>\n    <p>\n      La Mossa ha <b>effetto</b> quando il giocatore, aiutato dal GM, incorpora le indicazioni della risoluzione della Mossa nel contesto narrativo.\n      Che la Mossa abbia successo o meno, è imperativo fare in modo che le azioni dei PG abbiano conseguenze.\n      In mancanza di conseguenze dirette plausibili, specialmente in caso di 6-, il GM si occuperà di portare avanti la narrazioni per mezzo di una Mossa del GM.\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n    <h2>Mosse del GM</h2>\n    <div>\n      <p>\n        Le Mosse del GM sono un elenco di effetti da applicare direttamente al contesto narrativo.\n        Tuttavia queste Mosse non sono molto diverse dalle altre, hanno infatti un <b>innesco</b>:<br/>\n        <i><b>\n          Quando un giocatore tira un 6-,<br/>\n          Quando i giocatori guardano te per vedere cosa farai,<br/>\n          Quando si presenta un'occasione d'oro\n        </b></i>\n      </p>\n      <p>\n        Nessuna Mossa del GM prevede un <b>tiro</b> di dadi.\n      </p>\n      <p>\n        Il GM non dirà quale Mossa sta usando durante il gioco. Si limiterà ad applicarne l'<b>effetto</b>.\n      </p>\n    </div>\n</div>\n"
+module.exports = "<div class=\"rule-section\">\n  <h2>Cos'è Dungeon World - Unchained</h2>\n  <div>\n    <p>\n      Dungeon World - Unchained è un gioco di ruolo per 2 o più<a href=\"#fn1\" class=\"fn\">*</a> giocatori.\n      Per giocare servono questa app, carta e penna, un tavolo e delle sedie o un software di videochiamata.\n    </p>\n    <p>\n      Nella pratica, Dungeon World - Unchained è una conversazione.\n      I giocatori parlano tra loro delle caratteristiche, azioni ed emozioni di personaggi di loro invenzione.\n      Le regole del gioco intervengono nella conversazione tramite le Mosse.\n      Le Mosse aggiungono un pizzico di imprevedibilità tramite il tiro di dadi e rinforzano gli stereotipi del genere fantasy.\n    </p>\n    <p class=\"foot-note\" id=\"fn1\">\n      È consigliato limitare il numero di giocatori a 5-7 massimo per motivi pratici\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Terminologia</h2>\n  <div>\n    <p>\n      Dungeon World - Unchained serve a guidare la <b>Narrazione</b>, cioè l'attività di parlare di fatti e personaggi di fantasia.\n      Quando i giocatori interrompono la <b>Narrazione</b>, l'insieme delle cose dette può essere riassunto in una <b>Storia</b>.\n      Durante il gioco invece, mentre la <b>Narrazione</b> è in corso la <b>Storia</b> si chiama <b>Racconto</b>.\n      Al contrario della <b>Storia</b>, il <b>Racconto</b> è dinamico. Cresce e si trasforma con ogni frase pronunciata dai giocatori.\n    </p>\n    <p>\n      Se invece di giochi di ruolo parlassimo di scultura: il <b>Racconto</b> sarebbe l'<i>argilla</i>.\n      La <b>Narrazione</b> sarebbe l'attività di <i>modallare</i> l'argilla.\n      Quando si smette di modellare l'argilla e la si cuoce, la sua forma non può più essere modificata.\n      Lo stesso vale per la <b>Storia</b>.\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Come si gioca</h2>\n  <div>\n    <p>\n      Uno dei giocatori ricopre il ruolo di Game Master (abbreviato GM), in genere quello che conosce meglio le regole.\n      Ciascuno degli altri controlla direttamente un personaggio protagonista (abbreviato PG).\n      Il GM ha il compito di guidare la conversazione e di gestire gli antagonisti e i pericoli.\n      È possibile, ma non obbligatorio, interpretare in modo teatrale i personaggi.\n      Tutti sono incoraggiati a descrivere le azioni dei PG in modo dettagliato e dinamico.\n    </p>\n    <p>\n      Dungeon World non ha un rigida struttura a turni.\n      Come in ogni altra conversazione è essenziale saper ascoltare.\n      Altrettanto importante è collaborare attivamente facendo domande, dando e accettando suggerimenti.\n    </p>\n    <p>\n      Una tipica sessione di gioco si svolge così:\n    </p>\n    <ul style=\"list-style-type: decimal;\">\n      <li>Il GM descrive l'ambiente e la situazione in cui si trovano i PG.</li>\n      <li>Il GM chiede a tutti o alcuni giocatori: 'Cosa fai?'.</li>\n      <li>Il/I giocatori descrivono le azioni/reazioni dei propri PG.</li>\n      <li>Il GM indica se e quali Mosse sono state innescate.</li>\n      <li>Le Mosse innescate vengono risolte e i rispettivi risultati incorporati nella narrazione.</li>\n      <li>Ripeti dall'inizio.</li>\n    </ul>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n  <h2>Le Mosse</h2>\n  <div>\n    <p>\n      Una Mossa è fatta di pochi semplici elementi:\n    </p>\n    <ul style=\"list-style-type: decimal;\">\n      <li>Innesco</li>\n      <li>Tiro e Risoluzione</li>\n      <li>Effetto</li>\n    </ul>\n    <p>\n      Esempio:\n    </p>\n    <move-component [move]=\"parleyMove\" cardOnly=\"true\"></move-component>\n    <br/>\n    <p>\n      L'<b>innesco</b> (in grassetto) è una frase che descrive le circostanze in cui una Mossa interviene nella conversazione.\n      Non è possibile, tranne rare eccezioni, invocare l'uso di una Mossa direttamente.\n      La Mossa <i>Negoziare</i> è innescata quando un PG cerca di convincere un personaggio del GM\n      promettendogli qualcosa in cambio o minacciando ripercussioni. Interagire con personaggi del GM senza cercare\n      attivamente di manipolarne il comportamente non innesca <i>Negoziare</i>.\n    </p>\n    <p>\n      Alcune Mosse richiedono di fare un <b class=\"roll\">tiro</b> di dadi (testo in viola).\n      Se una Mossa dice <span class=\"roll\">tira+X</span> bisogna tirare 2 normali dadi a 6 facce e sommare il risultato a <b class=\"roll\">X</b>.\n      Di solito <b class=\"roll\">X</b> è un attributo del PG, in questo caso il valore di <b class=\"roll\">Carisma</b>.\n    </p>\n    <p>\n      Il meccanismo di <b>risoluzione</b> di un <b class=\"roll\">tiro</b> è molto semplice.\n      Basta trovare nella lista l'effetto corrispondente al valore totalizzato.\n      Gli effetti delle Mosse sono di norma suddivisi in 3:\n    </p>\n    <ul>\n      <li>10+. Se il totale è maggiore o pari a 10: l'azione del PG è considerata un successo.</li>\n      <li>7-9. Se il totale è 7, 8 o 9: il PG ottiene quello che voleva ma ci sono delle complicazioni.</li>\n      <li>6-. Se il totale è 6 o meno: in genere il PG non ottiene quello che sperava e, in ogni caso, il GM fa una Mossa.</li>\n    </ul>\n    <p>\n      Se una Mossa non elenca un effetto per il risultato <i>6-</i> è perchè da per scontato quanto scritto qui sopra.\n    </p>\n    <p>\n      La Mossa ha <b>effetto</b> quando il giocatore, aiutato dal GM, incorpora le indicazioni della risoluzione della Mossa nel contesto narrativo.\n      Che la Mossa abbia successo o meno, è imperativo fare in modo che le azioni dei PG abbiano conseguenze.\n      In mancanza di conseguenze dirette plausibili, specialmente in caso di 6-, il GM si occuperà di portare avanti la narrazioni per mezzo di una Mossa del GM.\n    </p>\n  </div>\n</div>\n\n<div class=\"rule-section\">\n    <h2>Mosse del GM</h2>\n    <div>\n      <p>\n        Le Mosse del GM sono un elenco di effetti da applicare direttamente al contesto narrativo.\n        Tuttavia queste Mosse non sono molto diverse dalle altre, hanno infatti un <b>innesco</b>:<br/>\n        <i><b>\n          Quando un giocatore tira un 6-,<br/>\n          Quando i giocatori guardano te per vedere cosa farai,<br/>\n          Quando si presenta un'occasione d'oro\n        </b></i>\n      </p>\n      <p>\n        Nessuna Mossa del GM prevede un <b>tiro</b> di dadi.\n      </p>\n      <p>\n        Il GM non dirà quale Mossa sta usando durante il gioco. Si limiterà ad applicarne l'<b>effetto</b>.\n      </p>\n    </div>\n</div>\n"
 
 /***/ }),
 
@@ -2193,10 +2221,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var move_data_service_1 = __webpack_require__("./src/app/data/move-data.service.ts");
 var IntroComponent = /** @class */ (function () {
-    function IntroComponent() {
+    function IntroComponent(moveData) {
+        this.moveData = moveData;
     }
     IntroComponent.prototype.ngOnInit = function () {
+        this.parleyMove = this.moveData.findOneBySlug("parley");
     };
     IntroComponent = __decorate([
         core_1.Component({
@@ -2204,7 +2235,7 @@ var IntroComponent = /** @class */ (function () {
             template: __webpack_require__("./src/app/player/intro/intro.component.html"),
             styles: [__webpack_require__("./src/app/player/intro/intro.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [move_data_service_1.MoveDataService])
     ], IntroComponent);
     return IntroComponent;
 }());
@@ -2462,14 +2493,14 @@ exports.SpecialMovesComponent = SpecialMovesComponent;
 /***/ "./src/app/shared/gear-stack/gear.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"gear-stack\">\n  <span class=\"item-name\">{{ stack.item.name | translate }}</span>\n  <span *ngIf=\"stack.size > 1\" class=\"stack-size\">x{{ stack.size }}</span>\n  <div class=\"item-tags\" *ngIf=\"showTags\">\n    <span class=\"tag\" *ngFor=\"let tag of tags; last as isLast; first as isFirst\"><span *ngIf=\"isFirst\">( </span><tag-component [tag]=\"tag\"></tag-component><span *ngIf=\"!isLast\">, </span><span *ngIf=\"isLast\">)</span></span>\n  </div>\n</div>\n"
+module.exports = "<div class=\"gear-stack\">\n  <span class=\"item-name\">{{ stack.item.name | translate }}</span>\n  <span *ngIf=\"stack.size > 1\" class=\"stack-size\">x{{ stack.size }}</span>\n  <div class=\"item-tags\" *ngIf=\"showTags\">\n    <span class=\"tag\" *ngFor=\"let tag of tags; last as isLast; first as isFirst\"><span *ngIf=\"isFirst\">( </span><tag-component [tag]=\"tag\"></tag-component><span *ngIf=\"!isLast\">, </span><span *ngIf=\"isLast\">)</span></span>\n  </div>\n  <div *ngIf=\"stack.item.description\" class=\"description\" [innerHTML]=\"stack.item.description | translate\"></div>\n</div>\n"
 
 /***/ }),
 
 /***/ "./src/app/shared/gear-stack/gear.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".gear-stack {\n  font-family: 'Roboto Condensed', sans-serif;\n  font-size: 14px; }\n  .gear-stack .item-tags {\n    display: inline-block; }\n  .gear-stack .item-tags .tag {\n      margin-left: 5px;\n      font-size: 12px;\n      font-style: italic;\n      color: #333;\n      font-family: 'Roboto Condensed', sans-serif; }\n  .gear-stack .item-tags .tag span {\n        display: inline-block; }\n"
+module.exports = ".gear-stack {\n  font-family: 'Roboto Condensed', sans-serif;\n  font-size: 14px; }\n  .gear-stack .item-tags {\n    display: inline-block; }\n  .gear-stack .item-tags .tag {\n      margin-left: 5px;\n      font-size: 12px;\n      font-style: italic;\n      color: #333;\n      font-family: 'Roboto Condensed', sans-serif; }\n  .gear-stack .item-tags .tag span {\n        display: inline-block; }\n  .gear-stack .description {\n    padding: 3px 0 5px 15px;\n    color: #666;\n    font-style: italic; }\n"
 
 /***/ }),
 
@@ -2594,7 +2625,7 @@ module.exports = "<div *ngIf=\"nameOnly\" class=\"move-name\">\n  <div class=\"m
 /***/ "./src/app/shared/move-detail/move-detail.component.scss":
 /***/ (function(module, exports) {
 
-module.exports = ".move-name {\n  color: black;\n  font-family: 'Marcellus SC';\n  font-size: 14px; }\n\n.move-detail {\n  margin: 10px 3px 3px;\n  font-family: 'Roboto Condensed', sans-serif; }\n\n.move-detail .rules {\n    background: transparent; }\n\n.move-detail .move-card {\n    -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n            box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n    background: rgba(255, 255, 255, 0.75); }\n\n.move-detail .move-card .name {\n      padding: 4px 10px;\n      font-size: 17px;\n      font-weight: normal;\n      background: black;\n      color: white;\n      font-family: 'Marcellus SC'; }\n\n.move-detail .move-card .name a {\n        color: white; }\n\n.move-detail .move-card .name a:hover {\n          color: #D1D1D1; }\n\n.move-detail .move-card .name .tags {\n        margin-left: 5px;\n        font-size: 12px;\n        font-style: italic;\n        color: silver;\n        font-family: 'Roboto Condensed', sans-serif; }\n\n.move-detail .move-card .body {\n      padding: 10px; }\n\n.move-detail .move-card .body .trigger {\n        font-style: italic;\n        font-weight: bold; }\n\n.move-detail .move-card .body .roll {\n        color: #7000AA;\n        font-weight: bold; }\n\n.move-detail .move-card .body .result-breakdown {\n        list-style-type: none;\n        padding-left: 22px;\n        margin: 3px 0; }\n\n.move-detail .move-card .body .result-breakdown .result-breakdown-item {\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-orient: horizontal;\n          -webkit-box-direction: normal;\n              -ms-flex-direction: row;\n                  flex-direction: row; }\n\n.move-detail .move-card .body .result-breakdown .result-breakdown-item .result-range {\n            -webkit-box-flex: 0;\n                -ms-flex: 0 0 25px;\n                    flex: 0 0 25px;\n            padding-right: 3px;\n            display: inline-block;\n            font-weight: bold;\n            text-align: right; }\n\n.move-detail .move-card .body .result-breakdown .result-breakdown-item .result-effect {\n            -webkit-box-flex: 1;\n                -ms-flex: 1 1 auto;\n                    flex: 1 1 auto;\n            vertical-align: middle; }\n\n.move-detail .comments {\n    margin-top: 25px; }\n\n.move-detail .comment {\n    -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n            box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n    padding: 10px;\n    margin-bottom: 5px;\n    background: rgba(255, 255, 255, 0.75); }\n"
+module.exports = ".move-name {\n  color: black;\n  font-family: 'Marcellus SC';\n  font-size: 14px; }\n\n.move-detail {\n  margin: 10px 3px 3px;\n  font-family: 'Roboto Condensed', sans-serif; }\n\n.move-detail .rules {\n    background: transparent; }\n\n.move-detail .move-card {\n    -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n            box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n    background: rgba(255, 255, 255, 0.75); }\n\n.move-detail .move-card .name {\n      padding: 4px 10px;\n      font-size: 17px;\n      font-weight: normal;\n      background: black;\n      color: white;\n      font-family: 'Marcellus SC'; }\n\n.move-detail .move-card .name a {\n        color: white; }\n\n.move-detail .move-card .name a:hover {\n          color: #D1D1D1; }\n\n.move-detail .move-card .name .tags {\n        margin-left: 5px;\n        font-size: 12px;\n        font-style: italic;\n        color: silver;\n        font-family: 'Roboto Condensed', sans-serif; }\n\n.move-detail .move-card .body {\n      padding: 10px; }\n\n.move-detail .move-card .body .result-breakdown {\n        list-style-type: none;\n        padding-left: 22px;\n        margin: 3px 0; }\n\n.move-detail .move-card .body .result-breakdown .result-breakdown-item {\n          display: -webkit-box;\n          display: -ms-flexbox;\n          display: flex;\n          -webkit-box-orient: horizontal;\n          -webkit-box-direction: normal;\n              -ms-flex-direction: row;\n                  flex-direction: row; }\n\n.move-detail .move-card .body .result-breakdown .result-breakdown-item .result-range {\n            -webkit-box-flex: 0;\n                -ms-flex: 0 0 25px;\n                    flex: 0 0 25px;\n            padding-right: 3px;\n            display: inline-block;\n            font-weight: bold;\n            text-align: right; }\n\n.move-detail .move-card .body .result-breakdown .result-breakdown-item .result-effect {\n            -webkit-box-flex: 1;\n                -ms-flex: 1 1 auto;\n                    flex: 1 1 auto;\n            vertical-align: middle; }\n\n.move-detail .comments {\n    margin-top: 25px; }\n\n.move-detail .comment {\n    -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n            box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n    padding: 10px;\n    margin-bottom: 5px;\n    background: rgba(255, 255, 255, 0.75); }\n"
 
 /***/ }),
 

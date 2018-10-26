@@ -16,7 +16,8 @@
         "BASIC_MOVES": "Mosse Base",
         "SPECIAL_MOVES": "Mosse Speciali",
         "PLAYBOOKS": "Playbooks",
-        "HERITAGES": "Retaggi"
+        "HERITAGES": "Retaggi",
+        "EQUIPMENT": "Equipaggiamento"
       }
     },
     "BASIC_MOVES": {
@@ -63,7 +64,8 @@
       "SLOW": "lento",
       "TOUCH": "contatto",
       "TWOHANDED": "due mani",
-      "DAMAGE": "danno {{ sign }}{{ value }}"
+      "DAMAGE": "danno {{ sign }}{{ value }}",
+      "USES": "{{ value }} usi"
     }
   },
   "CHARACTER": {
@@ -81,7 +83,8 @@
       "LOAD": "Carico",
       "STARTING_MOVES": "Mosse iniziali",
       "ADVANCED_MOVES": "Mosse avanzate",
-      "MAX_HP": "Max HP"
+      "MAX_HP": "Max HP",
+      "STARTING_GEAR": "Equipaggiamento Base"
     },
     "CLASS": {
       "FIGHTER": "Guerriero"
@@ -462,6 +465,10 @@
     },
     "ESTOC": {
       "NAME": "Stocco"
+    },
+    "ADV_EQP": {
+      "NAME": "Attrezzatura da Esplorazione",
+      "DESC": "L'attrezzatura da esplorazione è una set di oggetti facilmente reperibili come torce, acciarino, corda, sacco a pelo, rampino, ecc... <b>Quando frughi nel tuo bagaglio per cercare l'oggetto di cui hai bisogno</b>, ce l'hai: segnalo sulla tua scheda e spendi un utilizzo."
     }
   }
 }
