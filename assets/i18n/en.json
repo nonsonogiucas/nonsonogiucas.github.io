@@ -19,6 +19,11 @@
         "HERITAGES": "Heritages"
       }
     },
+    "MASTER": {
+      "NAV": {
+        "GEN": "Generators"
+      }
+    },
     "BASIC_MOVES": {
       "TITLE": "Basic Moves"
     },

@@ -71,7 +71,7 @@ module.exports = ""
 /***/ "./src/app/app.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h1>{{ \"PAGE.HOME.TITLE\" | translate }}</h1>\n\n<div class=\"nav\">\n  <div class=\"lang\">\n    <button (click)=\"selectLanguage('it')\">IT</button>\n    <button (click)=\"selectLanguage('en')\">EN</button>\n  </div>\n  <a routerLink=\"player/intro\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.PLAYER\" | translate }}</a>\n  <a routerLink=\"dungeon-master\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.GM\" | translate }}</a>\n  <!-- <span class=\"separator\">.</span> -->\n</div>\n\n<div class=\"main\">\n  <router-outlet></router-outlet>\n</div>\n\n<div class=\"footer\">\n  <div class=\"attribution\" [innerHTML]=\"'PAGE.HOME.ATTRIBUTION.DW' | translate\"></div>\n</div>\n"
+module.exports = "<h1>{{ \"PAGE.HOME.TITLE\" | translate }}</h1>\n\n<div class=\"nav\">\n  <div class=\"lang\">\n    <button (click)=\"selectLanguage('it')\">IT</button>\n    <button (click)=\"selectLanguage('en')\">EN</button>\n  </div>\n  <a routerLink=\"player/intro\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.PLAYER\" | translate }}</a>\n  <a routerLink=\"master\" routerLinkActive=\"active\">{{ \"PAGE.HOME.NAV.GM\" | translate }}</a>\n  <!-- <span class=\"separator\">.</span> -->\n</div>\n\n<div class=\"main\">\n  <router-outlet></router-outlet>\n</div>\n\n<div class=\"footer\">\n  <div class=\"attribution\" [innerHTML]=\"'PAGE.HOME.ATTRIBUTION.DW' | translate\"></div>\n</div>\n"
 
 /***/ }),
 
@@ -194,6 +194,7 @@ var init_tags_service_1 = __webpack_require__("./src/app/init-data/init-tags.ser
 var init_fighter_class_service_1 = __webpack_require__("./src/app/init-data/init-fighter-class.service.ts");
 var init_heritage_data_service_1 = __webpack_require__("./src/app/init-data/init-heritage-data.service.ts");
 var init_gear_data_service_1 = __webpack_require__("./src/app/init-data/init-gear-data.service.ts");
+var master_module_1 = __webpack_require__("./src/app/master/master.module.ts");
 function HttpLoaderFactory(http) {
     return new http_loader_1.TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
@@ -224,7 +225,8 @@ var AppModule = /** @class */ (function () {
                 app_routing_module_1.AppRoutingModule,
                 player_module_1.PlayerModule,
                 data_module_1.DataModule,
-                shared_module_1.SharedModule
+                shared_module_1.SharedModule,
+                master_module_1.MasterModule
             ],
             providers: [init_basic_moves_service_1.InitBasicMovesService, init_special_moves_service_1.InitSpecialMovesService, init_tags_service_1.InitTagsService, init_fighter_class_service_1.InitFighterClassService, init_heritage_data_service_1.InitHeritageDataService, init_gear_data_service_1.InitGearDataService],
             bootstrap: [app_component_1.AppComponent]
@@ -1839,6 +1841,1225 @@ var InitTagsService = /** @class */ (function () {
     return InitTagsService;
 }());
 exports.InitTagsService = InitTagsService;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/basic-generators/basic-generators.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<h4>Cryptic Quote</h4>\n<div class=\"list\">\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div innerHTML=\"{{crypticQuote}}\"></div>\n  </div>\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n</div>\n\n<h4>Random Duration</h4>\n<div class=\"list\">\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of durationRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/master/generators/basic-generators/basic-generators.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".list {\n  -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n          box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n  background: rgba(255, 255, 255, 0.75);\n  padding: 15px;\n  margin-bottom: 15px; }\n  .list .even {\n    background: rgba(0, 0, 0, 0.1); }\n  .list .rolls {\n    margin: 10px 0; }\n  .list .rolls > div {\n      padding: 3px 0; }\n"
+
+/***/ }),
+
+/***/ "./src/app/master/generators/basic-generators/basic-generators.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var BasicTables_class_1 = __webpack_require__("./src/app/master/generators/tables/BasicTables.class.ts");
+var random_tables_service_1 = __webpack_require__("./src/app/master/generators/tables/random-tables.service.ts");
+var QuotesTables_class_1 = __webpack_require__("./src/app/master/generators/tables/QuotesTables.class.ts");
+var BasicGeneratorsComponent = /** @class */ (function () {
+    function BasicGeneratorsComponent() {
+    }
+    BasicGeneratorsComponent.prototype.ngOnInit = function () {
+        this.rollDurations();
+    };
+    BasicGeneratorsComponent.prototype.rollDurations = function () {
+        var durationTable = BasicTables_class_1.BasicTables.DURATION;
+        this.durationRolls = [];
+        for (var _i = 0, durationTable_1 = durationTable; _i < durationTable_1.length; _i++) {
+            var entry = durationTable_1[_i];
+            this.durationRolls.push(random_tables_service_1.RandomTablesService.eval(entry[1], {
+                "@tables": BasicTables_class_1.BasicTables
+            }));
+        }
+    };
+    BasicGeneratorsComponent.prototype.rollCrypticQuotes = function () {
+        var crypticQuote_1 = QuotesTables_class_1.QuotesTables.QUOTE[0][1];
+        this.crypticQuote = random_tables_service_1.RandomTablesService.eval(crypticQuote_1, {
+            "@tables": QuotesTables_class_1.QuotesTables
+        });
+    };
+    BasicGeneratorsComponent = __decorate([
+        core_1.Component({
+            selector: 'app-basic-generators',
+            template: __webpack_require__("./src/app/master/generators/basic-generators/basic-generators.component.html"),
+            styles: [__webpack_require__("./src/app/master/generators/basic-generators/basic-generators.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], BasicGeneratorsComponent);
+    return BasicGeneratorsComponent;
+}());
+exports.BasicGeneratorsComponent = BasicGeneratorsComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/generator.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"generatorsLayout\">\n  <div class=\"nav\">\n    <a routerLink=\"test\" routerLinkActive=\"active\">Examples</a>\n    <a routerLink=\"basic\" routerLinkActive=\"active\">Basic Tables</a>\n  </div>\n  <div class=\"main\">\n    <router-outlet></router-outlet>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/master/generators/generator.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".generatorsLayout .nav {\n  margin: 5px 0 15px;\n  background: black;\n  color: white; }\n"
+
+/***/ }),
+
+/***/ "./src/app/master/generators/generator.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var GeneratorComponent = /** @class */ (function () {
+    function GeneratorComponent() {
+    }
+    GeneratorComponent.prototype.ngOnInit = function () {
+    };
+    GeneratorComponent = __decorate([
+        core_1.Component({
+            selector: 'app-generator',
+            template: __webpack_require__("./src/app/master/generators/generator.component.html"),
+            styles: [__webpack_require__("./src/app/master/generators/generator.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], GeneratorComponent);
+    return GeneratorComponent;
+}());
+exports.GeneratorComponent = GeneratorComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/generators.module.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var generator_component_1 = __webpack_require__("./src/app/master/generators/generator.component.ts");
+var random_tables_service_1 = __webpack_require__("./src/app/master/generators/tables/random-tables.service.ts");
+var basic_generators_component_1 = __webpack_require__("./src/app/master/generators/basic-generators/basic-generators.component.ts");
+var shared_module_1 = __webpack_require__("./src/app/shared/shared.module.ts");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var GeneratorsModule = /** @class */ (function () {
+    function GeneratorsModule() {
+    }
+    GeneratorsModule = __decorate([
+        core_1.NgModule({
+            imports: [
+                common_1.CommonModule,
+                shared_module_1.SharedModule,
+                router_1.RouterModule
+            ],
+            declarations: [generator_component_1.GeneratorComponent, basic_generators_component_1.BasicGeneratorsComponent],
+            providers: [random_tables_service_1.RandomTablesService]
+        })
+    ], GeneratorsModule);
+    return GeneratorsModule;
+}());
+exports.GeneratorsModule = GeneratorsModule;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/tables/BasicTables.class.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var BasicTables = /** @class */ (function () {
+    function BasicTables() {
+    }
+    BasicTables.DURATION = [
+        ["sec ltday", "per {$r=1d6} second{$r>1?'i':'o'}"],
+        ["sec ltday", "per {$r=6d10} second{$r>1?'i':'o'}"],
+        ["min ltday", "per {$r=1d6} minut{$r>1?'i':'o'}"],
+        ["min ltday", "per {$r=6d10} minut{$r>1?'i':'o'}"],
+        ["hr ltday", "per {$r=1d6} or{$r>1?'e':'a'}"],
+        ["var ltday", "fino a mezzogiorno"],
+        ["var ltday", "fino a mezzanotte"],
+        ["var ltday", "fino al tramonto"],
+        ["var ltday", "fino all\'alba"],
+        ["hr", "per {2d20} ore"],
+        ["day gtday", "per {1d6} giorni"],
+        ["day gtday", "per {1d20} giorni"],
+        ["var gtday", "fino a {[:WEEKDAY]}"],
+        ["var gtday", "fino alla prossima luna {[:MOON_PHASE]}"],
+        ["week gtweek", "per {$r=1d4} settiman{$r>1?'e':'a'}"],
+        ["month gtweek", "per {$r=1d4} mes{$r>1?'i':'e'}"],
+        ["var gtmonth", "fino al prossimo {[:SPECIAL_DAY]}"],
+        ["var gtmonth", "fino {#$r=1d4-1}al{$r<2?'la':''} prossim{$r<2?'a':'o'} {[$r:SEASON]}"]
+    ];
+    BasicTables.WEEKDAY = [
+        ["", "lunedì"],
+        ["", "martedì"],
+        ["", "mercoledì"],
+        ["", "giovedì"],
+        ["", "venerdì"],
+        ["", "sabato"],
+        ["", "domenica"],
+    ];
+    BasicTables.MOON_PHASE = [
+        ["", "piena"],
+        ["", "nuova"]
+    ];
+    BasicTables.SEASON = [
+        ["", "primavera"],
+        ["", "estate"],
+        ["", "autunno"],
+        ["", "inverno"]
+    ];
+    BasicTables.SPECIAL_DAY = [
+        ["", "solstizio"],
+        ["", "equinozio"],
+        ["", "solstizio ({#$s=d[1,3]}{[$s:SEASON]})"],
+        ["", "equinozio ({#$s=d[0,2]}{[$s:SEASON]})"]
+    ];
+    return BasicTables;
+}());
+exports.BasicTables = BasicTables;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/tables/QuotesTables.class.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var QuotesTables = /** @class */ (function () {
+    function QuotesTables() {
+    }
+    QuotesTables.QUOTE = [
+        // Frammenti di sogni che sembrano lontani ricordi
+        // Lontani ricordi che sembrano frammenti di sogni
+        // Voglio mettere in fila i pezzi, i tuoi ed i miei
+        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[$sp:COMPLICATED]} che {[:SIMILITUDE]}{$sproll>1?'no':''} {$chain=[$sp:COMPLICATED]}, <br/>"
+                + "{$chain} che {[:SIMILITUDE]}{$sproll>1?'no':''} {[$sp:COMPLICATED]}. <br/>"
+                + "{[:WILL]} {[:ACTION]}"],
+    ];
+    QuotesTables.SIMILITUDE = [
+        ["", "ricorda"],
+        ["", "sembra"],
+        ["", "rievoca"],
+        ["", "trasporta"],
+        ["", "accompagna"],
+        ["", "lega"],
+    ];
+    QuotesTables.COMPLICATED = [
+        ["sing", "un frammento di {['sing':CONCEPT]}"],
+        ["sing", "un {['sing':CONCEPT]} lontano"],
+        ["sing", "un {['sing':CONCEPT]} perduto"],
+        ["sing", "il ricordo di {['sing':CONCEPT]} perduto"],
+        ["sing", "un {['sing':CONCEPT]} nebuloso"],
+        ["sing", "un {['sing':CONCEPT]} arcano"],
+        ["sing", "un dolce {['sing':CONCEPT]}"],
+        ["plu", "frammenti di {['':CONCEPT]}"],
+        ["plu", "{['plu':CONCEPT]} lontani"],
+        ["plu", "{['plu':CONCEPT]} perduti"],
+        ["plu", "ricordi di {['plu':CONCEPT]} perduti"],
+        ["plu", "{['plu':CONCEPT]} nebuolsi"],
+        ["plu", "{['plu':CONCEPT]} arcani"],
+        ["plu", "dolci {['plu':CONCEPT]}"],
+    ];
+    QuotesTables.CONCEPT = [
+        ["sing", "sogno"],
+        ["sing", "sentimento"],
+        ["sing", "amore"],
+        ["sing", "simbolo"],
+        ["sing", "futuro"],
+        ["sing", "passato"],
+        ["sing", "equilibrio"],
+        ["sing", "controllo"],
+        ["sing", "mondo"],
+        ["sing", "universo"],
+        ["plu", "sogni"],
+        ["plu", "sentimenti"],
+        ["plu", "simboli"],
+        ["plu", "mondi"]
+    ];
+    QuotesTables.WILL = [
+        ["", "voglio"],
+        ["", "devo"],
+        ["", "devi"],
+        ["", "devo cercare di"],
+        ["", "devi cercare di"],
+        ["", "sforziamoci di"],
+        ["", "presto, devi"],
+        ["", "lotteremo per"],
+        ["", "lotterò per"],
+        ["", "la sfida è "],
+    ];
+    QuotesTables.ACTION = [
+        ["", "allineare i {['plu':CONCEPT]}"],
+        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
+        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
+        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
+        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
+        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"]
+    ];
+    QuotesTables.VERB = [
+        ["", "ricordare"],
+        ["", "trovare"],
+        ["", "capire"],
+        ["", "salvare"],
+        ["", "realizzare"],
+        ["", "immaginare"],
+        ["", "vincere"],
+        ["", "equilibrare"],
+        ["", "esaudire"]
+    ];
+    return QuotesTables;
+}());
+exports.QuotesTables = QuotesTables;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/tables/random-tables.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var RandomTablesService = /** @class */ (function () {
+    function RandomTablesService() {
+    }
+    RandomTablesService.eval = function (sentence, context) {
+        var _this = this;
+        if (context === undefined) {
+            context = {};
+        }
+        if (context['@listIndex'] === undefined) {
+            context['@listIndex'] = 1;
+        }
+        if (context['@tables'] === undefined) {
+            context['@tables'] = {};
+        }
+        console.log("------------- BEGIN -------------");
+        if (this.CMD_REGEX.test(sentence)) {
+            var sentence = sentence.replace(this.CMD_REGEX, function (sub, silent, cmd) {
+                var replace = _this.execCmd(cmd, context);
+                return silent ? "" : replace;
+            });
+        }
+        console.log("------------- END -------------");
+        return sentence;
+    };
+    RandomTablesService.execCmd = function (cmd, context) {
+        var _this = this;
+        console.log("Command", cmd);
+        if (this.ASSIGN_REGEX.test(cmd)) {
+            var a = this.ASSIGN_REGEX.exec(cmd);
+            console.log("Assign ", a[1], " = ", a[2]);
+            return context[a[1]] = this.execCmd(a[2], context);
+        }
+        else {
+            // Replace all variables with values
+            cmd = cmd.replace(this.VAR_REGEX, function (sub, varName, idx) {
+                var value = context[varName];
+                console.log("Variable", sub, varName, value);
+                if (value === undefined) {
+                    return sub;
+                }
+                else if (typeof value === "string") {
+                    return ["'", value, "'"].join('');
+                }
+                else if (typeof value === "number") {
+                    return "" + value;
+                }
+                else if (value.length > 0) {
+                    if (idx > 0 && cmd.charAt(idx - 1) == "d") {
+                        // It's a collection meant for a roll
+                        console.log("collection variabile for roll");
+                        return sub;
+                    }
+                    else {
+                        return _this.asStringValue(value);
+                    }
+                }
+            });
+            // Resolve collections
+            cmd = cmd.replace(this.COLLDEF_REGEX, function (sub, listDef) {
+                console.log("Collection", sub);
+                return _this.resolveCollection(listDef, context);
+            });
+            // Replace all rolls with values
+            cmd = cmd.replace(this.ROLL_REGEX, function (sub, samples, collection, explode, reduction, asList) {
+                console.log("Roll", sub, samples, collection, explode, reduction, asList);
+                return "" + _this.roll(parseInt(samples), collection, explode !== undefined, reduction, asList !== undefined, context);
+            });
+            // Lookup tables
+            cmd = cmd.replace(this.TABLE_LOOKUP_REGEX, function (sub, tags, lookup, tableName) {
+                console.log("Table lookup", sub, tableName, tags, lookup);
+                var lookupId = lookup === undefined ? null : parseInt(_this.execCmd(lookup, context));
+                var tokenizedTags = tags === undefined ? [] : tags.replace(/'/g, "").split(" ").filter(function (t) { return t.length > 0; });
+                var evaluatedLookup = _this.tableLookup(tableName, tokenizedTags, lookupId, context);
+                return _this.asStringValue(evaluatedLookup);
+            });
+            // See if it's just a value!
+            return this.evalInContext(cmd, context);
+        }
+    };
+    RandomTablesService.tableLookup = function (tableName, tags, id, context) {
+        var table = context['@tables'][tableName];
+        if (tags.length) {
+            table = table.filter(function (entry) {
+                var entryTags = entry[0].split(" ").filter(function (t) { return t.length; });
+                for (var _i = 0, tags_1 = tags; _i < tags_1.length; _i++) {
+                    var tag = tags_1[_i];
+                    if (entryTags.includes(tag)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+        if (table === undefined) {
+            return "unknown table";
+        }
+        else {
+            var lastId = table.length - 1;
+            id = id !== null ? Math.min(id, lastId) : this.randInt(0, lastId);
+            var tableSample = table[id];
+            return this.eval(tableSample[1], context);
+        }
+    };
+    RandomTablesService.resolveCollection = function (listDef, context) {
+        var listIndex = '$' + context['@listIndex']++;
+        if (this.LIST_REGEX.test(listDef)) {
+            context[listIndex] = listDef.split(",").map(function (item) { return parseInt(item); });
+        }
+        else if (this.RANGE_REGEX.test(listDef)) {
+            var rangeDef = this.RANGE_REGEX.exec(listDef);
+            console.log(rangeDef);
+            var range = [];
+            var min = parseInt(rangeDef[1]);
+            var max = parseInt(rangeDef[2]);
+            for (var i = min; i <= max; i++)
+                range.push(i);
+            context[listIndex] = range;
+        }
+        return listIndex;
+    };
+    RandomTablesService.roll = function (samples, collection, explode, reduction, asList, context) {
+        var allRolls;
+        if (collection.charAt(0) == '$') {
+            allRolls = this.rollCollection(samples, context[collection], explode);
+        }
+        else {
+            allRolls = this.rollDie(samples, parseInt(collection), explode);
+        }
+        if (reduction) {
+            var target = parseInt(reduction.substring(1));
+            if (this.RED_BEST_REGEX.test(reduction)) {
+                allRolls = this.reduceBestSubset(allRolls, target);
+            }
+            else if (this.RED_WORST_REGEX.test(reduction)) {
+                allRolls = this.reduceWorstSubset(allRolls, target);
+            }
+            else if (this.RED_SUCC_REGEX.test(reduction)) {
+                allRolls = this.reduceSuccesses(allRolls, reduction, target);
+            }
+        }
+        if (asList) {
+            var listIndex = '$' + context['@listIndex']++;
+            context[listIndex] = allRolls;
+            return listIndex;
+        }
+        else {
+            return allRolls.reduce(function (prev, curr) {
+                return prev + curr;
+            }, 0);
+        }
+    };
+    RandomTablesService.rollDie = function (samples, dieType, explode) {
+        var n = samples;
+        var rolledSamples = [];
+        while (n > 0) {
+            var sample = this.randInt(1, dieType);
+            rolledSamples.push(sample);
+            if (!explode || sample != dieType) {
+                n--;
+            }
+        }
+        return rolledSamples;
+    };
+    RandomTablesService.rollCollection = function (samples, collection, explode) {
+        var n = samples;
+        var rolledSamples = [];
+        while (n > 0) {
+            var roll = this.randInt(0, collection.length - 1);
+            var sample = collection[roll];
+            rolledSamples.push(sample);
+            if (!explode || roll != collection.length - 1) {
+                n--;
+            }
+        }
+        return rolledSamples;
+    };
+    RandomTablesService.reduceBestSubset = function (rolledSamples, keep) {
+        rolledSamples.sort().splice(0, rolledSamples.length - keep);
+        return rolledSamples;
+    };
+    RandomTablesService.reduceWorstSubset = function (rolledSamples, keep) {
+        rolledSamples.sort().reverse().splice(0, rolledSamples.length - keep);
+        return rolledSamples;
+    };
+    RandomTablesService.reduceSuccesses = function (rolledSamples, successCondition, target) {
+        if (successCondition.charAt(0) == ">") {
+            return rolledSamples.filter(function (s) {
+                return s > target;
+            });
+        }
+        else if (successCondition.charAt(0) == "<") {
+            return rolledSamples.filter(function (s) {
+                return s < target;
+            });
+        }
+    };
+    RandomTablesService.asStringValue = function (value) {
+        return ["'", value, "'"].join("");
+    };
+    RandomTablesService.randInt = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    RandomTablesService.evalInContext = function (scr, context) {
+        // execute script in private context
+        console.log("EVAL", scr, context);
+        var r;
+        try {
+            r = (new Function("with(this) { return " + scr + "}")).call(context);
+        }
+        catch (e) {
+            console.error(e);
+        }
+        return r;
+    };
+    RandomTablesService.CMD_REGEX = /\{\s*(\#)?([^\}]+)\s*\}/g;
+    RandomTablesService.ASSIGN_REGEX = /(\$[a-z][a-z0-9_]*)=([^=].*)/;
+    RandomTablesService.VAR_REGEX = /(\$[a-z][a-z0-9_]*)/g;
+    RandomTablesService.COLLDEF_REGEX = /\[([0-9\.\,]+)\]/g;
+    RandomTablesService.RANGE_REGEX = /^([0-9]+)\.\.([0-9]+)$/;
+    RandomTablesService.LIST_REGEX = /^([0-9]+(,[0-9]+)+)$/;
+    RandomTablesService.ROLL_REGEX = /([0-9]*)d([0-9]+|\$[0-9a-z_]+)(\!)?([BW<>][1-9]+)?([L])?/g;
+    RandomTablesService.TABLE_LOOKUP_REGEX = /^\[(\'[^\']*\')?([^\:\']+)?\:([A-Z_]+)\]$/;
+    RandomTablesService.RED_BEST_REGEX = /^B([0-9]+)$/;
+    RandomTablesService.RED_WORST_REGEX = /^W([0-9]+)$/;
+    RandomTablesService.RED_SUCC_REGEX = /^([<>][0-9]+)$/;
+    RandomTablesService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], RandomTablesService);
+    return RandomTablesService;
+}());
+exports.RandomTablesService = RandomTablesService;
+
+
+/***/ }),
+
+/***/ "./src/app/master/gevaluator.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var GevaluatorService = /** @class */ (function () {
+    function GevaluatorService() {
+    }
+    GevaluatorService.eval = function (sentence) {
+        var _this = this;
+        var context = {};
+        console.log("-------------");
+        // Try to execute all assignments first
+        var sentence = sentence.replace(this.G_ASSIGN_CMD_REGEX, function (sub, cmd) {
+            return _this.execCmd(cmd, context);
+        });
+        // Then all the rest
+        var result = sentence.replace(this.CMD_REGEX, function (sub, cmd) {
+            return _this.execCmd(cmd, context);
+        });
+        console.log(context);
+        return result;
+    };
+    GevaluatorService.execCmd = function (cmd, context) {
+        if (this.MUTE_CMD_REGEX.test(cmd)) {
+            var m = this.MUTE_CMD_REGEX.exec(cmd);
+            this.execCmd(m[1], context);
+            return "";
+        }
+        else if (this.ASSIGN_CMD_REGEX.test(cmd)) {
+            var a = this.ASSIGN_CMD_REGEX.exec(cmd);
+            return context[a[1]] = this.execCmd(a[2], context);
+        }
+        else if (this.COND_CMD_REGEX.test(cmd)) {
+            return this.evaluateCondition(cmd, context);
+        }
+        else if (this.ROLL_CMD_REGEX.test(cmd)) {
+            return this.roll(cmd);
+        }
+        else {
+            return context[cmd] || cmd;
+        }
+    };
+    GevaluatorService.evaluateCondition = function (cmd, context) {
+        var match = this.COND_CMD_REGEX.exec(cmd);
+        var A = this.execCmd(match[1], context);
+        var B = this.execCmd(match[3], context);
+        var op = match[2];
+        return eval("" + A + op + B) ? this.execCmd(match[4], context) : this.execCmd(match[5], context);
+    };
+    GevaluatorService.roll = function (rollCmd) {
+        var _this = this;
+        return rollCmd.replace(this.ROLL_CMD_REGEX, function (sub, rolls, dieType) {
+            rolls = rolls ? rolls : 1;
+            var result = 0;
+            while (rolls > 0) {
+                result += _this.randInt(1, dieType);
+                rolls--;
+            }
+            return result;
+        });
+    };
+    GevaluatorService.randInt = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    GevaluatorService.evalInContext = function (scr, context) {
+        // execute script in private context
+        var r;
+        try {
+            r = (new Function("with(this) { return " + scr + "}")).call(context);
+        }
+        catch (e) {
+            console.error(e);
+        }
+        return r;
+    };
+    GevaluatorService.CMD_REGEX = /\[\[([^\]]+)\]\]/g;
+    GevaluatorService.G_ASSIGN_CMD_REGEX = /\[\[(\$?[a-z_]+\=[^\]]+)\]\]/g;
+    GevaluatorService.MUTE_CMD_REGEX = /^\$(.+)$/;
+    GevaluatorService.ROLL_CMD_REGEX = /^([0-9]+)?d([0-9]+)?$/;
+    GevaluatorService.ASSIGN_CMD_REGEX = /^([a-z_]+)\=([^=]+)$/;
+    GevaluatorService.COND_CMD_REGEX = /^([0-9a-z_]+)(\<|\>|!=|==)([0-9a-z_]+)\?([^:]+):(.+)?$/;
+    GevaluatorService.OPERATOR_CMD_REGEX = /^([^\+\-\/\*\%\=]+)([\+\-\/\*\%])(.+)$/;
+    GevaluatorService = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], GevaluatorService);
+    return GevaluatorService;
+}());
+exports.GevaluatorService = GevaluatorService;
+
+
+/***/ }),
+
+/***/ "./src/app/master/gevaluator2.service.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var Gevaluator2Service = /** @class */ (function () {
+    function Gevaluator2Service() {
+    }
+    Gevaluator2Service.eval = function (sentence, context) {
+        var _this = this;
+        if (context === undefined) {
+            context = {};
+        }
+        if (context['@listIndex'] === undefined) {
+            context['@listIndex'] = 1;
+        }
+        if (context['@tables'] === undefined) {
+            context['@tables'] = {};
+        }
+        console.log("------------- BEGIN -------------");
+        if (this.CMD_REGEX.test(sentence)) {
+            var sentence = sentence.replace(this.CMD_REGEX, function (sub, silent, cmd) {
+                var replace = _this.execCmd(cmd, context);
+                return silent ? "" : replace;
+            });
+        }
+        console.log(context);
+        console.log("------------- END -------------");
+        return sentence;
+    };
+    Gevaluator2Service.execCmd = function (cmd, context) {
+        var _this = this;
+        console.log("Command", cmd);
+        if (this.ASSIGN_REGEX.test(cmd)) {
+            var a = this.ASSIGN_REGEX.exec(cmd);
+            return context[a[1]] = this.execCmd(a[2], context);
+        }
+        else {
+            // Replace all variables with values
+            cmd = cmd.replace(this.VAR_REGEX, function (sub, varName, idx) {
+                var value = context[varName];
+                console.log("Variable", sub, varName, value);
+                if (value === undefined) {
+                    return sub;
+                }
+                else if (typeof value === "string") {
+                    return ["'", value, "'"].join('');
+                }
+                else if (typeof value === "number") {
+                    return "" + value;
+                }
+                else if (value.length > 0) {
+                    if (idx > 0 && cmd.charAt(idx - 1) == "d") {
+                        // It's a collection meant for a roll
+                        console.log("collection variabile for roll");
+                        return sub;
+                    }
+                    else {
+                        return _this.asStringValue(value);
+                    }
+                }
+            });
+            console.log(cmd);
+            // Resolve collections
+            cmd = cmd.replace(this.COLLDEF_REGEX, function (sub, listDef) {
+                console.log("Collection", sub);
+                return _this.resolveCollection(listDef, context);
+            });
+            // Replace all rolls with values
+            cmd = cmd.replace(this.ROLL_REGEX, function (sub, samples, collection, explode, reduction, asList) {
+                console.log("Roll", sub);
+                console.log(samples, collection, explode, reduction, asList);
+                return "" + _this.roll(parseInt(samples), collection, explode !== undefined, reduction, asList !== undefined, context);
+            });
+            // Lookup tables
+            cmd = cmd.replace(this.TABLE_LOOKUP_REGEX, function (sub, tags, lookup, tableName) {
+                console.log("Table lookup", sub, tableName, tags, lookup);
+                var lookupId = lookup === undefined ? null : parseInt(_this.execCmd(lookup, context));
+                var tokenizedTags = tags === undefined ? [] : tags.replace(/'/g, "").split(" ").filter(function (t) { return t.length > 0; });
+                var evaluatedLookup = _this.tableLookup(tableName, tokenizedTags, lookupId, context);
+                return _this.asStringValue(evaluatedLookup);
+            });
+            console.log(cmd);
+            // See if it's just a value!
+            return this.evalInContext(cmd, context);
+        }
+    };
+    Gevaluator2Service.tableLookup = function (tableName, tags, id, context) {
+        var table = context['@tables'][tableName];
+        if (tags.length) {
+            table = table.filter(function (entry) {
+                var entryTags = entry[0].split(" ").filter(function (t) { return t.length; });
+                for (var _i = 0, tags_1 = tags; _i < tags_1.length; _i++) {
+                    var tag = tags_1[_i];
+                    if (entryTags.includes(tag)) {
+                        return true;
+                    }
+                }
+                return false;
+            });
+        }
+        if (table === undefined) {
+            return "unknown table";
+        }
+        else {
+            var lastId = table.length - 1;
+            console.log(table, tags, lastId, id);
+            id = id !== null ? Math.min(id, lastId) : this.randInt(0, lastId);
+            var tableSample = table[id];
+            return this.eval(tableSample[1], context);
+        }
+    };
+    Gevaluator2Service.resolveCollection = function (listDef, context) {
+        var listIndex = '$' + context['@listIndex']++;
+        if (this.LIST_REGEX.test(listDef)) {
+            context[listIndex] = listDef.split(",").map(function (item) { return parseInt(item); });
+        }
+        else if (this.RANGE_REGEX.test(listDef)) {
+            var rangeDef = this.RANGE_REGEX.exec(listDef);
+            console.log(rangeDef);
+            var range = [];
+            var min = parseInt(rangeDef[1]);
+            var max = parseInt(rangeDef[2]);
+            for (var i = min; i <= max; i++)
+                range.push(i);
+            context[listIndex] = range;
+        }
+        return listIndex;
+    };
+    Gevaluator2Service.roll = function (samples, collection, explode, reduction, asList, context) {
+        var allRolls;
+        if (collection.charAt(0) == '$') {
+            allRolls = this.rollCollection(samples, context[collection], explode);
+        }
+        else {
+            allRolls = this.rollDie(samples, parseInt(collection), explode);
+        }
+        console.log(allRolls);
+        if (reduction) {
+            var target = parseInt(reduction.substring(1));
+            if (this.RED_BEST_REGEX.test(reduction)) {
+                allRolls = this.reduceBestSubset(allRolls, target);
+            }
+            else if (this.RED_WORST_REGEX.test(reduction)) {
+                allRolls = this.reduceWorstSubset(allRolls, target);
+            }
+            else if (this.RED_SUCC_REGEX.test(reduction)) {
+                allRolls = this.reduceSuccesses(allRolls, reduction, target);
+            }
+        }
+        console.log(allRolls, asList);
+        if (asList) {
+            var listIndex = '$' + context['@listIndex']++;
+            context[listIndex] = allRolls;
+            return listIndex;
+        }
+        else {
+            return allRolls.reduce(function (prev, curr) {
+                return prev + curr;
+            }, 0);
+        }
+    };
+    Gevaluator2Service.rollDie = function (samples, dieType, explode) {
+        var n = samples;
+        var rolledSamples = [];
+        while (n > 0) {
+            var sample = this.randInt(1, dieType);
+            rolledSamples.push(sample);
+            if (!explode || sample != dieType) {
+                n--;
+            }
+        }
+        return rolledSamples;
+    };
+    Gevaluator2Service.rollCollection = function (samples, collection, explode) {
+        var n = samples;
+        var rolledSamples = [];
+        while (n > 0) {
+            var roll = this.randInt(0, collection.length - 1);
+            var sample = collection[roll];
+            rolledSamples.push(sample);
+            if (!explode || roll != collection.length - 1) {
+                n--;
+            }
+        }
+        return rolledSamples;
+    };
+    Gevaluator2Service.reduceBestSubset = function (rolledSamples, keep) {
+        rolledSamples.sort().splice(0, rolledSamples.length - keep);
+        return rolledSamples;
+    };
+    Gevaluator2Service.reduceWorstSubset = function (rolledSamples, keep) {
+        rolledSamples.sort().reverse().splice(0, rolledSamples.length - keep);
+        return rolledSamples;
+    };
+    Gevaluator2Service.reduceSuccesses = function (rolledSamples, successCondition, target) {
+        if (successCondition.charAt(0) == ">") {
+            return rolledSamples.filter(function (s) {
+                return s > target;
+            });
+        }
+        else if (successCondition.charAt(0) == "<") {
+            return rolledSamples.filter(function (s) {
+                return s < target;
+            });
+        }
+    };
+    Gevaluator2Service.asStringValue = function (value) {
+        return ["'", value, "'"].join("");
+    };
+    Gevaluator2Service.randInt = function (min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    Gevaluator2Service.evalInContext = function (scr, context) {
+        // execute script in private context
+        console.log("EVAL", scr, context);
+        var r;
+        try {
+            r = (new Function("with(this) { return " + scr + "}")).call(context);
+        }
+        catch (e) {
+            console.error(e);
+        }
+        return r;
+    };
+    Gevaluator2Service.CMD_REGEX = /\{\s*(\#)?([^\}]+)\s*\}/g;
+    Gevaluator2Service.ASSIGN_REGEX = /(\$[a-z][a-z0-9_]*)=([^=$].*)/;
+    Gevaluator2Service.VAR_REGEX = /(\$[a-z][a-z0-9_]*)/g;
+    Gevaluator2Service.COLLDEF_REGEX = /\[([0-9\.\,]+)\]/g;
+    Gevaluator2Service.RANGE_REGEX = /^([0-9]+)\.\.([0-9]+)$/;
+    Gevaluator2Service.LIST_REGEX = /^([0-9]+(,[0-9]+)+)$/;
+    Gevaluator2Service.ROLL_REGEX = /([0-9]*)d([0-9]+|\$[0-9a-z_]+)(\!)?([BW<>][1-9]+)?([L])?/g;
+    Gevaluator2Service.TABLE_LOOKUP_REGEX = /^\[(\'[^\']*\')?([^\:\']+)?\:([A-Z_]+)\]$/;
+    Gevaluator2Service.RED_BEST_REGEX = /^B([0-9]+)$/;
+    Gevaluator2Service.RED_WORST_REGEX = /^W([0-9]+)$/;
+    Gevaluator2Service.RED_SUCC_REGEX = /^([<>][0-9]+)$/;
+    Gevaluator2Service = __decorate([
+        core_1.Injectable(),
+        __metadata("design:paramtypes", [])
+    ], Gevaluator2Service);
+    return Gevaluator2Service;
+}());
+exports.Gevaluator2Service = Gevaluator2Service;
+
+
+/***/ }),
+
+/***/ "./src/app/master/master-routing.module.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var router_1 = __webpack_require__("./node_modules/@angular/router/esm5/router.js");
+var master_component_1 = __webpack_require__("./src/app/master/master.component.ts");
+var generator_component_1 = __webpack_require__("./src/app/master/generators/generator.component.ts");
+var basic_generators_component_1 = __webpack_require__("./src/app/master/generators/basic-generators/basic-generators.component.ts");
+var test_generator_component_1 = __webpack_require__("./src/app/master/test-generator/test-generator.component.ts");
+var routes = [{
+        path: 'master',
+        component: master_component_1.MasterComponent,
+        children: [
+            {
+                path: 'generators',
+                component: generator_component_1.GeneratorComponent,
+                children: [
+                    {
+                        path: 'test',
+                        component: test_generator_component_1.TestGeneratorComponent
+                    },
+                    {
+                        path: 'basic',
+                        component: basic_generators_component_1.BasicGeneratorsComponent
+                    }
+                ]
+            }
+        ]
+    }];
+var MasterRoutingModule = /** @class */ (function () {
+    function MasterRoutingModule() {
+    }
+    MasterRoutingModule = __decorate([
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forChild(routes)],
+            exports: [router_1.RouterModule]
+        })
+    ], MasterRoutingModule);
+    return MasterRoutingModule;
+}());
+exports.MasterRoutingModule = MasterRoutingModule;
+
+
+/***/ }),
+
+/***/ "./src/app/master/master.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/master/master.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"master nav\">\n  <a routerLink=\"generators/basic\" routerLinkActive=\"active\">{{ \"PAGE.MASTER.NAV.GEN\" | translate }}</a>\n</div>\n<router-outlet></router-outlet>\n"
+
+/***/ }),
+
+/***/ "./src/app/master/master.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var MasterComponent = /** @class */ (function () {
+    function MasterComponent() {
+    }
+    MasterComponent.prototype.ngOnInit = function () {
+    };
+    MasterComponent = __decorate([
+        core_1.Component({
+            selector: 'app-master',
+            template: __webpack_require__("./src/app/master/master.component.html"),
+            styles: [__webpack_require__("./src/app/master/master.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], MasterComponent);
+    return MasterComponent;
+}());
+exports.MasterComponent = MasterComponent;
+
+
+/***/ }),
+
+/***/ "./src/app/master/master.module.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var common_1 = __webpack_require__("./node_modules/@angular/common/esm5/common.js");
+var master_routing_module_1 = __webpack_require__("./src/app/master/master-routing.module.ts");
+var master_component_1 = __webpack_require__("./src/app/master/master.component.ts");
+var test_generator_component_1 = __webpack_require__("./src/app/master/test-generator/test-generator.component.ts");
+var gevaluator_service_1 = __webpack_require__("./src/app/master/gevaluator.service.ts");
+var shared_module_1 = __webpack_require__("./src/app/shared/shared.module.ts");
+var generators_module_1 = __webpack_require__("./src/app/master/generators/generators.module.ts");
+var MasterModule = /** @class */ (function () {
+    function MasterModule() {
+    }
+    MasterModule = __decorate([
+        core_1.NgModule({
+            imports: [
+                common_1.CommonModule,
+                shared_module_1.SharedModule,
+                master_routing_module_1.MasterRoutingModule,
+                generators_module_1.GeneratorsModule
+            ],
+            declarations: [
+                master_component_1.MasterComponent,
+                test_generator_component_1.TestGeneratorComponent
+            ],
+            providers: [gevaluator_service_1.GevaluatorService]
+        })
+    ], MasterModule);
+    return MasterModule;
+}());
+exports.MasterModule = MasterModule;
+
+
+/***/ }),
+
+/***/ "./src/app/master/test-generator/TestGenTables.class.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var TestGenTables = /** @class */ (function () {
+    function TestGenTables() {
+    }
+    TestGenTables.EXAMPLES = [
+        ["", "Elemento di tabella statico."],
+        ["", "Tira 2d6: {1d6}"],
+        ["", "Tira 2d6L (mostra lista) : {1d6L}"],
+        ["", "Tira 5d6! (esplode): {5d6!L}; Tira 5d6>4 (successi 5 e 6): {5d6>4L}; Tira 5d6B2 (tieni i 2 migliori): {5d6B2L}"],
+        ["", "Dado come lista 3d[3,5,8,13,21]: {3d[3,5,8,13,21]L}"],
+        ["", "Dado come intervallo 3d[8..15]: {3d[8..15]L}"],
+        ["", "Variabili a = {$a=2}, b = {$b=3}, a+b = {$a+$b}"],
+        ["", "Variabili e dadi: $hit = {$hit=8}, 3d$hit = {3d$hitL}"],
+        ["", "Variabili e intervalli: $hitmin = {$hitmin=8}, $hitmax = {$hitmax=21}, 3d[$hitmin..$hitmax] = {3d[$hitmin..$hitmax]L}"],
+        ["", "Combinare dadi e espressioni: a={$a=3}, 1d4+a+2d3 = {1d4+$a+2d3}"],
+        ["", "Comandi nascosti: {#$a=3d6L} {#$b=3d[10..16]L} {$a}<{$b}"],
+        ["", "Importa da tabella (casuale): {[:CHAR_ATTR]}"],
+        ["", "Importa da tabella (id={$id=4}): {[$id:CHAR_ATTR]}"],
+        ["", "Importa da tabella (id=4+1d4): {[4+1d4:CHAR_ATTR]}"],
+        ["", "Importa da tabella (per tag): {['skill':CHAR_ATTR]}"],
+        ["", "Importa da tabella (per tag): {['hr var':DURATION]}"],
+    ];
+    TestGenTables.EX_CHAR_ATTR = [
+        ["ability", "Forza {$str=4d6B3}"],
+        ["ability", "Destrezza {$dex=4d6B3}"],
+        ["ability", "Costituzione {$cos=4d6B3}"],
+        ["ability", "Intelligenza {$int=4d6B3}"],
+        ["ability", "Saggezza {$sag=4d6B3}"],
+        ["ability", "Carisma {$car=4d6B3}"],
+        ["skill", "Conoscenza (dungeon) {$kno_dungeon=1d6}"],
+        ["skill", "Conoscenza (arcano) {$kno_arcane=1d6}"],
+        ["skill", "Stealth {$kno_stealth=1d6}"],
+    ];
+    TestGenTables.DURATION = [
+        ["sec ltday", "{$r=1d6} second{$r>1?'i':'o'}"],
+        ["sec ltday", "{$r=6d10} second{$r>1?'i':'o'}"],
+        ["min ltday", "{$r=1d6} minut{$r>1?'i':'o'}"],
+        ["min ltday", "{$r=6d10} minut{$r>1?'i':'o'}"],
+        ["hr ltday", "{$r=1d6} or{$r>1?'e':'a'}"],
+        ["var ltday", "fino a mezzogiorno"],
+        ["var ltday", "fino a mezzanotte"],
+        ["var ltday", "fino al tramonto"],
+        ["var ltday", "fino all\\'alba"],
+        ["hr", "{2d20} ore"],
+        ["day gtday", "{1d6} giorni"],
+        ["day gtday", "{1d20} giorni"]
+    ];
+    return TestGenTables;
+}());
+exports.TestGenTables = TestGenTables;
+
+
+/***/ }),
+
+/***/ "./src/app/master/test-generator/test-generator.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  <button (click)=\"reroll()\">REROLL</button>\n</p>\n\n<div class=\"list\">\n  <div *ngFor=\"let roll of rolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n</div>\n\n<div class=\"list\">\n  <div *ngFor=\"let roll of durationRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/master/test-generator/test-generator.component.scss":
+/***/ (function(module, exports) {
+
+module.exports = ".list {\n  -webkit-box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n          box-shadow: 1px 3px 8px rgba(0, 0, 0, 0.5);\n  background: rgba(255, 255, 255, 0.75);\n  padding: 15px; }\n  .list > div {\n    padding: 3px 0; }\n  .list .even {\n    background: rgba(0, 0, 0, 0.1); }\n"
+
+/***/ }),
+
+/***/ "./src/app/master/test-generator/test-generator.component.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var TestGenTables_class_1 = __webpack_require__("./src/app/master/test-generator/TestGenTables.class.ts");
+var gevaluator2_service_1 = __webpack_require__("./src/app/master/gevaluator2.service.ts");
+var BasicTables_class_1 = __webpack_require__("./src/app/master/generators/tables/BasicTables.class.ts");
+var random_tables_service_1 = __webpack_require__("./src/app/master/generators/tables/random-tables.service.ts");
+var TestGeneratorComponent = /** @class */ (function () {
+    function TestGeneratorComponent() {
+        this.rolls = [];
+        this.durationRolls = [];
+    }
+    TestGeneratorComponent.prototype.ngOnInit = function () {
+        this.reroll();
+    };
+    TestGeneratorComponent.prototype.reroll = function () {
+        var table = TestGenTables_class_1.TestGenTables.EXAMPLES;
+        this.rolls = [];
+        for (var _i = 0, table_1 = table; _i < table_1.length; _i++) {
+            var entry = table_1[_i];
+            var line = gevaluator2_service_1.Gevaluator2Service.eval(entry[1], {
+                "@tables": {
+                    EXAMPLES: table,
+                    CHAR_ATTR: TestGenTables_class_1.TestGenTables.EX_CHAR_ATTR,
+                    DURATION: TestGenTables_class_1.TestGenTables.DURATION
+                }
+            });
+            this.rolls.push(line);
+        }
+        var durationTable = BasicTables_class_1.BasicTables.DURATION;
+        this.durationRolls = [];
+        for (var _a = 0, durationTable_1 = durationTable; _a < durationTable_1.length; _a++) {
+            var entry = durationTable_1[_a];
+            this.durationRolls.push(random_tables_service_1.RandomTablesService.eval(entry[1], {
+                "@tables": BasicTables_class_1.BasicTables
+            }));
+        }
+    };
+    TestGeneratorComponent = __decorate([
+        core_1.Component({
+            selector: 'app-test-generator',
+            template: __webpack_require__("./src/app/master/test-generator/test-generator.component.html"),
+            styles: [__webpack_require__("./src/app/master/test-generator/test-generator.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], TestGeneratorComponent);
+    return TestGeneratorComponent;
+}());
+exports.TestGeneratorComponent = TestGeneratorComponent;
 
 
 /***/ }),
