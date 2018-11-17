@@ -1848,7 +1848,7 @@ exports.InitTagsService = InitTagsService;
 /***/ "./src/app/master/generators/basic-generators/basic-generators.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Cryptic Quote</h4>\n<div class=\"list\">\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div innerHTML=\"{{crypticQuote}}\"></div>\n  </div>\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n</div>\n\n<h4>Random Duration</h4>\n<div class=\"list\">\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of durationRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n</div>\n"
+module.exports = "<h4>Cryptic Quote</h4>\n<div class=\"list\">\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div innerHTML=\"{{crypticQuote}}\"></div>\n  </div>\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n</div>\n\n<h4>Wild Magic</h4>\n<div class=\"list\">\n  <div>\n    How many rolls? <input [(ngModel)]=\"wildMagicRollsNumber\">\n  </div>\n  <button (click)=\"rollWildMagic()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of wildMagicRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollWildMagic()\">RE-ROLL!</button>\n</div>\n\n<h4>Random Duration</h4>\n<div class=\"list\">\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of durationRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n</div>\n"
 
 /***/ }),
 
@@ -1878,11 +1878,22 @@ var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
 var BasicTables_class_1 = __webpack_require__("./src/app/master/generators/tables/BasicTables.class.ts");
 var random_tables_service_1 = __webpack_require__("./src/app/master/generators/tables/random-tables.service.ts");
 var QuotesTables_class_1 = __webpack_require__("./src/app/master/generators/tables/QuotesTables.class.ts");
+var WildMagicTables_class_1 = __webpack_require__("./src/app/master/generators/tables/WildMagicTables.class.ts");
 var BasicGeneratorsComponent = /** @class */ (function () {
     function BasicGeneratorsComponent() {
+        this.wildMagicRollsNumber = 1;
     }
     BasicGeneratorsComponent.prototype.ngOnInit = function () {
-        this.rollDurations();
+        // this.rollDurations();
+        this.rollWildMagic();
+    };
+    BasicGeneratorsComponent.prototype.rollWildMagic = function () {
+        this.wildMagicRolls = [];
+        for (var i = 0; i < this.wildMagicRollsNumber; i++) {
+            this.wildMagicRolls.push(random_tables_service_1.RandomTablesService.eval(WildMagicTables_class_1.WildMagicTables._START, {
+                "@tables": WildMagicTables_class_1.WildMagicTables
+            }));
+        }
     };
     BasicGeneratorsComponent.prototype.rollDurations = function () {
         var durationTable = BasicTables_class_1.BasicTables.DURATION;
@@ -2081,82 +2092,739 @@ var QuotesTables = /** @class */ (function () {
         // Voglio mettere in fila i pezzi, i tuoi ed i miei
         ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[$sp:COMPLICATED]} che {[:SIMILITUDE]}{$sproll>1?'no':''} {$chain=[$sp:COMPLICATED]}, <br/>"
                 + "{$chain} che {[:SIMILITUDE]}{$sproll>1?'no':''} {[$sp:COMPLICATED]}. <br/>"
-                + "{[:WILL]} {[:ACTION]}"],
+                + "{[:WILL]} {[:ACTION]}"]
     ];
     QuotesTables.SIMILITUDE = [
         ["", "ricorda"],
         ["", "sembra"],
-        ["", "rievoca"],
-        ["", "trasporta"],
+        ["", "prefigura"],
         ["", "accompagna"],
-        ["", "lega"],
     ];
     QuotesTables.COMPLICATED = [
         ["sing", "un frammento di {['sing':CONCEPT]}"],
         ["sing", "un {['sing':CONCEPT]} lontano"],
         ["sing", "un {['sing':CONCEPT]} perduto"],
-        ["sing", "il ricordo di {['sing':CONCEPT]} perduto"],
-        ["sing", "un {['sing':CONCEPT]} nebuloso"],
+        ["sing", "l'immagine di un {['sing':CONCEPT]} perduto"],
+        ["sing", "l'ombra di un {['sing':CONCEPT]} perduto"],
+        ["sing", "lo spirito di un {['sing':CONCEPT]} perduto"],
         ["sing", "un {['sing':CONCEPT]} arcano"],
         ["sing", "un dolce {['sing':CONCEPT]}"],
+        ["sing", "un {['sing':CONCEPT]} dimenticato"],
         ["plu", "frammenti di {['':CONCEPT]}"],
+        ["plu", "immagini di {['':CONCEPT]}"],
+        ["plu", "spiriti di {['':CONCEPT]}"],
         ["plu", "{['plu':CONCEPT]} lontani"],
         ["plu", "{['plu':CONCEPT]} perduti"],
         ["plu", "ricordi di {['plu':CONCEPT]} perduti"],
-        ["plu", "{['plu':CONCEPT]} nebuolsi"],
         ["plu", "{['plu':CONCEPT]} arcani"],
-        ["plu", "dolci {['plu':CONCEPT]}"],
+        ["plu", "{['plu':CONCEPT]} nostalgici"],
+        ["plu", "{['plu':CONCEPT]} dimenticati"],
     ];
     QuotesTables.CONCEPT = [
         ["sing", "sogno"],
         ["sing", "sentimento"],
         ["sing", "amore"],
-        ["sing", "simbolo"],
         ["sing", "futuro"],
         ["sing", "passato"],
         ["sing", "equilibrio"],
-        ["sing", "controllo"],
         ["sing", "mondo"],
         ["sing", "universo"],
         ["plu", "sogni"],
         ["plu", "sentimenti"],
-        ["plu", "simboli"],
-        ["plu", "mondi"]
+        ["plu", "mondi"],
+        ["plu", "universi"],
+        ["plu", "amori"]
     ];
     QuotesTables.WILL = [
         ["", "voglio"],
         ["", "devo"],
-        ["", "devi"],
-        ["", "devo cercare di"],
-        ["", "devi cercare di"],
-        ["", "sforziamoci di"],
-        ["", "presto, devi"],
-        ["", "lotteremo per"],
+        ["", "ho intenzione"],
+        ["", "il mio destino è"],
+        ["", "il mio compito è"],
         ["", "lotterò per"],
-        ["", "la sfida è "],
+        ["", "la sfida è"],
+        ["", "non mi fermerò finchè non sarò riuscito a"],
+        ["", "non avrò riposo finchè non sarò riuscito a"],
+        ["", "la sola via d'uscita è"],
     ];
     QuotesTables.ACTION = [
-        ["", "allineare i {['plu':CONCEPT]}"],
-        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
-        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
-        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
-        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"],
         ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"]
     ];
     QuotesTables.VERB = [
+        ["", "allineare"],
         ["", "ricordare"],
         ["", "trovare"],
         ["", "capire"],
         ["", "salvare"],
         ["", "realizzare"],
         ["", "immaginare"],
-        ["", "vincere"],
-        ["", "equilibrare"],
-        ["", "esaudire"]
+        ["", "riequilibrare"],
+        ["", "collezionare"],
+        ["", "consumare"],
+        ["", "allontanare"],
+        ["", "far conoscere"],
+        ["", "dimenticare"],
+        ["", "distruggere"],
+        ["", "eradicare"],
+        ["", "fondere"],
+        ["", "moltiplicare"],
     ];
     return QuotesTables;
 }());
 exports.QuotesTables = QuotesTables;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/tables/SupportTables.class.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var SupportTables = /** @class */ (function () {
+    function SupportTables() {
+    }
+    SupportTables.WILD_MAGIC = [
+        // instantaneous EVOCATION
+        // ["", "{[:EVOCATION]}"],
+        // TRIGGER EVOCATION
+        // TRIGGER ALTERATION DURATION
+        ["", "{[:ALTERATION]} {[:DURATION]}"],
+    ];
+    SupportTables.EVOCATION = [
+        // some fenomenon manifests somewhere
+        ["", "{[:LOCALIZED_FENOMENON]} indefinitely"],
+        ["", "{[:LOCALIZED_FENOMENON]} {[:DURATION]}"],
+    ];
+    SupportTables.ALTERATION = [
+        // something is turned into something
+        // an area is altered
+        // someone is altered
+        ["", "{[:CREATURE_ALTERATION]}"],
+        ["", "{[:CREATURE_BODYPART_ALTERATION]}"]
+    ];
+    SupportTables.LOCALIZED_FENOMENON = [
+        ["", "{$cc=1d[1,2,3,5,10,50,100]} {['flying':INSECT]} swarm{$cc>1?'':'s'} harmlessly around {[:POI]}"],
+        ["", "{[:MINOR_APPARITION]} {[:PARTICLE_BEHAVIOR]} around {[:POI]}"],
+        ["", "{# $bp_tags='part hand foot limb' }{#$bp_string=[:_TARGET_BODYPART]}"
+                + "{$cc=1d[1,2,3,5,10,50,100]} {['flying':INSECT]} swarm{$cc>1?'':'s'} harmlessly around {$bp_arity>2?'':'the '}{$bp_string}"],
+        ["", "{# $bp_tags='part hand foot limb' }{#$bp_string=[:_TARGET_BODYPART]}"
+                + "{[:MINOR_APPARITION]} {[:PARTICLE_BEHAVIOR]} around {$bp_arity>2?'':'the '}{$bp_string}"]
+    ];
+    SupportTables.PARTICLE_BEHAVIOR = [
+        ["", "{[:BEHAVIOUR_VELOCITY]} dance{$mmpc>2?'':'s'}"],
+        ["", "{[:BEHAVIOUR_VELOCITY]} circle{$mmpc>2?'':'s'}"],
+        ["", "{[:BEHAVIOUR_VELOCITY]} zip{$mmpc>2?'':'s'}"],
+        ["", "{[:BEHAVIOUR_VELOCITY]} zig-zag{$mmpc>2?'':'s'}"],
+    ];
+    SupportTables.BEHAVIOUR_VELOCITY = [
+        ["", "sluggishly"],
+        ["", "gently"],
+        ["", "slowly"],
+        ["", "rapidly"],
+        ["", "erratically"],
+        ["", "unpredictably"],
+    ];
+    /**
+     * BODY PARTS
+     */
+    SupportTables.BODY_PART = [
+        ["part vital", "head" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["part vital", "neck" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["part vital", "torso" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["part vital", "abdomen" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["part vital", "groin" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["part vital", "chest" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["part vital", "back" + " {#$bp_a=2}{#$bp_n=1} "],
+        ["limb arm simmetric", "{[:SIDE_LR]} arm" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["limb leg simmetric", "{[:SIDE_LR]} leg" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["limb arm", "arms" + "{#$bp_a=2}{#$bp_n=2} "],
+        ["limb leg", "legs" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["limb all", "limbs" + "{#$bp_a=2}{#$bp_n=4}"],
+        ["appendage hand simmetric", "{[:SIDE_LR]} hand" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage foot simmetric", "{[:SIDE_LR]} foot" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage all hand", "hands" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["appendage all foot", "feet" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["appendage finger", "finger" + "{#$bp_a=1}{#$bp_n=1}"],
+        ["appendage finger", "toe" + "{#$bp_a=1}{#$bp_n=1}"],
+        ["appendage many finger", "{#$bp_a=0}{$bp_n=1d[2..5]} fingers"],
+        ["appendage many toe", "{#$bp_a=0}{$bp_n=1d[2..5]} toes"],
+        ["appendage many tooth", "{#$bp_a=0}{$bp_n=1d[3..31]} teeth"],
+        ["appendage orifice", "nose" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage tooth", "tooth" + "{#$bp_a=0}{#$bp_n=1}"],
+        ["appendage orifice simmetric", "{[:SIDE_LR]} ear" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage orifice simmetric", "{[:SIDE_LR]} eye" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage many finger", "{#$bp_a=0}{$bp_n=1d[3..5]} fingers"],
+        ["appendage many toe", "{#$bp_a=0}{$bp_n=1d[3..5]} toes"],
+        ["appendage many tooth", "{#$bp_a=0}{$bp_n=1d[3..20]} teeth"],
+        ["appendage all finger", "fingers" + "{#$bp_a=2}{#$bp_n=10}"],
+        ["appendages all toe", "toes" + "{#$bp_a=2}{#$bp_n=10}"],
+        ["appendage all tooth", "teeth" + "{#$bp_a=2}{#$bp_n=32}"],
+        ["appendages all orifice", "ears" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["appendages all orifice", "eyes" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["appendage all shed", "hair" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage shed", "{# $bp_string=['limb||hand||foot||part':BODY_PART] }"
+                + "hair on {[$bp_a:A_THE_SOME_ALL]} {$bp_string}" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["appendage all shed", "nails" + "{#$bp_a=2}{#$bp_n=20}"],
+        ["appendage shed", "finger nails" + "{#$bp_a=2}{#$bp_n=10}"],
+        ["appendage shed", "toe nails" + "{#$bp_a=2}{#$bp_n=10}"],
+        ["appendage shed", "{# $bp_string=['(hand||feet)&&!all':BODY_PART] }"
+                + "nails on {[$bp_a:A_THE_SOME_ALL]} {$bp_string}" + "{#$bp_a=2}{#$bp_n=5}"],
+        ["orifice", "mouth" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ vital", "heart" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ vital", "liver" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ vital", "guts" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ vital", "stomach" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ vital", "panchreas" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ vital", "brain" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ simmetric", "{[:SIDE_LR]} kidney" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ simmetric", "{[:SIDE_LR]} lung" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["organ all vital", "kidneys" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["organ all vital", "lungs" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["muscles vital all", "muscles" + "{#$bp_a=2}{#$bp_n=6}"],
+        ["muscles", "{# $bp_string=['limb||hand||foot||finger||toe':BODY_PART] }"
+                + "muscles in {[$bp_a:A_THE_SOME_ALL]} {$bp_string}" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone all", "bones" + "{#$bp_a=2}{#$bp_n=2}"],
+        ["bones", "{# $bp_string=['limb||hand||foot||finger||toe':BODY_PART] }"
+                + "bones in {[$bp_a:A_THE_SOME_ALL]} {$bp_string}" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone", "spine" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone", "ribcage" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone", "skull" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone", "hipbone" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone simmetric", "{[:SIDE_LR]} collarbone" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["bone simmetric", "{[:SIDE_LR]} femur" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["fluid vital", "blood" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["fluid", "saliva" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["fluid", "mucus" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["fluid", "sweat" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["fluid", "bile" + "{#$bp_a=2}{#$bp_n=1}"],
+        ["fluid", "urine" + "{#$bp_a=2}{#$bp_n=1}"]
+    ];
+    SupportTables.SIDE_LR = [
+        ["", "left"], ["", "right"],
+    ];
+    SupportTables.A_THE_SOME_ALL = [
+        ["", ""], ["", "a"], ["", "the"], ["", "some"], ["", "all"]
+    ];
+    /**
+     * SUBSTANCES and MATERIALS
+     */
+    SupportTables.MATERIAL = [
+        ["solid", "{[:MAT_METAL]}"],
+        ["solid", "{[:MAT_STONE]}"],
+        ["solid", "{[:MAT_WOOD]}"],
+        ["composit", "{[:MAT_COMP_SOLID]}"],
+        ["loose dust", "{[:MAT_DUST]}"],
+        ["loose fluid liquid", "{[:MAT_LIQUID]}"],
+        ["loose fluid liquid harmful", "molten {[:MAT_METAL]}"],
+        ["loose fluid liquid harmful", "molten {[:MAT_STONE]}"],
+        ["loose fluid gas", "air"],
+        ["loose fluid gas", "ozone"],
+        ["loose fluid gas", "smoke"],
+        ["loose fluid gas", "{['!harmful':MAT_LIQUID]} vapor"],
+        ["loose fluid gas harmful", "{['harmful':MAT_LIQUID]} vapor"],
+        ["loose fluid gas harmful", "{['liquid&&harmful':MATERIAL]} vapor"]
+    ];
+    SupportTables.MAT_METAL = [
+        ["", "lead"],
+        ["", "copper"],
+        ["", "iron"],
+        ["", "bronze"],
+        ["", "steel"],
+        ["", "silver"],
+        ["", "gold"],
+    ];
+    SupportTables.MAT_STONE = [
+        ["", "sandstone"],
+        ["", "granite"],
+        ["", "marble"],
+        ["", "obsidian"],
+        ["", "alabaster"],
+        ["", "quartz"],
+        ["", "jade"],
+    ];
+    SupportTables.MAT_WOOD = [
+        ["", "pine"],
+        ["", "ash wood"],
+        ["", "beech"],
+        ["", "oak"],
+        ["", "maple"],
+        ["", "mahogany"],
+        ["", "walnut"],
+        ["", "rose wood"],
+        ["", "sandal wood"],
+    ];
+    SupportTables.MAT_COMP_SOLID = [
+        ["", "mortar"],
+        ["", "cobblestone"],
+        ["", "stone bricks"],
+        ["", "clay bricks"],
+    ];
+    SupportTables.MAT_DUST = [
+        ["", "dust"],
+        ["", "ash"],
+        ["", "sand"],
+        ["", "gravel"],
+        ["", "soil"],
+        ["", "{[:MAT_METAL]} dust"],
+        ["", "{[:MAT_STONE]} dust"],
+    ];
+    SupportTables.MAT_LIQUID = [
+        ["edible", "water"],
+        ["", "sea water"],
+        ["edible vegetable", "olive oil"],
+        ["edible", "vinegar"],
+        ["edible vegetable", "{[:FRUIT]} juice"],
+        ["edible", "wine"],
+        ["edible", "brandy"],
+        ["harmful", "acid"],
+        ["", "mud"],
+        ["", "petroleum"],
+        ["animal", "blood"],
+        ["animal", "bile"],
+        ["animal edible", "milk"],
+        ["animal", "urine"],
+    ];
+    /**
+     * PLANTS
+     */
+    SupportTables.PLANT = [];
+    SupportTables.TREE = [];
+    SupportTables.BUSH = [];
+    SupportTables.FRUIT = [
+        ["", "apple{ $cc > 1 ? 's' : '' }"],
+        ["", "pear{ $cc > 1 ? 's' : '' }"],
+        ["", "orange{ $cc > 1 ? 's' : '' }"],
+        ["", "banana{ $cc > 1 ? 's' : '' }"],
+        ["", "mango{ $cc > 1 ? 'es' : '' }"],
+        ["", "papaya{ $cc > 1 ? 's' : '' }"],
+        ["", "ananas"],
+        ["", "peach{ $cc > 1 ? 'es' : '' }"],
+        ["", "apricot{ $cc > 1 ? 's' : '' }"],
+        ["", "plum{ $cc > 1 ? 's' : '' }"],
+    ];
+    /**
+     * CREATURE TYPES: ANIMALS
+     */
+    SupportTables.ANIMAL = [
+        ["flying", "{['flying':MAMMAL]}"],
+        ["flying", "{['flying':INSECT]}"],
+        ["flying", "{['!acquatic':BIRD]}"],
+        ["acquatic", "{['acquatic':MAMMAL]}"],
+        ["acquatic", "{['acquatic':BIRD]}"],
+        ["acquatic", "{['acquatic':INSECT]}"],
+        ["acquatic", "{['acquatic':REPTILE]}"],
+        ["acquatic", "{[:FISH]}"],
+        ["acquatic", "{[:CRUSTACEAN]}"],
+        ["", "{[:MAMMAL]}"],
+        ["", "{[:BIRD]}"],
+        ["", "{[:REPTILE]}"],
+        ["", "{[:FISH]}"],
+        ["", "{[:CRUSTACEAN]}"],
+        ["", "{[:INSECT]}"],
+    ];
+    SupportTables.MAMMAL = [
+        ["primate", "chimp{ $cc > 1 ? 's' : '' }"],
+        ["primate", "monkey{ $cc > 1 ? 's' : '' }"],
+        ["primate", "gorilla{ $cc > 1 ? 's' : '' }"],
+        ["primate", "baboon{ $cc > 1 ? 's' : '' }"],
+        ["primate", "macaque{ $cc > 1 ? 's' : '' }"],
+        ["cetacean acquatic", "whale{ $cc > 1 ? 's' : '' }"],
+        ["cetacean acquatic", "dolphin{ $cc > 1 ? 's' : '' }"],
+        ["cetacean acquatic", "beluga{ $cc > 1 ? 's' : '' }"],
+        ["acquatic", "otter{ $cc > 1 ? 's' : '' }"],
+        ["acquatic", "sea lion{ $cc > 1 ? 's' : '' }"],
+        ["acquatic", "walrus{ $cc > 1 ? 'es' : '' }"],
+        ["flying", "bat{ $cc > 1 ? 's' : '' }"],
+    ];
+    SupportTables.BIRD = [
+        ["prey", "eagle{ $cc > 1 ? 's' : '' }"],
+        ["prey", "hawk{ $cc > 1 ? 's' : '' }"],
+        ["prey", "sparrow{ $cc > 1 ? 's' : '' }"],
+        ["acquatic", "penguin{ $cc > 1 ? 's' : '' }"],
+    ];
+    SupportTables.REPTILE = [
+        ["", "lizard{ $cc > 1 ? 's' : '' }"],
+        ["acquatic", "crocodile{ $cc > 1 ? 's' : '' }"],
+        ["acquatic", "turtle{ $cc > 1 ? 's' : '' }"],
+        ["", "tortoise{ $cc > 1 ? 's' : '' }"],
+    ];
+    SupportTables.FISH = [
+        ["predator", "shark{ $cc > 1 ? 's' : '' }"],
+        ["school predator", "piranha{ $cc > 1 ? 's' : '' }"],
+        ["school", "sardine{ $cc > 1 ? 's' : '' }"],
+    ];
+    SupportTables.CRUSTACEAN = [
+        ["", "crab{ $cc > 1 ? 's' : '' }"],
+        ["", "shrimp{ $cc > 1 ? 's' : '' }"],
+        ["", "lobster{ $cc > 1 ? 's' : '' }"],
+    ];
+    SupportTables.INSECT = [
+        ["flying hive", "bee{$cc>1?'s':''}"],
+        ["flying", "locust{$cc>1?'s':''}"],
+        ["flying", "bumblebee{$cc>1?'s':''}"],
+        ["flying hive", "wasp{$cc>1?'s':''}"],
+        ["flying", "mosquito{$cc>1?'es':''}"],
+        ["flying", "fl{$cc>1?'ies':'y'}"],
+        ["flying", "butterfl{$cc>1?'ies':'y'}"],
+        ["crawling", "spider{ $cc > 1 ? 's' : 'y' }"],
+        ["crawling", "cockroach{ $cc > 1 ? 'es' : 'y' }"],
+        ["crawling", "centipede{ $cc > 1 ? 's' : '' }"],
+        ["crawling hive", "ant{ $cc > 1 ? 's' : '' }"],
+        ["crawling hive", "termite{ $cc > 1 ? 's' : '' }"],
+    ];
+    SupportTables.MINOR_APPARITION = [
+        ["", "{$mmpc=1d[1..10]} {[:MINOR_MAGICAL_PARTICLE]}"]
+    ];
+    /**
+     * PARANORMAL COSMETICS
+     */
+    SupportTables.MINOR_MAGICAL_PARTICLE = [
+        ["", "{[:MINOR_MAGICAL_COSMETICS]} {[:COLOR]} mote{$mmpc>1?'s':''}"],
+        ["", "{[:MINOR_MAGICAL_COSMETICS]} {[:COLOR]} globe{$mmpc>1?'s':''}"],
+        ["", "{[:MINOR_MAGICAL_COSMETICS]} {[:COLOR]} ghostly {#$cc=$mmpc}{['flying':INSECT]}"],
+        ["", "{[:MINOR_MAGICAL_COSMETICS]} {[:COLOR]} oversized {#$cc=$mmpc}{['flying':INSECT]}"],
+    ];
+    SupportTables.MINOR_MAGICAL_COSMETICS = [
+        ["", "sparkling"],
+        ["", "crackling"],
+        ["", "twinkling"],
+        ["", "flashing"],
+        ["", "glowing"],
+        ["", "ondulating"],
+        ["", "pulsating"],
+        ["", "fizzing"],
+        ["", "humming"],
+        ["", "vibrating"],
+        ["", "rotating"],
+        ["", "bobbing"]
+    ];
+    /**
+     * COLORS and SURFACES
+     */
+    SupportTables.COLOR_MOD = [
+        ["shade", "light"],
+        ["shade", "dark"],
+        ["saturation", "brilliant"],
+        ["saturation", "muted"]
+    ];
+    SupportTables.COLOR = [
+        ["modded mono", "{['shade':COLOR_MOD]} gray"],
+        ["modded", "{[:COLOR_MOD]} {['!mono':PURE_COLOR]}"],
+        ["mono", "{['mono':PURE_COLOR]}"],
+        ["primary", "{['primary':PURE_COLOR]}"],
+        ["rainbow", "{['rainbow':PURE_COLOR]}"],
+        ["fancy", "{['fancy':PURE_COLOR]}"],
+        ["modded primary", "{[:COLOR_MOD]} {['primary':PURE_COLOR]}"],
+        ["modded rainbow", "{[:COLOR_MOD]} {['rainbow':PURE_COLOR]}"],
+        ["modded fancy", "{[:COLOR_MOD]} {['fancy':PURE_COLOR]}"],
+    ];
+    SupportTables.PURE_COLOR = [
+        ["mono", "black"],
+        ["mono", "gray"],
+        ["mono", "white"],
+        ["primary rainbow", "red"],
+        ["rainbow", "orange"],
+        ["rainbow", "yellow"],
+        ["primary rainbow", "green"],
+        ["primary rainbow", "blu"],
+        ["rainbow", "indigo"],
+        ["rainbow", "violet"],
+        ["fancy", "purple"],
+        ["fancy", "beige"],
+        ["fancy", "cream"],
+        ["fancy", "sepia"],
+        ["fancy", "tangerine"],
+        ["fancy", "amber"],
+        ["fancy", "cherry"],
+        ["fancy", "fuscia"],
+        ["fancy", "salmon"],
+        ["fancy", "pink"],
+        ["fancy", "magenta"],
+        ["fancy", "lilac"],
+        ["fancy", "azure"],
+        ["fancy", "teal"],
+        ["fancy", "lime"],
+        ["fancy", "mint"],
+        ["fancy", "brown"],
+    ];
+    /**
+     * TIME & DURATION
+     */
+    SupportTables.DURATION = [
+        ["sec ltday", "for {$r=1d6} second{$r>1?'s':''}"],
+        ["sec ltday", "for {$r=6d10} second{$r>1?'s':''}"],
+        ["min ltday", "for {$r=1d6} minute{$r>1?'s':''}"],
+        ["min ltday", "for {$r=6d10} minute{$r>1?'s':''}"],
+        ["hr ltday", "for {$r=1d6} hour{$r>1?'s':''}"],
+        ["until ltday", "until {[:DAY_TRANSITION]}"],
+        ["hr", "for {2d20} hours"],
+        ["day gtday", "for {1d6} days"],
+        ["day gtday", "for {1d20} days"],
+        ["until gtday", "until next {[:WEEKDAY]} at {[:DAY_TRANSITION]}"],
+        ["until gtday", "until next {[:MOON_PHASE]} moon"],
+        ["week gtweek", "for {$r=1d4} week{$r>1?'s':''}"],
+        ["month gtweek", "for {$r=1d4} month{$r>1?'s':''}"],
+        ["until gtmonth", "until next {[:ASTRONOMICAL_EVENT]}"],
+        ["until gtmonth", "until next {[:SEASON]}"]
+    ];
+    SupportTables.TIME_CICLIC = [
+        ["sun", "{[:DAY_TRANSITION]}"],
+        ["week", "{[:WEEKDAY]}"],
+        ["moon", "{[:MOON_PHASE]}"],
+        ["month", "{[:MONTH]}"],
+        ["season", "{[:SEASON]}"],
+        ["astronomical", "{[:ASTRONOMICAL_EVENT]}"],
+    ];
+    SupportTables.DAY_TRANSITION = [
+        ["", "dawn"],
+        ["", "noon"],
+        ["", "sunset"],
+        ["", "midnight"]
+    ];
+    SupportTables.WEEKDAY = [
+        ["", "monday"],
+        ["", "tuesday"],
+        ["", "wednesday"],
+        ["", "thursday"],
+        ["", "friday"],
+        ["", "saturday"],
+        ["", "sunday"]
+    ];
+    SupportTables.MOON_PHASE = [
+        ["", "full"],
+        ["", "new"],
+        ["", "first quarter"],
+        ["", "third quarter"]
+    ];
+    SupportTables.MONTH = [
+        ["", "january"],
+        ["", "february"],
+        ["", "march"],
+        ["", "april"],
+        ["", "may"],
+        ["", "june"],
+        ["", "july"],
+        ["", "august"],
+        ["", "september"],
+        ["", "october"],
+        ["", "november"],
+        ["", "december"]
+    ];
+    SupportTables.SEASON = [
+        ["", "spring"],
+        ["", "summer"],
+        ["", "autumn"],
+        ["", "winter"],
+    ];
+    SupportTables.ASTRONOMICAL_EVENT = [
+        ["", "solstice"],
+        ["", "equinox"],
+        ["", "solstice ({#$s=d[1,3]}{[$s:SEASON]})"],
+        ["", "equinox ({#$s=d[0,2]}{[$s:SEASON]})"]
+    ];
+    return SupportTables;
+}());
+exports.SupportTables = SupportTables;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/tables/WildMagicTables.class.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var SupportTables_class_1 = __webpack_require__("./src/app/master/generators/tables/SupportTables.class.ts");
+var WildMagicTables = /** @class */ (function () {
+    function WildMagicTables() {
+    }
+    WildMagicTables.S = SupportTables_class_1.SupportTables;
+    WildMagicTables._START = "{[:WILD_MAGIC]}";
+    WildMagicTables.WILD_MAGIC = [
+        // Instantaneous, reversible, single-target (creature)
+        // -- Single creature is transmogrified (reversible)
+        ["instant reversible one trnsm", "{[:COSMETIC_TRANSMOGRIFICATION]|C}"],
+        ["instant reversible one trnsm", "{['reversible':MOSTLY_HARMLESS_TRANSMOGRIFICATION]|C}"],
+        // -- Single creature gains an ability
+        ["instant reversible one trnsm", "The {[:SPECIFIC_CREATURE]} gains the ability of {[:MINOR_ABILITY]}"],
+    ];
+    /**
+     * TARANSMOGRIFICATION
+     * $tc:number = 1 // target count
+     */
+    WildMagicTables._TRANSMOGRIFICATION_INIT = "{# $tc = $tc || 1 }{# $verb_s = $tc == 1 ? 's' : '' }";
+    WildMagicTables.COSMETIC_TRANSMOGRIFICATION = [
+        // creature (or part of) becomes invisible
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} become{$verb_s} invisible"],
+        ["reversible",
+            "{# $bp_string=['limb||hand||foot||part||appendage||orifice||fluid':S.BODY_PART] }{#$tc = $bp_n}"
+                + WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "{[$bp_a:S.A_THE_SOME_ALL]} {$bp_string} of "
+                + "the {[:SPECIFIC_CREATURE]} become{$verb_s} invisible"],
+        // creature (or part of) becomes seethrough
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} become{$verb_s} {1d9*10}% transparent"],
+        ["reversible",
+            "{# $bp_string=['limb||hand||foot||part||appendage||orifice||fluid':S.BODY_PART] }{#$tc = $bp_n}"
+                + WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "{[$bp_a:S.A_THE_SOME_ALL]} {$bp_string} of "
+                + "the {[:SPECIFIC_CREATURE]} become{$verb_s} {1d9*10}% transparent"],
+        // creature (skin, hair, blood, nail, eyes) changes color
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} turn{$verb_s} the color {[:S.COLOR]}"],
+        ["reversible",
+            "{# $bp_string=['limb||hand||foot||part||appendage||orifice||fluid':S.BODY_PART] }{#$tc = $bp_n}"
+                + WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "{[$bp_a:S.A_THE_SOME_ALL]} {$bp_string} of "
+                + "the {[:SPECIFIC_CREATURE]} turn{$verb_s} the color {[:S.COLOR]}"],
+        // creature emanates aura (light, darkness, sensation, sound, temperature, etc...)
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} emanate{$verb_s} a constant {[:AURA]}"],
+        ["reversible",
+            "{# $bp_string=['limb||hand||foot||part||appendage||orifice||fluid':S.BODY_PART] }{#$tc = $bp_n}"
+                + WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "{[$bp_a:S.A_THE_SOME_ALL]} {$bp_string} of "
+                + "the {[:SPECIFIC_CREATURE]} emanate{$verb_s} a constant {[:AURA]}"],
+        // creature shed-appendages grow / fall-off
+        ["reversible",
+            "{# $bp_string=['shed&&appendage':S.BODY_PART] }{#$tc = $bp_n}"
+                + WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "{[$bp_a:S.A_THE_SOME_ALL]} {$bp_string} of "
+                + "the {[:SPECIFIC_CREATURE]} immediately fall{$verb_s} off"],
+        ["reversible",
+            "{# $bp_string=['shed&&appendage':S.BODY_PART] }{#$tc = $bp_n}"
+                + WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "{[$bp_a:S.A_THE_SOME_ALL]} {$bp_string} of "
+                + "the {[:SPECIFIC_CREATURE]} grow{$verb_s} {1d[2,3,5,10]} times as fast"],
+    ];
+    WildMagicTables.MOSTLY_HARMLESS_TRANSMOGRIFICATION = [
+        // reversible
+        // -- creature polymorphs into an animal (retaining memories, intelligence, and ability to speak and cast spells)
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} turn{$verb_s} into a {[:S.ANIMAL]} but can still speak, and cast spells"],
+        // -- creature changes gender
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} switch{$tc == 1 ? 'es' : ''} gender"],
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} become{$verb_s} gender-less"],
+        // -- creature ages / rejuvenates a little
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} immediately age{$verb_s} {1d10} years"],
+        ["reversible",
+            WildMagicTables._TRANSMOGRIFICATION_INIT
+                + "the {[:SPECIFIC_CREATURE]} immediately rejuvenate{$verb_s} {1d5} years"],
+    ];
+    WildMagicTables.NON_LETHAL_TRANSMOGRIFICATION = [];
+    WildMagicTables.POTENTIALLY_LETHAL_TRANSMOGRIFICATION = [];
+    /**
+     * SINGLE TARGET SELECTION
+     */
+    WildMagicTables.SPECIFIC_CREATURE = [
+        ["absolute", "Caster"],
+        ["absolute", "original spell target"],
+        ["contextual", "closest creature relative to {['absolute':SPECIFIC_CREATURE]}"],
+        ["contextual", "closest {[:CREATURE_RELATIONSHIP]} relative to {['absolute':SPECIFIC_CREATURE]}"]
+    ];
+    WildMagicTables.CREATURE_CLASS = [
+        ["mundane antropomorphic", "human{ $cc > 1 ? 's' : '' }"],
+        ["fantasy antropomorphic", "humanoid{ $cc > 1 ? 's' : '' }"],
+        ["fantasy antropomorphic", "halfling{ $cc > 1 ? 's' : '' }"],
+        ["fantasy antropomorphic", "dwar{ $cc > 1 ? 'ves' : 'f' }"],
+        ["fantasy antropomorphic", "el{ $cc > 1 ? 'ves' : 'f' }"],
+        ["fantasy antropomorphic", "goblinoid{ $cc > 1 ? 's' : '' }"],
+        ["mundane", "animal{ $cc > 1 ? 's' : '' }"],
+        ["fantasy", "monster{ $cc > 1 ? 's' : '' }"],
+    ];
+    WildMagicTables.CREATURE_RELATIONSHIP = [
+        ["friendly ally", "companion"],
+        ["friendly ally", "friend"],
+        ["friendly", "family member"],
+        ["", "acquaintance"],
+        ["unfriendly", "rival"],
+        ["unfriendly", "enemy"],
+    ];
+    WildMagicTables.RELATIVE_CREATURE = [
+        ["", "farthest"],
+        ["", "youngest"],
+        ["", "oldest"],
+        ["", "strongest"],
+        ["", "weakest"]
+    ];
+    /**
+     * AREA SELECTION
+     */
+    WildMagicTables.POI = [
+        ["creature", "{['one':TARGET_CREATURE]}"],
+        ["place", "{['one':TARGET_CREATURE]}'s home"],
+        ["place", "where {['one':TARGET_CREATURE]} last slept"],
+    ];
+    WildMagicTables.WITHIN_RANGE = [
+        ["absolute ltkm", "within {1d[3,5,10,30,50]} meters"],
+        ["absolute ltkm", "within {1d[3,5,10,30,50]} meters of the original target"],
+        ["absolute ltkm", "in sight of the Caster"],
+        ["absolute ltkm", "in sight of the original target"],
+        ["absolute ltkm", "in the Caster's field of view"],
+        ["absolute ltkm", "in the original target's field of view"],
+    ];
+    /**
+     * MINOR MAGICAL ABILITIES
+     */
+    WildMagicTables.MINOR_ABILITY = [
+        ["", "seeing through {[:S.MATERIAL]}"],
+        ["", "understanding {#$cc=2}{[:S.ANIMAL]}"],
+        ["", "speaking to {#$cc=2}{[:S.ANIMAL]} but not understand them"],
+        ["", "rotating their {['(limb&&!all)||part||(appendage&&all&&!shed)':S.BODY_PART]} {1d[180..360]} degrees"],
+        ["", "making their {['!many&&(part||limb||appendage||orifice)':S.BODY_PART]} {1d9*10}% invisible"],
+        ["", "becoming {1d[3..20]}cm shorter for a short while"],
+        ["", "becoming {1d[3..20]}cm taller for a short while"],
+        ["", "stretching their {['limb||part':S.BODY_PART]} up to {1d[3..20]}cm"],
+        ["", "speaking in reverse"],
+        ["", "understanding reversed speech"],
+        ["", "immediately count groups of small similar objects up to {1d[7..100]*1d[1,3,5,7,10]} at a time"],
+    ];
+    /**
+     * MAGICAL APPARITIONS AND COSMETICS
+     */
+    WildMagicTables.AURA = [
+        ["", "aura of {[:AURA_LIKENESS]}"],
+        ["", "{[:AURA_SENSATION]} aura"],
+    ];
+    WildMagicTables.AURA_SENSATION = [
+        ["", "unsettling"],
+        ["", "disturbing"],
+        ["", "soothing"],
+        ["", "calming"],
+        ["", "provoking"],
+        ["", "radiant"],
+        ["", "terrifying"],
+        ["", "inviting"],
+    ];
+    WildMagicTables.AURA_LIKENESS = [
+        ["", "evil"],
+        ["", "savagery"],
+        ["", "violence"],
+        ["", "holyness"],
+        ["", "serenity"],
+        ["", "peace"],
+        ["", "cold"],
+        ["", "heat"],
+        ["", "darkness"],
+    ];
+    return WildMagicTables;
+}());
+exports.WildMagicTables = WildMagicTables;
 
 
 /***/ }),
@@ -2191,93 +2859,130 @@ var RandomTablesService = /** @class */ (function () {
         if (context['@tables'] === undefined) {
             context['@tables'] = {};
         }
-        console.log("------------- BEGIN -------------");
+        //console.log("------------- BEGIN -------------")
         if (this.CMD_REGEX.test(sentence)) {
             var sentence = sentence.replace(this.CMD_REGEX, function (sub, silent, cmd) {
                 var replace = _this.execCmd(cmd, context);
                 return silent ? "" : replace;
             });
         }
-        console.log("------------- END -------------");
+        //console.log("------------- END -------------")
         return sentence;
     };
     RandomTablesService.execCmd = function (cmd, context) {
+        //console.log("Command", cmd)
         var _this = this;
-        console.log("Command", cmd);
         if (this.ASSIGN_REGEX.test(cmd)) {
+            //console.log("Assign command...")
             var a = this.ASSIGN_REGEX.exec(cmd);
-            console.log("Assign ", a[1], " = ", a[2]);
-            return context[a[1]] = this.execCmd(a[2], context);
+            var value = this.execCmd(a[2], context);
+            //console.log("Assign ", a[1], " = ", value);
+            return context[a[1]] = value;
         }
         else {
+            // Catch Pipe functions
+            cmd = cmd.replace(this.PIPE_REGEX, function (sub, piped, pipe) {
+                //console.log(sub, piped, pipe);
+                var transformed = _this.execCmd(piped, context);
+                switch (pipe) {
+                    case "C":
+                        transformed = _this.capitalize(transformed);
+                        break;
+                }
+                return _this.asStringValue(transformed);
+            });
             // Replace all variables with values
             cmd = cmd.replace(this.VAR_REGEX, function (sub, varName, idx) {
                 var value = context[varName];
-                console.log("Variable", sub, varName, value);
                 if (value === undefined) {
-                    return sub;
+                    value = sub;
                 }
                 else if (typeof value === "string") {
-                    return ["'", value, "'"].join('');
+                    value = _this.asStringValue(value);
                 }
                 else if (typeof value === "number") {
-                    return "" + value;
+                    value = "" + value;
                 }
                 else if (value.length > 0) {
                     if (idx > 0 && cmd.charAt(idx - 1) == "d") {
                         // It's a collection meant for a roll
-                        console.log("collection variabile for roll");
-                        return sub;
+                        //console.log("collection variabile for roll")
+                        value = sub;
                     }
                     else {
-                        return _this.asStringValue(value);
+                        value = _this.asStringValue(value);
                     }
                 }
+                //console.log("Variable", sub, varName, value);
+                return value;
             });
             // Resolve collections
             cmd = cmd.replace(this.COLLDEF_REGEX, function (sub, listDef) {
-                console.log("Collection", sub);
+                //console.log("Collection", sub);
                 return _this.resolveCollection(listDef, context);
             });
             // Replace all rolls with values
             cmd = cmd.replace(this.ROLL_REGEX, function (sub, samples, collection, explode, reduction, asList) {
-                console.log("Roll", sub, samples, collection, explode, reduction, asList);
+                //console.log("Roll", sub, samples, collection, explode, reduction, asList);
                 return "" + _this.roll(parseInt(samples), collection, explode !== undefined, reduction, asList !== undefined, context);
             });
             // Lookup tables
             cmd = cmd.replace(this.TABLE_LOOKUP_REGEX, function (sub, tags, lookup, tableName) {
-                console.log("Table lookup", sub, tableName, tags, lookup);
+                //console.log("Table lookup", sub, tableName, tags, lookup);
                 var lookupId = lookup === undefined ? null : parseInt(_this.execCmd(lookup, context));
-                var tokenizedTags = tags === undefined ? [] : tags.replace(/'/g, "").split(" ").filter(function (t) { return t.length > 0; });
-                var evaluatedLookup = _this.tableLookup(tableName, tokenizedTags, lookupId, context);
+                if (tags)
+                    tags = tags.replace(/(^\s*'|'\s*$)/g, "");
+                var evaluatedLookup = _this.tableLookup(tableName, tags, lookupId, context);
                 return _this.asStringValue(evaluatedLookup);
             });
             // See if it's just a value!
             return this.evalInContext(cmd, context);
         }
     };
-    RandomTablesService.tableLookup = function (tableName, tags, id, context) {
-        var table = context['@tables'][tableName];
-        if (tags.length) {
+    RandomTablesService._deepGet = function (p, o) {
+        return p.reduce(function (xs, x) { return (xs && xs[x]) ? xs[x] : null; }, o);
+    };
+    RandomTablesService.tableLookup = function (tableName, tagExpression, id, context) {
+        var _this = this;
+        var tablePath = tableName.split(".");
+        var table = this._deepGet(tablePath, context['@tables']);
+        //console.log("Access table: ", tableName, tablePath, table, tagExpression, id, context);
+        if (tagExpression) {
             table = table.filter(function (entry) {
-                var entryTags = entry[0].split(" ").filter(function (t) { return t.length; });
-                for (var _i = 0, tags_1 = tags; _i < tags_1.length; _i++) {
-                    var tag = tags_1[_i];
-                    if (entryTags.includes(tag)) {
-                        return true;
-                    }
-                }
-                return false;
+                var tagContext = {};
+                var entryTags = entry[0];
+                tagExpression.split(/\s*(?:\&\&|\|\||[\(\)\!\'])\s*/g).filter(function (tagName) { return tagName.length; }).map(function (tagName) {
+                    tagContext[tagName] = false;
+                    return tagName;
+                });
+                entryTags.split(" ").filter(function (tagName) { return tagName.length; }).map(function (tagName) {
+                    tagContext[tagName] = true;
+                });
+                var evaluation = _this.evalInContext(tagExpression, tagContext);
+                //console.log("EVALUATING ENTRY ", entry, tagExpression, evaluation)
+                return evaluation;
             });
         }
-        if (table === undefined) {
+        if (table === undefined || table === null) {
             return "unknown table";
         }
         else {
             var lastId = table.length - 1;
             id = id !== null ? Math.min(id, lastId) : this.randInt(0, lastId);
             var tableSample = table[id];
-            return this.eval(tableSample[1], context);
+            //console.log("Table sample id: ", id, tableSample);
+            var resolvedTableSample;
+            if (tablePath.length > 1) {
+                //console.log("Performing Tables Switcheroo", context['@tables'][tablePath[tablePath.length - 2]])
+                var currTables = context['@tables'];
+                context['@tables'] = context['@tables'][tablePath[tablePath.length - 2]];
+                resolvedTableSample = this.eval(tableSample[1], context);
+                context['@tables'] = currTables;
+            }
+            else {
+                resolvedTableSample = this.eval(tableSample[1], context);
+            }
+            return resolvedTableSample;
         }
     };
     RandomTablesService.resolveCollection = function (listDef, context) {
@@ -2286,8 +2991,7 @@ var RandomTablesService = /** @class */ (function () {
             context[listIndex] = listDef.split(",").map(function (item) { return parseInt(item); });
         }
         else if (this.RANGE_REGEX.test(listDef)) {
-            var rangeDef = this.RANGE_REGEX.exec(listDef);
-            console.log(rangeDef);
+            var rangeDef = this.RANGE_REGEX.exec(listDef); //console.log(rangeDef)
             var range = [];
             var min = parseInt(rangeDef[1]);
             var max = parseInt(rangeDef[2]);
@@ -2374,31 +3078,47 @@ var RandomTablesService = /** @class */ (function () {
         }
     };
     RandomTablesService.asStringValue = function (value) {
-        return ["'", value, "'"].join("");
+        return ["'", value.replace("'", "\\'"), "'"].join("");
     };
     RandomTablesService.randInt = function (min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
-    RandomTablesService.evalInContext = function (scr, context) {
+    RandomTablesService.evalInContext = function (command, context) {
         // execute script in private context
-        console.log("EVAL", scr, context);
+        // console.log("EVAL", command, context);
+        var src = command.replace(this.VAR_REGEX, function (sub, varname) {
+            if (context[varname] === undefined) {
+                context[varname] = undefined;
+            }
+            return sub;
+        });
         var r;
         try {
-            r = (new Function("with(this) { return " + scr + "}")).call(context);
+            r = (new Function("with(this) { return " + command + "}")).call(context);
         }
         catch (e) {
+            console.log("Was evaluating '" + command + "' in", context);
             console.error(e);
         }
         return r;
     };
-    RandomTablesService.CMD_REGEX = /\{\s*(\#)?([^\}]+)\s*\}/g;
-    RandomTablesService.ASSIGN_REGEX = /(\$[a-z][a-z0-9_]*)=([^=].*)/;
+    RandomTablesService.capitalize = function (line) {
+        if (typeof line === "string" && line.length > 0) {
+            return line.charAt(0).toUpperCase() + line.substring(1);
+        }
+        else {
+            return line;
+        }
+    };
+    RandomTablesService.CMD_REGEX = /\{\s*(\#)?\s*([^\}]+)\s*\}/g;
+    RandomTablesService.ASSIGN_REGEX = /(\$[a-z][a-z0-9_]*)\s*=\s*([^=].*)/;
+    RandomTablesService.PIPE_REGEX = /(\'[^']*\'|\$[a-z][a-z0-9_]*|\[[^:]*:[^\]]+\])\|(C)/g;
     RandomTablesService.VAR_REGEX = /(\$[a-z][a-z0-9_]*)/g;
     RandomTablesService.COLLDEF_REGEX = /\[([0-9\.\,]+)\]/g;
     RandomTablesService.RANGE_REGEX = /^([0-9]+)\.\.([0-9]+)$/;
     RandomTablesService.LIST_REGEX = /^([0-9]+(,[0-9]+)+)$/;
     RandomTablesService.ROLL_REGEX = /([0-9]*)d([0-9]+|\$[0-9a-z_]+)(\!)?([BW<>][1-9]+)?([L])?/g;
-    RandomTablesService.TABLE_LOOKUP_REGEX = /^\[(\'[^\']*\')?([^\:\']+)?\:([A-Z_]+)\]$/;
+    RandomTablesService.TABLE_LOOKUP_REGEX = /^\s*\[(\'[^\']*\')?([^\:\']+)?\:([A-Z_\.]+)\]\s*$/;
     RandomTablesService.RED_BEST_REGEX = /^B([0-9]+)$/;
     RandomTablesService.RED_WORST_REGEX = /^W([0-9]+)$/;
     RandomTablesService.RED_SUCC_REGEX = /^([<>][0-9]+)$/;
@@ -3987,6 +4707,7 @@ var heritage_component_1 = __webpack_require__("./src/app/shared/heritage/herita
 var playbook_card_component_1 = __webpack_require__("./src/app/shared/playbook-card/playbook-card.component.ts");
 var gear_component_1 = __webpack_require__("./src/app/shared/gear-stack/gear.component.ts");
 var tag_component_1 = __webpack_require__("./src/app/shared/tag/tag.component.ts");
+var forms_1 = __webpack_require__("./node_modules/@angular/forms/esm5/forms.js");
 var SharedModule = /** @class */ (function () {
     function SharedModule() {
     }
@@ -3995,12 +4716,14 @@ var SharedModule = /** @class */ (function () {
             imports: [
                 common_1.CommonModule,
                 core_2.TranslateModule,
-                router_1.RouterModule.forChild([])
+                router_1.RouterModule.forChild([]),
+                forms_1.FormsModule
             ],
             declarations: [move_detail_component_1.MoveDetailComponent, show_character_component_1.ShowCharacterComponent, heritage_component_1.HeritageComponent, playbook_card_component_1.PlaybookCardComponent, gear_component_1.GearStackComponent, tag_component_1.TagComponent],
             exports: [
                 move_detail_component_1.MoveDetailComponent,
                 core_2.TranslateModule,
+                forms_1.FormsModule,
                 show_character_component_1.ShowCharacterComponent,
                 heritage_component_1.HeritageComponent,
                 playbook_card_component_1.PlaybookCardComponent,
