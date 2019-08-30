@@ -1,0 +1,367 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="jqui/jquery-ui.min.css" />
+    <style>
+        table tbody tr:nth-of-type(odd) {
+            background-color: #EEE;
+        }
+
+        table td {
+            padding: 3px 5px;
+        }
+
+        table ul {
+            padding: 0;
+            margin: 0;
+        }
+
+        table li {
+            list-style-type: none;
+            padding: 1px 0px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="results">
+        <div id="filters">
+            <input id="product" type="text" placeholder="I want..." />
+
+        </div>
+        <table style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>Extractor</th>
+                    <th>Inputs</th>
+                    <th>Outputs</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="jqui/jquery-ui.min.js"></script>
+    <script>
+
+        jQuery(function ($) {
+
+            $.getJSON("./data.json", function (data) {
+
+
+                window.fuData = data;
+
+                window.fuData.recipesByOutput = recipesByOutput(data);
+
+                var $outputField = $("#product")
+
+                $outputField.autocomplete({
+                    source: function (request, provideResponse) {
+                        provideResponse(searchByOutput(data, request.term));
+                    }
+                });
+
+                $outputField.on("autocompleteselect", function (e, result) {
+                    console.log(e, result)
+                    if (result.item) {
+                        var recipeRows = showRecipesForOutput(result.item.label, result.item.value);
+                        recipeRows = recipeRows.sort(function(a,b) {
+                            var outA = a.outputs.find(function(output) {
+                                return output.item == result.item.label;
+                            });
+                            
+                            var outB = b.outputs.find(function(output) {
+                                return output.item == result.item.label;
+                            });
+                            return parseInt(outA.number) > parseInt(outB.number) ? -1 : 1;
+                        });
+
+                        recipeRows.forEach(function(recipe) {
+                            addRow(recipe.device, recipe.inputs, recipe.outputs);
+                        });
+                    }
+                })
+
+            });
+
+
+        });
+
+        function showRecipesForOutput(outputName, recipesObject) {
+            console.log(outputName, recipesObject);
+
+            var $ = jQuery;
+            $("#results table tbody").empty();
+
+            var extractors = ["grinder", "extractor", "quantum extractor"];
+
+            var recipeRows = [];
+
+            for (var device in recipesObject) {
+                if (recipesObject.hasOwnProperty(device)) {
+
+                    for (var i in recipesObject[device]) {
+
+                        var recipe = recipesObject[device][i];
+
+                        var inputs = [];
+                        var outputs = [];
+
+                        switch (device) {
+                            case "extraction":
+
+                                for (var di in extractors) {
+
+                                    for (var inputName in recipe.inputs) {
+                                        if (recipe.inputs.hasOwnProperty(inputName)) {
+                                            inputs.push({
+                                                item: inputName,
+                                                number: recipe.inputs[inputName][di] || recipe.inputs[inputName]
+                                            });
+                                        }
+                                    }
+
+                                    for (var outputName in recipe.outputs) {
+                                        if (recipe.outputs.hasOwnProperty(outputName)) {
+                                            outputs.push({
+                                                item: outputName,
+                                                number: recipe.outputs[outputName][di] || recipe.outputs[outputName]
+                                            })
+                                        }
+                                    }
+
+                                    recipeRows.push({
+                                        device: extractors[di],
+                                        inputs: inputs,
+                                        outputs: outputs
+                                    });
+                                    // addRow(extractors[di], inputs, outputs);
+                                    outputs = [];
+                                    inputs = [];
+                                }
+
+                                break;
+                            case "liquidCentrifuge":
+                            case "gasCentrifuge":
+                            case "powderSifter":
+                            case "woodenCentrifuge":
+                                inputs.push({ item: recipe.input, number: 1 });
+                                for (var outputName in recipe.outputs) {
+                                    if (recipe.outputs.hasOwnProperty(outputName)) {
+                                        outputs.push({
+                                            item: outputName,
+                                            number: [
+                                                recipe.outputs[outputName][1],
+                                                recipe.outputs[outputName][0]
+                                            ].join(", ")
+                                        })
+                                    }
+                                }
+                                recipeRows.push({
+                                    device: device,
+                                    inputs: inputs,
+                                    outputs: outputs
+                                });
+                                // addRow(device, inputs, outputs);
+                                break;
+                            case "mixing":
+                            case "gene":
+
+                                var skipWild = false;
+
+                                for (var inputName in recipe.inputs) {
+                                    if (recipe.inputs.hasOwnProperty(inputName)) {
+                                        if ((inputName.indexOf("wild") == 0 && device == "gene")) {
+                                            skipWild = true;
+                                        }
+                                        inputs.push({
+                                            item: inputName,
+                                            number: recipe.inputs[inputName]
+                                        });
+
+                                    }
+                                }
+
+                                for (var outputName in recipe.outputs) {
+                                    if (recipe.outputs.hasOwnProperty(outputName)) {
+                                        outputs.push({
+                                            item: outputName,
+                                            number: recipe.outputs[outputName]
+                                        })
+                                    }
+                                }
+                                if (!skipWild)
+                                    recipeRows.push({
+                                        device: device,
+                                        inputs: inputs,
+                                        outputs: outputs
+                                    });
+                                    // addRow(device, inputs, outputs);
+                                break;
+                        }
+                    }
+
+                }
+            }
+            return recipeRows;
+        }
+
+        function addRow(device, inputs, outputs) {
+            var $ = jQuery;
+            var $table = $("#results table tbody");
+            var $row = $("<tr></tr>");
+
+            $row.append(['<td>', device, '</td>'].join(''));
+
+            var $inputsList = $('<ul></ul>');
+            for (var i in inputs) {
+                $inputsList.append($(['<li>', inputs[i].item, ' (', inputs[i].number, ')</li>'].join('')));
+            }
+            var $inputsRow = $("<td></td>");
+            $inputsRow.append($inputsList);
+            $row.append($inputsRow);
+
+            var $outputsList = $('<ul></ul>');
+            for (var i in outputs) {
+                $outputsList.append($(['<li>', outputs[i].item, ' (', outputs[i].number, ')</li>'].join('')));
+            }
+            var $outputsRow = $("<td></td>");
+            $outputsRow.append($outputsList);
+            $row.append($outputsRow);
+
+            $table.append($row);
+        }
+
+        function searchByOutput(data, term) {
+            var matchingOutputs = [];
+
+            for (var outputName in data.recipesByOutput) {
+                if (matchingOutputs.length >= 10) {
+                    break;
+                }
+                if (data.recipesByOutput.hasOwnProperty(outputName)) {
+
+                    if (outputName.indexOf(term) > -1) {
+                        matchingOutputs.push({
+                            label: outputName,
+                            value: data.recipesByOutput[outputName]
+                        });
+                    }
+
+                }
+            }
+            return matchingOutputs;
+        }
+
+        function recipesByOutput(data) {
+            var recipes = {};
+
+            // extractor
+            for (var i in data.fu_extraction_recipes) {
+                var extractionRecipe = data.fu_extraction_recipes[i];
+                for (var output in extractionRecipe.outputs) {
+                    if (extractionRecipe.outputs.hasOwnProperty(output)) {
+
+                        if (recipes[output] == undefined) {
+                            recipes[output] = newOutputDef();
+                        }
+                        if (recipes[output]["extraction"].indexOf(extractionRecipe) < 0) {
+                            recipes[output]["extraction"].push(extractionRecipe);
+                        }
+
+                    }
+                }
+            }
+
+            // liquid mixer
+            for (var i in data.fu_liquid_mixer_recipes) {
+                var mixerRecipe = data.fu_liquid_mixer_recipes[i];
+
+                for (var output in mixerRecipe.outputs) {
+                    if (mixerRecipe.outputs.hasOwnProperty(output)) {
+
+                        if (recipes[output] == undefined) {
+                            recipes[output] = newOutputDef();
+                        }
+                        if (recipes[output]["mixing"].indexOf(mixerRecipe) < 0) {
+                            recipes[output]["mixing"].push(mixerRecipe);
+                        }
+
+                    }
+                }
+
+            }
+
+            // centrifuges
+            for (var cRecipeType in data.fu_centrifugation_recipes) {
+
+                centrifugeTypes = data.centrifugeTypesByRecipeType[cRecipeType];
+
+                if (data.fu_centrifugation_recipes.hasOwnProperty(cRecipeType)) {
+                    var cRecipes = data.fu_centrifugation_recipes[cRecipeType];
+
+                    for (var input in cRecipes) {
+                        var centrifugationByInput = cRecipes[input];
+
+                        for (var output in centrifugationByInput) {
+                            if (centrifugationByInput.hasOwnProperty(output)) {
+
+                                if (recipes[output] == undefined) {
+                                    recipes[output] = newOutputDef();
+                                }
+
+                                for (var cti in centrifugeTypes) {
+                                    var centrifugeType = centrifugeTypes[cti];
+                                    recipes[output][centrifugeType].push({
+                                        input: input,
+                                        outputs: centrifugationByInput
+                                    })
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+
+            // gene extractor
+            for (var i in data.fu_gene_recipes) {
+                var geneRecipe = data.fu_gene_recipes[i];
+
+                for (var output in geneRecipe.outputs) {
+                    if (geneRecipe.outputs.hasOwnProperty(output)) {
+
+                        if (recipes[output] == undefined) {
+                            recipes[output] = newOutputDef();
+                        }
+                        if (recipes[output]["gene"].indexOf(geneRecipe) < 0) {
+                            recipes[output]["gene"].push(geneRecipe);
+                        }
+
+                    }
+                }
+            }
+
+            return recipes;
+        }
+
+        function newOutputDef() {
+            return {
+                "extraction": [],
+                "woodenCentrifuge": [],
+                "liquidCentrifuge": [],
+                "gasCentrifuge": [],
+                "powderSifter": [],
+                "mixing": [],
+                "gene": []
+            };
+        }
+
+    </script>
+</body>
+
+</html>
