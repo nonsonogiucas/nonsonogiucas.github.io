@@ -1848,7 +1848,7 @@ exports.InitTagsService = InitTagsService;
 /***/ "./src/app/master/generators/basic-generators/basic-generators.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Cryptic Quote</h4>\n<div class=\"list\">\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div innerHTML=\"{{crypticQuote}}\"></div>\n  </div>\n  <button (click)=\"rollCrypticQuotes()\">RE-ROLL!</button>\n</div>\n\n<h4>Wild Magic</h4>\n<div class=\"list\">\n  <div>\n    How many rolls? <input [(ngModel)]=\"wildMagicRollsNumber\">\n  </div>\n  <button (click)=\"rollWildMagic()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of wildMagicRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollWildMagic()\">RE-ROLL!</button>\n</div>\n\n<h4>Random Duration</h4>\n<div class=\"list\">\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of durationRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollDurations()\">RE-ROLL!</button>\n</div>\n"
+module.exports = "<h4>Wild Magic</h4>\n<div class=\"list\">\n  <div>\n    How many rolls? <input [(ngModel)]=\"wildMagicRollsNumber\">\n  </div>\n  <button (click)=\"rollWildMagic()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of wildMagicRolls; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollWildMagic()\">RE-ROLL!</button>\n</div>\n\n<h4>Random Dungeon</h4>\n<div class=\"list\">\n  <button (click)=\"rollDungeons()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div innerHTML=\"{{rolledDungeon}}\"></div>\n  </div>\n  <button (click)=\"rollDungeons()\">RE-ROLL!</button>\n</div>\n\n<h4>Random Spell Name</h4>\n<div class=\"list\">\n  <button (click)=\"rollSpells()\">RE-ROLL!</button>\n  <div class=\"rolls\">\n    <div *ngFor=\"let roll of rolledSpells; let even = even\" [ngClass]=\"{'even': even}\">{{roll}}</div>\n  </div>\n  <button (click)=\"rollSpells()\">RE-ROLL!</button>\n</div>\n"
 
 /***/ }),
 
@@ -1875,10 +1875,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
-var BasicTables_class_1 = __webpack_require__("./src/app/master/generators/tables/BasicTables.class.ts");
 var random_tables_service_1 = __webpack_require__("./src/app/master/generators/tables/random-tables.service.ts");
-var QuotesTables_class_1 = __webpack_require__("./src/app/master/generators/tables/QuotesTables.class.ts");
 var WildMagicTables_class_1 = __webpack_require__("./src/app/master/generators/tables/WildMagicTables.class.ts");
+var HtHaDTables_class_1 = __webpack_require__("./src/app/master/generators/tables/HtHaDTables.class.ts");
+var SpellNameTables_class_1 = __webpack_require__("./src/app/master/generators/tables/SpellNameTables.class.ts");
 var BasicGeneratorsComponent = /** @class */ (function () {
     function BasicGeneratorsComponent() {
         this.wildMagicRollsNumber = 1;
@@ -1886,6 +1886,7 @@ var BasicGeneratorsComponent = /** @class */ (function () {
     BasicGeneratorsComponent.prototype.ngOnInit = function () {
         // this.rollDurations();
         this.rollWildMagic();
+        this.rollSpells();
     };
     BasicGeneratorsComponent.prototype.rollWildMagic = function () {
         this.wildMagicRolls = [];
@@ -1895,21 +1896,25 @@ var BasicGeneratorsComponent = /** @class */ (function () {
             }));
         }
     };
-    BasicGeneratorsComponent.prototype.rollDurations = function () {
-        var durationTable = BasicTables_class_1.BasicTables.DURATION;
-        this.durationRolls = [];
-        for (var _i = 0, durationTable_1 = durationTable; _i < durationTable_1.length; _i++) {
-            var entry = durationTable_1[_i];
-            this.durationRolls.push(random_tables_service_1.RandomTablesService.eval(entry[1], {
-                "@tables": BasicTables_class_1.BasicTables
-            }));
-        }
-    };
-    BasicGeneratorsComponent.prototype.rollCrypticQuotes = function () {
-        var crypticQuote_1 = QuotesTables_class_1.QuotesTables.QUOTE[0][1];
-        this.crypticQuote = random_tables_service_1.RandomTablesService.eval(crypticQuote_1, {
-            "@tables": QuotesTables_class_1.QuotesTables
+    BasicGeneratorsComponent.prototype.rollDungeons = function () {
+        this.rolledDungeon = random_tables_service_1.RandomTablesService.eval(HtHaDTables_class_1.HtHaDTables._START, {
+            "@tables": HtHaDTables_class_1.HtHaDTables
         });
+    };
+    BasicGeneratorsComponent.prototype.rollSpells = function () {
+        this.rolledSpells = [];
+        for (var j = 0; j < SpellNameTables_class_1.SpellNamesTables.SB_SUITE.length; j++) {
+            for (var i = 0; i < this.wildMagicRollsNumber; i++) {
+                this.rolledSpells.push(random_tables_service_1.RandomTablesService.eval(SpellNameTables_class_1.SpellNamesTables.SB_SUITE[j], {
+                    "@tables": SpellNameTables_class_1.SpellNamesTables
+                }));
+            }
+        }
+        // for (var i = 0; i < this.wildMagicRollsNumber; i++) {
+        //   this.rolledSpells.push(RandomTablesService.eval(SpellNamesTables.RANDOMSPELL, {
+        //     "@tables": SpellNamesTables
+        //   }));
+        // }
     };
     BasicGeneratorsComponent = __decorate([
         core_1.Component({
@@ -2077,101 +2082,805 @@ exports.BasicTables = BasicTables;
 
 /***/ }),
 
-/***/ "./src/app/master/generators/tables/QuotesTables.class.ts":
+/***/ "./src/app/master/generators/tables/HtHaDTables.class.ts":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-var QuotesTables = /** @class */ (function () {
-    function QuotesTables() {
+var SupportTables_class_1 = __webpack_require__("./src/app/master/generators/tables/SupportTables.class.ts");
+var HtHaDTables = /** @class */ (function () {
+    function HtHaDTables() {
     }
-    QuotesTables.QUOTE = [
-        // Frammenti di sogni che sembrano lontani ricordi
-        // Lontani ricordi che sembrano frammenti di sogni
-        // Voglio mettere in fila i pezzi, i tuoi ed i miei
-        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[$sp:COMPLICATED]} che {[:SIMILITUDE]}{$sproll>1?'no':''} {$chain=[$sp:COMPLICATED]}, <br/>"
-                + "{$chain} che {[:SIMILITUDE]}{$sproll>1?'no':''} {[$sp:COMPLICATED]}. <br/>"
-                + "{[:WILL]} {[:ACTION]}"]
+    HtHaDTables.S = SupportTables_class_1.SupportTables;
+    HtHaDTables._START = "Legends say that {[:LAND_ORIGIN]}.<br/>"
+        + "The land {[:LAND_FORMATION]}.<br/>"
+        + "Since the dawn of time, {[:NEXUS]} could be found in the {1d4+3}th underground stratum.<br/>"
+        + "During the primordial age: <ul>"
+        + "<li>The surface {[:SURFACE_FEATURES]}</li>"
+        + "<li>The 1st underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "<li>The 2nd underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "<li>The 3rd underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "<li>The 4th underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "<li>The 5th underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "<li>The 6th underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "<li>The 7th underground stratum {[:UNDERGROUND_FEATURES]}</li>"
+        + "</ul>";
+    HtHaDTables.UNDERGROUND_FEATURES = [
+        ["", "{[:UG_CAVES_DISTRIBUTION]}"],
+        ["", "{[:UG_CAVES_DISTRIBUTION]}"],
+        ["", "{[:UG_CAVES_DISTRIBUTION]}"],
+        ["", "{[:UG_CAVES_DISTRIBUTION]}"],
+        ["", "{[:UG_WATER_DISTRIBUTION]}"],
+        ["", "{[:UG_WATER_DISTRIBUTION]}"],
+        ["", "{[:UG_WATER_DISTRIBUTION]}"],
+        ["", "{[:UG_BIOME_DISTRIBUTION]}"],
+        ["", "{[:UG_BIOME_DISTRIBUTION]}"],
+        ["", "{[:UG_MAGMA_DISTIBUTION]}"],
+        ["", "{[:UG_ORE_DISTRIBUTION]}"],
+        ["", "{[:UG_GEM_DISTRIBUTION]}"]
     ];
-    QuotesTables.SIMILITUDE = [
-        ["", "ricorda"],
-        ["", "sembra"],
-        ["", "prefigura"],
-        ["", "accompagna"],
+    HtHaDTables.UG_BIOME_DISTRIBUTION = [
+        ["", "included a huge cavern that occupied about half the stratum, filled with {['below':BIOME]}"],
+        ["", "included a huge cavern that occupied about half the stratum, filled with {['below':BIOME]}"],
+        ["", "included a huge cavern that occupied about half the stratum, filled with {['below':BIOME]}"],
+        ["", "included a huge cavern that occupied about half the stratum, filled with {['below':BIOME]}"],
+        ["", "included a huge cavern that occupied most of the stratum, filled with {['below':BIOME]}"],
+        ["", "included a huge cavern that occupied most of the stratum, filled with {['below':BIOME]}"],
+        ["", "{['!inhabited':UG_CAVES_DISTRIBUTION]}, filled with {['below':BIOME]}"],
+        ["", "{['!inhabited':UG_CAVES_DISTRIBUTION]}, filled with {['below':BIOME]}"],
+        ["", "{[:UG_WATER_DISTRIBUTION]}, brimming with {['below':BIOME]}"],
     ];
-    QuotesTables.COMPLICATED = [
-        ["sing", "un frammento di {['sing':CONCEPT]}"],
-        ["sing", "un {['sing':CONCEPT]} lontano"],
-        ["sing", "un {['sing':CONCEPT]} perduto"],
-        ["sing", "l'immagine di un {['sing':CONCEPT]} perduto"],
-        ["sing", "l'ombra di un {['sing':CONCEPT]} perduto"],
-        ["sing", "lo spirito di un {['sing':CONCEPT]} perduto"],
-        ["sing", "un {['sing':CONCEPT]} arcano"],
-        ["sing", "un dolce {['sing':CONCEPT]}"],
-        ["sing", "un {['sing':CONCEPT]} dimenticato"],
-        ["plu", "frammenti di {['':CONCEPT]}"],
-        ["plu", "immagini di {['':CONCEPT]}"],
-        ["plu", "spiriti di {['':CONCEPT]}"],
-        ["plu", "{['plu':CONCEPT]} lontani"],
-        ["plu", "{['plu':CONCEPT]} perduti"],
-        ["plu", "ricordi di {['plu':CONCEPT]} perduti"],
-        ["plu", "{['plu':CONCEPT]} arcani"],
-        ["plu", "{['plu':CONCEPT]} nostalgici"],
-        ["plu", "{['plu':CONCEPT]} dimenticati"],
+    HtHaDTables.UG_MAGMA_DISTIBUTION = [
+        ["", "included a large magma chamber connected to the surface by a vent"],
+        ["", "included a magma river, flowing out of the region"],
+        ["", "included a large cave with a magma lake in"],
+        ["", "included a large cave with {1d4} distinct small magma lakes in it"],
+        ["", "included a huge cavern with a magma sea taking most of the stratum"],
+        ["", "included {1d4+1} independent small caves containing magma pools"],
+        ["", "included {1d4+1} small caves, each containing a magma pool, connected by magma channels"],
+        ["", "included a medium size cave with a magma lake connected trough a channel to the depths of the earth"],
     ];
-    QuotesTables.CONCEPT = [
-        ["sing", "sogno"],
-        ["sing", "sentimento"],
-        ["sing", "amore"],
-        ["sing", "futuro"],
-        ["sing", "passato"],
-        ["sing", "equilibrio"],
-        ["sing", "mondo"],
-        ["sing", "universo"],
-        ["plu", "sogni"],
-        ["plu", "sentimenti"],
-        ["plu", "mondi"],
-        ["plu", "universi"],
-        ["plu", "amori"]
+    HtHaDTables.UG_WATER_DISTRIBUTION = [
+        ["", "included an underground river, going through its length"],
+        ["", "included an underground river, crossing multiple strata"],
+        ["", "included a large cave with an undeground lake in it"],
+        ["", "included a huge cave, taking almost all its length, with an undeground sea in it"],
+        ["", "included {1d4+1} small to medium caves, all having lakes and ponds, connected by underground rivers"],
     ];
-    QuotesTables.WILL = [
-        ["", "voglio"],
-        ["", "devo"],
-        ["", "ho intenzione"],
-        ["", "il mio destino è"],
-        ["", "il mio compito è"],
-        ["", "lotterò per"],
-        ["", "la sfida è"],
-        ["", "non mi fermerò finchè non sarò riuscito a"],
-        ["", "non avrò riposo finchè non sarò riuscito a"],
-        ["", "la sola via d'uscita è"],
+    HtHaDTables.UG_CAVES_DISTRIBUTION = [
+        ["", "included {1d6+2} independent, medium size caves"],
+        ["", "included {1d6+2} independent, medium size caves"],
+        ["", "included {1d4+1} medium size caves connected by a single tunnel"],
+        ["", "included {1d4+1} medium size caves connected by a single tunnel"],
+        ["", "included a large cavern the size of a castle"],
+        ["", "was almost entirely occupied by a huge cavern supported by many large pillars"],
+        ["", "included a long, twisty tunnel going through its length"],
+        ["", "included a long tunnel going though its length, crossed by a smaller one perpendicular to it"],
+        ["inhabited", "{['!inhabited':UG_CAVES_DISTRIBUTION]}, a civilizations of {[:UNDERGROUND_MOSTER_RACE]} lived there"],
+        ["inhabited", "{['!inhabited':UG_CAVES_DISTRIBUTION]}, in one such cave lived {[:ANCIENT_BEAST]}"],
     ];
-    QuotesTables.ACTION = [
-        ["", "{#$sproll=1d2}{#$sp=$sproll>1?'plu':'sing'}{[:VERB]} i{$sproll>1?'':'l'} {[$sp:CONCEPT]}"]
+    HtHaDTables.UG_ORE_DISTRIBUTION = [
+        ["", "included a vein of {[:ORE]} running through its entire length"],
+        ["", "included a vein of {[:ORE]} running through its entire length"],
+        ["", "included a vein of {[:ORE]} running through its entire length"],
+        ["", "included a vein of {[:ORE]} running through its entire length"],
+        ["", "was scattered with {2d4} small {[:ORE]} deposits"],
+        ["", "was scattered with {2d4} small {[:ORE]} deposits"],
+        ["", "included a fairly large {[:ORE]} deposit in the middle"],
+        ["", "was made of {[:ORE]} deposits for half its entire length"],
+        ["", "was made of {[:ORE]} deposits for almost all its length"],
     ];
-    QuotesTables.VERB = [
-        ["", "allineare"],
-        ["", "ricordare"],
-        ["", "trovare"],
-        ["", "capire"],
-        ["", "salvare"],
-        ["", "realizzare"],
-        ["", "immaginare"],
-        ["", "riequilibrare"],
-        ["", "collezionare"],
-        ["", "consumare"],
-        ["", "allontanare"],
-        ["", "far conoscere"],
-        ["", "dimenticare"],
-        ["", "distruggere"],
-        ["", "eradicare"],
-        ["", "fondere"],
-        ["", "moltiplicare"],
+    HtHaDTables.UG_GEM_DISTRIBUTION = [
+        ["", "was scattered with {2d4} small {[:GEM]} deposits"],
+        ["", "was scattered with {2d4} small {[:GEM]} deposits"],
+        ["", "was scattered with {2d4} small {[:GEM]} deposits"],
+        ["", "was scattered with {2d4} small {[:GEM]} deposits"],
+        ["", "was scattered with {2d4} small {[:GEM]} deposits"],
+        ["", "was scattered with {2d4} small {[:GEM]} deposits"],
+        ["", "included a large cave, its walls lined with {1d4} {[:GEM]} deposits"],
+        ["", "included a clump of {1d4+1} small {[:GEM]} deposits close to each other"],
+        ["", "included a singled huge {[:GEM]} the size of a small castle"],
     ];
-    return QuotesTables;
+    HtHaDTables.SURFACE_FEATURES = [
+        ["", "was entirely covered by {['above':BIOME]}"],
+        ["", "{# $b1 = 1d6}{# $br = 8-$b1}{# $b2 = $b1 + 1d$br}"
+                + "was a patchwork of {[$b1:BIOME]} and {[$b2:BIOME]}"],
+        ["", "included {[:GROUND_WATERS]} surrounded by {['above':BIOME]}"],
+        ["", "was mostly covered by {['above':BIOME]} with {1d4+1} open air deposits of {[:GEM]}"],
+        ["", "was mostly covered by {['above':BIOME]} with {1d4+1} superficial deposits of {[:ORE]} ore"],
+        ["", "included a small area of {#$b=1d6}{[$b:BIOME]} surrounded by arid wasteland"],
+        ["", "was just arid wasteland"],
+    ];
+    HtHaDTables.ORE = [
+        ["", "iron"], ["", "silver"], ["", "gold"], ["", "mithral"],
+    ];
+    HtHaDTables.GEM = [
+        ["", "diamond"], ["", "ruby"], ["", "emerald"], ["", "sapphire"], ["", "jade"],
+        ["", "black opal"], ["", "red beryl"], ["", "painite"], ["", "rose quartz"],
+    ];
+    HtHaDTables.GROUND_WATERS = [
+        ["", "a long river"], ["", "a shallow sea"], ["", "a volcanic lake"], ["", "a number of small lakes"]
+    ];
+    HtHaDTables.BIOME = [
+        ["above", "grasslands"], ["above", "forests"], ["above", "brushlands"], ["above", "swamps"],
+        ["above", "deep jungles"], ["above", "frozen tundras"], ["above", "badlands"], ["above", "sand dunes"],
+        ["below", "fungal forests"], ["below", "slime organisms"], ["below", "jurassic wildlife"],
+        ["below", "alien life"], ["below", "necrotic unlife"], ["below", "crystalline lifeforms"],
+    ];
+    HtHaDTables.NEXUS = [
+        ["", "the lair of {[:ANCIENT_BEAST]}"],
+        ["", "the source of a terrible plague"],
+        ["", "the ultimate doom of a civilization"],
+        ["", "a massive fault, reaching in the depts of the earth"],
+        ["", "the heart of the dungeon"],
+        ["", "a gateway to another plane of existence"],
+        ["", "a cyclopean complex (a network of massive chambers and corridors)"],
+        ["", "a piece of a dead god"],
+        ["", "one of the fundamental components of the universe"],
+        ["", "a very, very ancient intelligence"],
+        ["", "a huge bone structure"],
+        ["", "a huge area made entirely of {[:NEXUS_MATERIAL]}"],
+        ["", "a primordial magic nexus"],
+        ["", "a vein of highly radioactive material"],
+        ["", "an area of unnatural darkness, nearly impossible to light up"],
+        ["", "a strange {[:NEXUS_PALACE_ADJ]} palace {[:NEXUS_PALACE_VARIANT]}"],
+        ["", "a pit opening in the endless, annihilating void"],
+        ["", "a fracture from which elemental {[:ELEMENT]} enters this world"],
+        ["", "the center of {1d4} lay lines that reach for miles in various directions"]
+    ];
+    HtHaDTables.ELEMENT = [
+        ["", "fire"], ["", "ice"], ["", "water"], ["", "air"],
+        ["", "darkness"], ["", "light"], ["", "evil"], ["", "radiance"],
+        ["", "love"],
+    ];
+    HtHaDTables.NEXUS_PALACE_ADJ = [
+        ["", "crystalline"], ["", "basalt"], ["", "marble"],
+        ["", "bronze"], ["", "golden"], ["", "silvery"],
+    ];
+    HtHaDTables.NEXUS_PALACE_VARIANT = [
+        ["", "with rooms and passages extending up to the surface"],
+        ["", "with rooms and passages reaching to the depths of the earth"],
+        ["", "with many rooms and twisty passages"],
+    ];
+    HtHaDTables.NEXUS_MATERIAL = [
+        ["", "crystalline salt"], ["", "rust"], ["", "congealed blood"], ["", "ice"], ["", "amassed alien corpses"],
+        ["", "brimstone"]
+    ];
+    HtHaDTables.DRAGON_COLOR = [
+        ["", "red"], ["", "blu"], ["", "black"], ["", "green"], ["", "white"],
+        ["", "gold"], ["", "silver"], ["", "copper"], ["", "bronze"], ["", "brass"],
+    ];
+    HtHaDTables.LAND_FORMATION = [
+        ["", "is {[:ABOVE_GROUND_SHAPE]} and the underground {[:BELOW_GROUD_STRATA]}"],
+    ];
+    HtHaDTables.ABOVE_GROUND_SHAPE = [
+        ["", "mostly flat"],
+        ["", "interrupted by a high ridge"],
+        ["", "dominated by a tall mountain"],
+        ["", "divided by a deep canyon"],
+        ["", "a series of plateaus and valleys"],
+    ];
+    HtHaDTables.BELOW_GROUD_STRATA = [
+        ["", "is divided in 7 horizontal strata"],
+        ["", "is divided in 7 patchwork strata"],
+        ["", "is divided in 7 concentrical strata"],
+        ["", "{# $s1 = 1d3+1 }{# $s2 = 7-$s1 }"
+                + "is divided by a fault, a group of {$s1} horizontal strata makes up one side and {$s2} the other"],
+        ["", "{# $s1 = 1d3+1 }{# $s2 = 7-$s1 }"
+                + "is divided in two groups of strata, {$s1} layered horizontally beneath the surface and {$s2} randomly disposed below the firsts"],
+        ["", "{# $s1 = 1d3+1 }{# $s2 = 7-$s1 }"
+                + "is divided in {$s1} horizontal strata with {$s2} pocket strata nested between them"],
+    ];
+    HtHaDTables.LAND_ORIGIN = [
+        ["", "this world is the detritus of a deity that was {[:GODLY_DEMISE]}"],
+        ["", "Sky mated with Ocean and gave birth to this world"],
+        ["", "some deity planned this world just this way"],
+        ["", "some deity planned this world, but it didn’t work out at all as they expected"],
+        ["", "this world is a product of the {[:IMPERSONAL_FORCES]}"],
+        ["", "this world has always been and always will be, why do you ask?"],
+        ["", "this world came into being as result of a {[:CELESTIAL_DRAMA_TYPE]} celestial family drama"],
+        ["", "this world is just a dream of {[:COSMIC_DREAMER]}"],
+        ["", "it’s all a cosmic game"],
+        ["reroll", "{['!reroll':LAND_ORIGIN]}. But they also say that {['!reroll':LAND_ORIGIN]}. And both are true."],
+    ];
+    HtHaDTables.UNDERGROUND_MOSTER_RACE = [
+        ["humanoid", "goblins"], ["humanoid", "kobolds"], ["humanoid", "troglodytes"],
+        ["humanoid", "lizard-men"], ["humanoid", "fish-men"], ["humanoid", "rat-men"],
+        ["", "oozes"], ["", "ankhegs"], ["", "fungalits"], ["", "oozes"],
+    ];
+    HtHaDTables.ANCIENT_BEAST = [
+        ["", "an ancient {[:DRAGON_COLOR]} dragon"], ["", "a deamon"], ["", "a powerful djinni"],
+        ["", "an elemental lord"], ["", "the kraken"], ["", "a cyclop"], ["", "an evil avatar"],
+        ["", "a huge wurm"],
+    ];
+    HtHaDTables.COSMIC_DREAMER = [
+        ["", "a forgotten deity"],
+        ["", "some child deity"],
+        ["", "an alien deity"],
+        ["", "an alien deity"],
+        ["", "a powerful wizard"],
+        ["", "a mad wizard"],
+        ["", "a deluded wizard"],
+        ["", "a cosmic monster"],
+        ["", "a lonely monster"],
+        ["", "a person not too different from you and me"],
+    ];
+    HtHaDTables.IMPERSONAL_FORCES = [
+        ["", "forces of nature"],
+        ["", "forces of chaos"],
+        ["", "forces of the elements"],
+        ["", "forces of order"],
+    ];
+    HtHaDTables.GODLY_DEMISE = [
+        ["", "dismembered by {[:GODLY_KILLER]}"],
+        ["", "killed by {[:GODLY_KILLER]}"],
+        ["", "beheaded by {[:GODLY_KILLER]}"],
+        ["", "abandoned by his followers"],
+        ["", "imprisoned by {[:GODLY_KILLER]}"],
+        ["", "turned into a boulder by {[:GODLY_KILLER]}"],
+    ];
+    HtHaDTables.GODLY_KILLER = [
+        ["", "a rival deity"],
+        ["", "their brother"],
+        ["", "their mate"],
+        ["", "their children"],
+        ["", "the primordial chaos"],
+        ["", "the forces of darkness"],
+    ];
+    HtHaDTables.CELESTIAL_DRAMA_TYPE = [
+        ["", "tragic"],
+        ["", "comedic"],
+        ["", "lyric"],
+        ["", "pornographic"],
+        ["", "complicated"],
+        ["", "epic"],
+    ];
+    return HtHaDTables;
 }());
-exports.QuotesTables = QuotesTables;
+exports.HtHaDTables = HtHaDTables;
+
+
+/***/ }),
+
+/***/ "./src/app/master/generators/tables/SpellNameTables.class.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var SpellNamesTables = /** @class */ (function () {
+    function SpellNamesTables() {
+    }
+    SpellNamesTables.RANDOMSPELL = "{[:SPELLTEMPLATE]}";
+    SpellNamesTables.SPELLTEMPLATE = [
+        ["", "{['!intr':ACTION]} {[:OBJECT]}"],
+        ["", "{['intr':ACTION]} with {[:OBJECT]}"],
+        ["", "{['!elem':EFFECT]}"],
+        ["", "{['elem':EFFECT]} {[:FORM]}"],
+        ["", "Summon {[:ADJECTIVE]} {[:ANIMATE]}"],
+        ["", "Summon {['elem':EFFECT]} {[:ANIMATE]}"],
+        ["", "{[:FORM]} of {['!elem':EFFECT]}"],
+        ["", "{[:EFFECT]} {[:PHYSPROJECTILE]}"],
+        ["", "Magic {['phys':OBJECT]}"],
+        ["", "{[:ADJECTIVE]} {[:OBJECT]}"],
+        ["", "{['!classic':WIZARDNAME]}'s {[:OBJECT]}"],
+        ["", "{['!classic':WIZARDNAME]}'s {[:ADJECTIVE]} {[:FORM]}"],
+        ["", "{['!classic':WIZARDNAME]}'s {['!phys':ADJECTIVE]} {['phys':OBJECT]}"],
+        ["", "{['!classic':WIZARDNAME]}'s {[:ADJECTIVE]} {['human':ANIMATE]}"],
+        ["", "{[:OBJECT]} of {[:EFFECT]}"],
+        ["", "{['!classic':WIZARDNAME]}'s {[:ADJECTIVE]} {[:FORM]} of {[:EFFECT]}"]
+    ];
+    SpellNamesTables.SB_SUITE = [
+        // CONJURATION
+        "{['!neg':SB_EFFECT_CONJURE]} {['!neg&&!plasma':ELEMENT]}",
+        "{['neg':SB_EFFECT_CONJURE]} {['!neg&&!sub&&!plasma&&!meta':ELEMENT]}",
+        // ALTERATION
+        "{[:SB_EFFECT_ALTER]} {[:ELEMENT]}",
+        // SB_ELEMENTALISM
+        "{['!sub':ELEMENT]} {['projectile':SB_FORM]}",
+        "{[:SB_FORM_BURST]} of {['!solid':ELEMENT]}",
+        "{['elem':ADJECTIVE]} {['area':SB_FORM]}",
+        // SB_MYSTICISM
+        "{['(mental||phys)&&!buff':ADJECTIVE]} {['selective':SB_FORM]}",
+        "{['buff':ADJECTIVE]} {['area||los':SB_FORM]}",
+        "{['intr&&!port':SB_EFFECT_MYSTICISM]} with {['planar':ANIMATE]}s",
+        "{['!intr&&!port':SB_EFFECT_MYSTICISM]} {['planar':ANIMATE]}s",
+        "{['port':SB_EFFECT_MYSTICISM]} {[:SB_TARGET_CONTEXT]}",
+        "{['port':SB_EFFECT_MYSTICISM]} through {['solid':ELEMENT]}",
+        "{['meta||plasma':ELEMENT]} Walk",
+        // SB_INVOCATION
+        "{['!neg':SB_EFFECT_SUMMON]} {['!buff&&!phys':ADJECTIVE]} {['human':ANIMATE]}",
+        "{['!neg':SB_EFFECT_SUMMON]} {[:ELEMENT]} {['!human':ANIMATE]}",
+        "{['!neg':SB_EFFECT_SUMMON]} {['elem':ADJECTIVE]} {['!human':ANIMATE]}",
+        "{['neg':SB_EFFECT_SUMMON]} {['planar':ANIMATE]}",
+        // Random
+        // "{['intr':ACTION]} with {['!human':ANIMATE]}",
+        // "{['!elem':EFFECT]}",
+        // "{['elem':EFFECT]} {[:FORM]}",
+        // "Summon {[:ADJECTIVE]} {[:ANIMATE]}",
+        // "Summon {['elem':EFFECT]} {[:ANIMATE]}",
+        // "{[:FORM]} of {['elem':EFFECT]}",
+        // "{[:EFFECT]} {[:PHYSPROJECTILE]}",
+        "{['!mental&&!phys&&!buff':ADJECTIVE]} {['phys':OBJECT]}",
+        "{['!buff':ADJECTIVE]} {['!phys':OBJECT]}",
+        "{['!classic':WIZARDNAME]}'s {[:OBJECT]}",
+        "{['!classic':WIZARDNAME]}'s {[:ADJECTIVE]} {[:FORM]}",
+        "{['!classic':WIZARDNAME]}'s {['!phys':ADJECTIVE]} {['phys':OBJECT]}",
+        "{['!classic':WIZARDNAME]}'s {[:ADJECTIVE]} {['human':ANIMATE]}",
+        "{[:OBJECT]} of {[:EFFECT]}",
+        "{['!classic':WIZARDNAME]}'s {[:ADJECTIVE]} {[:FORM]} of {[:EFFECT]}"
+    ];
+    SpellNamesTables.SB_TARGET_CONTEXT = [
+        ["", "Self"],
+        ["", "Ally"],
+        ["", "Other"]
+    ];
+    SpellNamesTables.SB_EFFECT_MYSTICISM = [
+        ["intr", "Commune"],
+        ["intr", "Speak"],
+        ["intr", "Walk"],
+        ["", "Contact"],
+        ["", "Sense"],
+        ["", "Locate"],
+        ["port", "Warp"],
+        ["port", "Teleport"],
+        ["port", "Transport"],
+        ["port", "Translocate"],
+    ];
+    SpellNamesTables.SB_EFFECT_CONJURE = [
+        ["", "Conjure"],
+        ["", "Create"],
+        ["", "Produce"],
+        ["", "Materialize"],
+        ["neg", "Destroy"],
+        ["neg", "Consume"],
+        ["neg", "Dematerialize"]
+    ];
+    SpellNamesTables.SB_EFFECT_SUMMON = [
+        ["", "Invoke"],
+        ["", "Call Forth"],
+        ["", "Summon"],
+        ["neg", "Banish"],
+        ["neg", "Evoke"],
+        ["neg", "Exile"]
+    ];
+    SpellNamesTables.SB_EFFECT_ALTER = [
+        ["", "Alter"],
+        ["", "Manipulate"],
+        ["", "Shape"],
+        ["", "Control"],
+        ["", "Bend"],
+        ["", "Transform"],
+        ["", "Transmute"],
+        ["", "Polymorph"],
+        ["", "Shrink"],
+        ["", "Enlarge"]
+    ];
+    SpellNamesTables.SB_FORM = [
+        ["single selective los contact", "{[:SB_FORM_TOUCH]}"],
+        ["single selective los ranged", "{[:SB_FORM_GAZE]}"],
+        ["single selective ranged", "{[:SB_FORM_HEX]}"],
+        ["single faf contact", "{[:SB_FORM_GLYPH]}"],
+        ["single projectile ranged", "{[:SB_FORM_BOLT]}"],
+        ["projectile ranged", "{[:SB_FORM_RAY]}"],
+        ["area centered", "{[:SB_FORM_BURST]}"],
+        ["area ranged", "{[:SB_FORM_AREA]}"]
+    ];
+    SpellNamesTables.SB_FORM_AREA = [
+        ["", "Area"],
+        ["", "Zone"],
+        ["", "Cloud"],
+        ["", "Myst"],
+        ["", "Shower"],
+        ["", "Rain"]
+    ];
+    SpellNamesTables.SB_FORM_BURST = [
+        ["", "Burst"],
+        ["", "Cone"],
+        ["", "Spray"],
+        ["", "Aura"],
+        ["", "Sphere"],
+        ["", "Wave"],
+        ["", "Explosion"],
+        ["", "Avalanche"],
+        ["", "Eruption"]
+    ];
+    SpellNamesTables.SB_FORM_RAY = [
+        ["", "Ray"],
+        ["", "Lance"],
+        ["", "Spear"],
+        ["", "Spike"]
+    ];
+    SpellNamesTables.SB_FORM_BOLT = [
+        ["", "Bolt"],
+        ["", "Ball"],
+        ["", "Orb"]
+    ];
+    SpellNamesTables.SB_FORM_GLYPH = [
+        ["", "Glyph"],
+        ["", "Rune"],
+        ["", "Sygil"],
+        ["", "Snare"],
+        ["", "Trap"]
+    ];
+    SpellNamesTables.SB_FORM_HEX = [
+        ["", "Hex"],
+        ["", "Curse"],
+        ["", "Word"],
+        ["", "Sentence"],
+        ["", "Judgement"]
+    ];
+    SpellNamesTables.SB_FORM_GAZE = [
+        ["", "Gaze"],
+        ["", "Eye"],
+        ["", "Stare"]
+    ];
+    SpellNamesTables.SB_FORM_TOUCH = [
+        ["", "Touch"],
+        ["", "Hand"],
+        ["", "Finger"],
+        ["", "Mark"]
+    ];
+    SpellNamesTables.WIZARDNAME = [
+        ["classic", "Tenser"],
+        ["classic", "Bigby"],
+        ["classic", "Drawmij"],
+        ["classic", "Evard"],
+        ["classic", "Leomund"],
+        ["classic", "Melf"],
+        ["classic", "Mordekainen"],
+        ["classic", "Nystul"],
+        ["classic", "Otyluke"],
+        ["classic", "Otto"],
+        ["classic", "Rary"],
+        ["classic", "Tasha"],
+        ["", "{[:WIZNAMESTART]}{[:WIZNAMEMIDDLE]}{[:WIZNAMEEND]}"]
+    ];
+    SpellNamesTables.ADJECTIVE = [
+        ["elem light", "Bright"],
+        ["elem light", "Resplendent"],
+        ["elem light", "Radiant"],
+        ["elem darkness", "Smoky"],
+        ["elem darkness", "Dark"],
+        ["elem thunder", "Cacophonous"],
+        ["elem thunder", "Thundering"],
+        ["elem fire", "Blazing"],
+        ["elem fire", "Flaming"],
+        ["elem cold", "Freezing"],
+        ["elem cold", "Icy"],
+        ["color elem drakness", "Black"],
+        ["phys mental elem light", "Blinding"],
+        ["phys elem thunder mental", "Screaming"],
+        ["mental elem fire", "Excruciating"],
+        ["phys elem darkness", "Smoking"],
+        ["mental", "Befuddling"],
+        ["mental", "Confusing"],
+        ["mental buff", "Enlightening"],
+        ["mental", "Ensorcelling"],
+        ["mental", "Fearsome"],
+        ["mental", "Illusory"],
+        ["mental", "Maddening"],
+        ["mental", "Raging"],
+        ["mental", "Stupefying"],
+        ["mental", "Terrible"],
+        ["mental", "Uncontrollable"],
+        ["mental", "Vengeful"],
+        ["mental", "Vexing"],
+        ["mental", "All-Knowing"],
+        ["mental", "All-Seeing"],
+        ["mental", "Erratic"],
+        ["mental", "Strange"],
+        ["color mental", "Prismatic"],
+        ["phys", "Violent"],
+        ["phys", "Bloody"],
+        ["phys", "Consuming"],
+        ["phys", "Deflecting"],
+        ["phys", "Diminishing"],
+        ["phys", "Enveloping"],
+        ["phys", "Expanding"],
+        ["phys", "Floating"],
+        ["phys", "Gyrating"],
+        ["phys", "Hindering"],
+        ["phys", "Oozing"],
+        ["phys", "Pestilential"],
+        ["phys", "Piercing"],
+        ["phys", "Poisonous"],
+        ["phys", "Sensitive"],
+        ["phys", "Slow"],
+        ["phys", "Thirsty"],
+        ["phys", "Transmuting"],
+        ["phys", "Untiring"],
+        ["phys", "Weakening"],
+        ["phys", "Voracious"],
+        ["phys", "Devastating"],
+        ["phys buff", "Empowering"],
+        ["phys buff", "Rejuvenating"],
+        ["phys buff", "Restorative"],
+        ["phys buff", "Invigorating"],
+        ["phys buff", "Invisible"],
+        ["phys buff", "Invulnerable"],
+        ["phys buff", "Entangling"],
+        ["phys mental buff", "Liberating"],
+        ["phys mental buff", "Concealing"],
+        ["phys mental", "Binding"],
+        ["phys mental", "Draining"],
+        ["phys mental", "Silent"],
+        ["phys mental", "Sleeping"],
+        ["phys mental", "Unseen"],
+        ["color", "Cerulean"],
+        ["color", "Crimson"],
+        ["color", "Glittering"],
+        ["color", "Shimmering"],
+        ["color", "Shining"],
+        ["color", "Many-Colored"],
+        ["color", "Violet"],
+        ["color", "Viridian"],
+        ["color", "White"],
+        ["color", "Yellow"],
+        ["buff", "Helpful"],
+        ["", "Arcane"],
+        ["", "Damnable"],
+        ["", "Delicate"],
+        ["", "Demonic"],
+        ["", "Devilish"],
+        ["", "Eldritch"],
+        ["", "Evil"],
+        ["", "Extra-Planar"],
+        ["", "Incredible"],
+        ["", "Inescapable"],
+        ["", "Ingenious"],
+        ["", "Instant"],
+        ["", "Magnificent"],
+        ["", "Mighty"],
+        ["", "Magical"],
+        ["", "Enchanted"],
+        ["", "Most Excellent"],
+        ["", "Omnipotent"],
+        ["", "Penultimate"],
+        ["", "Sorcerer’s"],
+        ["", "Trans-Dimensional"],
+        ["", "Ultimate"],
+        ["", "Unstoppable"],
+        ["", "Wondrous"]
+    ];
+    SpellNamesTables.ACTION = [
+        ["", "Alter"],
+        ["", "Summon"],
+        ["", "Conjure"],
+        ["", "Create"],
+        ["", "Produce"],
+        ["", "Project"],
+        ["", "Raise"],
+        ["", "Regenerate"],
+        ["", "Manipulate"],
+        ["", "Control"],
+        ["", "Animate"],
+        ["", "Awaken"],
+        ["", "Banish"],
+        ["", "Calm"],
+        ["", "Charm"],
+        ["", "Detect"],
+        ["", "Disguise"],
+        ["", "Disintegrate"],
+        ["", "Dominate"],
+        ["", "Dream"],
+        ["", "Enthrall"],
+        ["", "Entangle"],
+        ["", "Hold"],
+        ["", "Find"],
+        ["", "Identify"],
+        ["", "Locate"],
+        ["", "Modify"],
+        ["", "Polymorph"],
+        ["", "Change"],
+        ["", "Shatter"],
+        ["", "Teleport"],
+        ["", "Transport"],
+        ["intr", "Speak"],
+        ["intr", "Commune"]
+    ];
+    SpellNamesTables.EFFECT = [
+        ["elem", "Fire"],
+        ["elem", "Cold"],
+        ["elem", "Wind"],
+        ["elem", "Stone"],
+        ["elem", "Lightning"],
+        ["elem", "Acid"],
+        ["elem", "Darkness"],
+        ["elem", "Light"],
+        ["elem", "Thunder"],
+        ["mental", "Frenzy"],
+        ["mental", "Apathy"],
+        ["", "Death"],
+        ["", "Blight"],
+        ["", "Life"],
+        ["", "Haste"],
+        ["", "Resistance"],
+        ["", "Aid"],
+        ["", "Purity"],
+        ["phys", "Vitality"],
+        ["phys", "Vigor"],
+        ["phys", "Decay"]
+    ];
+    SpellNamesTables.OBJECT = [
+        ["phys", "{[:ARMORPIECE]}"],
+        ["phys", "{[:MELEEWEAPON]}"],
+        ["phys", "{[:RANGEDWEAPON]}"],
+        ["phys", "{[:PHYSPROJECTILE]}"],
+        ["", "{[:FORM]}"],
+        ["", "{[:ABSTRACT]}"]
+    ];
+    SpellNamesTables.ABSTRACT = [
+        ["", "Shapes"],
+        ["", "Objects"],
+        ["", "Friendship"],
+        ["", "Emotions"],
+        ["", "Dead"]
+    ];
+    SpellNamesTables.ANIMATE = [
+        ["human", "Servant"],
+        ["human", "Slave"],
+        ["human", "Warrior"],
+        ["human", "Acolyte"],
+        ["human", "Messenger"],
+        ["planar", "Elemental"],
+        ["planar", "Demon"],
+        ["planar", "Angel"],
+        ["planar", "Spirit"],
+        ["planar", "Ghost"],
+        ["", "Pixie"],
+        ["planar", "Imp"],
+        ["animal", "Horse"],
+        ["animal", "Hound"],
+        ["animal", "Hawk"],
+        ["animal", "Serpent"],
+        ["const", "Golem"],
+        ["const", "Construct"],
+        ["const", "Automaton"],
+        ["animal", "Spider"],
+        ["animal", "Centipede"]
+    ];
+    SpellNamesTables.ARMORPIECE = [
+        ["", "Mantle"],
+        ["", "Cuirass"],
+        ["", "Helm"],
+        ["", "Gauntlet"],
+        ["", "Boots"],
+        ["", "Belt"]
+    ];
+    SpellNamesTables.MELEEWEAPON = [
+        ["", "Sword"],
+        ["", "Spear"],
+        ["", "Lance"],
+        ["", "Hammer"],
+        ["", "Cleaver"],
+        ["", "Scyte"],
+        ["", "Flail"],
+        ["", "Dagger"],
+        ["", "Club"],
+        ["siege", "Battering Ram"]
+    ];
+    SpellNamesTables.RANGEDWEAPON = [
+        ["", "Bow"],
+        ["", "Crowssbow"],
+        ["", "Slingshot"],
+        ["siege", "Cannon"],
+        ["siege", "Ballista"],
+        ["siege", "Catapult"],
+        ["siege", "Trebuchet"]
+    ];
+    SpellNamesTables.PHYSPROJECTILE = [
+        ["", "Needle"],
+        ["", "Arrow"],
+        ["", "Dart"],
+        ["", "Bullet"],
+        ["", "Boomerang"],
+        ["", "Javelin"],
+        ["siege", "Boulder"]
+    ];
+    SpellNamesTables.FORM = [
+        ["proj moving", "Bolt"],
+        ["proj moving", "Ball"],
+        ["proj moving", "Sphere"],
+        ["proj moving", "Orb"],
+        ["area moving", "Rain"],
+        ["area moving", "Barrage"],
+        ["area moving", "Volley"],
+        ["area moving", "Spout"],
+        ["area moving", "Shower"],
+        ["area moving", "Wave"],
+        ["area moving", "Avalanche"],
+        ["area moving", "Explosion"],
+        ["area moving", "Conflagration"],
+        ["area moving", "Eruption"],
+        ["area moving", "Swarm"],
+        ["area moving", "Splash"],
+        ["area static", "Cloud"],
+        ["area static", "Ring"],
+        ["area static", "Wall"],
+        ["area static", "Column"],
+        ["area static", "Aura"],
+        ["proj static", "Disc"],
+        ["proj static", "Spike"],
+        ["proj static", "Barrier"],
+        ["", "Shell"],
+        ["", "Eye"],
+        ["", "Hand"],
+        ["", "Hands"],
+        ["", "Skin"]
+    ];
+    SpellNamesTables.WIZNAMESTART = [
+        ["", "Mor"],
+        ["", "Ten"],
+        ["", "Bi"],
+        ["", "Ta"],
+        ["", "Oty"],
+        ["", "Mel"],
+        ["", "Eka"],
+        ["", "Leo"],
+        ["", "Dra"],
+        ["", "Nys"],
+        ["", "O"],
+        ["", "Her"],
+        ["", "Grif"],
+        ["", "Gwen"],
+        ["", "Al"]
+    ];
+    SpellNamesTables.WIZNAMEMIDDLE = [
+        ["", "dekai"],
+        ["", "se"],
+        ["", "mu"],
+        ["", "tu"],
+        ["", "mi"],
+        ["", "fin"],
+        ["", "dol"],
+        ["", "ca"]
+    ];
+    SpellNamesTables.WIZNAMEEND = [
+        ["", "nen"],
+        ["", "nd"],
+        ["", "ser"],
+        ["", "by"],
+        ["", "ha"],
+        ["", "uke"],
+        ["", "f"],
+        ["", "to"],
+        ["", "l"],
+        ["", "mij"],
+        ["", "one"],
+        ["", "dor"],
+        ["", "in"],
+        ["", "trax"]
+    ];
+    SpellNamesTables.ELEMENT = [
+        ["plasma", "Fire"],
+        ["plasma", "Lightning"],
+        ["gas", "Air"],
+        ["liquid", "Water"],
+        ["solid", "Stone"],
+        ["liquid bio sub", "Blood"],
+        ["solid sub", "Soil"],
+        ["solid bio sub", "Wood"],
+        ["solid sub", "Metal"],
+        ["solid bio sub", "Bone"],
+        ["particulate sub", "Sand"],
+        ["particulate sub", "Dust"],
+        ["particulate sub", "Ash"],
+        ["particulate sub", "Snow"],
+        ["solid sub", "Ice"],
+        ["gas sub", "Myst"],
+        ["meta", "Light"],
+        ["meta neg", "Shadow"],
+        ["meta neg", "Void"],
+        ["meta", "Evil"],
+        ["meta", "Order"],
+        ["meta", "Chaos"],
+        ["meta", "Purity"]
+    ];
+    return SpellNamesTables;
+}());
+exports.SpellNamesTables = SpellNamesTables;
 
 
 /***/ }),
@@ -2314,6 +3023,7 @@ var SupportTables = /** @class */ (function () {
         ["solid", "{[:MAT_METAL]}"],
         ["solid", "{[:MAT_STONE]}"],
         ["solid", "{[:MAT_WOOD]}"],
+        ["solid", "{[:MAT_BONE]}"],
         ["composit", "{[:MAT_COMP_SOLID]}"],
         ["loose dust", "{[:MAT_DUST]}"],
         ["loose fluid liquid", "{[:MAT_LIQUID]}"],
@@ -2354,6 +3064,15 @@ var SupportTables = /** @class */ (function () {
         ["", "walnut"],
         ["", "rose wood"],
         ["", "sandal wood"],
+    ];
+    SupportTables.MAT_BONE = [
+        ["", "ivory"],
+        ["", "shell"],
+        ["", "{[:MAMMAL]} bone"],
+        ["", "{[:BIRD]} bone"],
+        ["", "{[:REPTILE]} bone"],
+        ["", "{[:CRUSTACEAN]} chitin"],
+        ["", "{[:INSECT]} chitin"]
     ];
     SupportTables.MAT_COMP_SOLID = [
         ["", "mortar"],
@@ -2413,7 +3132,6 @@ var SupportTables = /** @class */ (function () {
         ["flying", "{['!acquatic':BIRD]}"],
         ["acquatic", "{['acquatic':MAMMAL]}"],
         ["acquatic", "{['acquatic':BIRD]}"],
-        ["acquatic", "{['acquatic':INSECT]}"],
         ["acquatic", "{['acquatic':REPTILE]}"],
         ["acquatic", "{[:FISH]}"],
         ["acquatic", "{[:CRUSTACEAN]}"],
@@ -2550,6 +3268,18 @@ var SupportTables = /** @class */ (function () {
         ["fancy", "brown"],
     ];
     /**
+     * RECURRING PERIODS
+     */
+    SupportTables.RECURRING_PERIOD = [
+        ["while", "while the {[:MOON_PHASE]} moon is in the sky"],
+        ["while", "while he maintains a spell"],
+        ["during", "during daylight hours"],
+        ["during", "during mornings"],
+        ["during", "during afternoons"],
+        ["during", "during nights"],
+        ["between", "between {$start_time=1d8} and {$start_time + 1d4} {[:AM_PM]}"],
+    ];
+    /**
      * TIME & DURATION
      */
     SupportTables.DURATION = [
@@ -2582,6 +3312,9 @@ var SupportTables = /** @class */ (function () {
         ["", "noon"],
         ["", "sunset"],
         ["", "midnight"]
+    ];
+    SupportTables.AM_PM = [
+        ["", "AM"], ["", "PM"],
     ];
     SupportTables.WEEKDAY = [
         ["", "monday"],
@@ -2649,7 +3382,9 @@ var WildMagicTables = /** @class */ (function () {
         ["instant reversible one trnsm", "{[:COSMETIC_TRANSMOGRIFICATION]|C}"],
         ["instant reversible one trnsm", "{['reversible':MOSTLY_HARMLESS_TRANSMOGRIFICATION]|C}"],
         // -- Single creature gains an ability
-        ["instant reversible one trnsm", "The {[:SPECIFIC_CREATURE]} gains the ability of {[:MINOR_ABILITY]}"],
+        ["instant reversible one trnsm", "The {[:SPECIFIC_CREATURE]} gains the ability of {[:MINOR_POWER]}"],
+        // -- Single creature abilities are altered
+        ["instant reversible one trnsm", "The {[:SPECIFIC_CREATURE]} {[:MINOR_IMPAIRMENT]}"],
     ];
     /**
      * TARANSMOGRIFICATION
@@ -2732,10 +3467,10 @@ var WildMagicTables = /** @class */ (function () {
      * SINGLE TARGET SELECTION
      */
     WildMagicTables.SPECIFIC_CREATURE = [
-        ["absolute", "Caster"],
-        ["absolute", "original spell target"],
-        ["contextual", "closest creature relative to {['absolute':SPECIFIC_CREATURE]}"],
-        ["contextual", "closest {[:CREATURE_RELATIONSHIP]} relative to {['absolute':SPECIFIC_CREATURE]}"]
+        ["absolute", "Caster{#$cc=1}"],
+        ["absolute", "original spell target{#$cc=1}"],
+        ["contextual", "creature closest to the {['absolute':SPECIFIC_CREATURE]}{#$cc=1}"],
+        ["contextual", "{[:CREATURE_RELATIONSHIP]} closest to {['absolute':SPECIFIC_CREATURE]}{#$cc=1}"]
     ];
     WildMagicTables.CREATURE_CLASS = [
         ["mundane antropomorphic", "human{ $cc > 1 ? 's' : '' }"],
@@ -2781,18 +3516,58 @@ var WildMagicTables = /** @class */ (function () {
     /**
      * MINOR MAGICAL ABILITIES
      */
+    WildMagicTables.MINOR_POWER = [
+        ["limited", "{['limited':MINOR_ABILITY]} {['sec||min':S.DURATION]}, with a cool-down period of {['min||hr':S.DURATION]}"],
+        ["limited", "{['limited':MINOR_ABILITY]} {['min||hr':S.DURATION]}, any time they want but they can't turn it off once activated"],
+        ["limited", "{['limited':MINOR_ABILITY]} {['sec||min':S.DURATION]}, {[:ABILITY_AVALIABILITY]}"],
+        ["unlimited", "{['unlimited':MINOR_ABILITY]}"],
+        ["limited", "{['limited':MINOR_ABILITY]} at will"],
+    ];
     WildMagicTables.MINOR_ABILITY = [
-        ["", "seeing through {[:S.MATERIAL]}"],
-        ["", "understanding {#$cc=2}{[:S.ANIMAL]}"],
-        ["", "speaking to {#$cc=2}{[:S.ANIMAL]} but not understand them"],
-        ["", "rotating their {['(limb&&!all)||part||(appendage&&all&&!shed)':S.BODY_PART]} {1d[180..360]} degrees"],
-        ["", "making their {['!many&&(part||limb||appendage||orifice)':S.BODY_PART]} {1d9*10}% invisible"],
-        ["", "becoming {1d[3..20]}cm shorter for a short while"],
-        ["", "becoming {1d[3..20]}cm taller for a short while"],
-        ["", "stretching their {['limb||part':S.BODY_PART]} up to {1d[3..20]}cm"],
-        ["", "speaking in reverse"],
-        ["", "understanding reversed speech"],
-        ["", "immediately count groups of small similar objects up to {1d[7..100]*1d[1,3,5,7,10]} at a time"],
+        ["unlimited", "understanding {#$cc=2}{[:S.ANIMAL]}"],
+        ["unlimited", "speaking to {#$cc=2}{[:S.ANIMAL]} but not understand them"],
+        ["unlimited", "rotating their {['(limb&&!all)||part||(appendage&&all&&!shed)':S.BODY_PART]} {1d[180..360]} degrees"],
+        ["unlimited", "stretching their {['limb||part':S.BODY_PART]} up to {1d[3..20]}cm"],
+        ["unlimited", "speaking in reverse"],
+        ["unlimited", "understanding reversed speech"],
+        ["unlimited", "immediately count groups of small similar objects up to {1d[7..100]*1d[1,3,5,7,10]} at a time"],
+        ["limited", "seeing through {[:S.MATERIAL]}"],
+        ["limited", "making their {['!many&&(part||limb||appendage||orifice)':S.BODY_PART]} {1d9*10}% invisible"],
+        ["limited", "becoming {1d[3..20]}cm shorter"],
+        ["limited", "becoming {1d[3..20]}cm taller"],
+    ];
+    WildMagicTables.MINOR_IMPAIRMENT = [
+        ["", "{['speed':MUNDANE_ABILITY]} speed is reduced by {1d5*10}%"],
+        ["", "{$cc == 1 ? 'is' : 'are'} unable of {['onoff':MUNDANE_ABILITY]} {['min||hr':S.DURATION]}"],
+        ["", "{$cc == 1 ? 'is' : 'are'} unable of {['onoff':MUNDANE_ABILITY]} {[:S.RECURRING_PERIOD]}"],
+    ];
+    WildMagicTables.MUNDANE_ABILITY = [
+        ["speed onoff", "walking"],
+        ["speed onoff", "running"],
+        ["speed onoff", "speaking"],
+        ["speed onoff", "reading"],
+        ["speed onoff", "chewing"],
+        ["speed onoff", "counting"],
+        ["onoff", "standing upright"],
+        ["onoff", "holding objects in the {['hand':BODY_PART]}"],
+        ["onoff", "feeling temperature"],
+        ["onoff", "doing basic math"],
+        ["onoff", "seeing depth"],
+        ["onoff", "seeing color"],
+        ["onoff", "recognizing faces"],
+        ["onoff", "recognizing voices"],
+    ];
+    WildMagicTables.ABILITY_AVALIABILITY = [
+        ["", "{#$times=1d3}{[$times:N_TIMES]} a day"],
+        ["", "{#$times=1d6+2}{['many':N_TIMES]} a week"],
+        ["", "{#$times=1d6+2}{['many':N_TIMES]} a month"],
+    ];
+    WildMagicTables.N_TIMES = [
+        ["0", "0"],
+        ["1", "once"],
+        ["2", "twice"],
+        ["3", "thrice"],
+        ["many", "{#$troll=1d[2..6]}{#$times = $times || $troll}{$times} times"],
     ];
     /**
      * MAGICAL APPARITIONS AND COSMETICS
@@ -2946,7 +3721,7 @@ var RandomTablesService = /** @class */ (function () {
         var _this = this;
         var tablePath = tableName.split(".");
         var table = this._deepGet(tablePath, context['@tables']);
-        //console.log("Access table: ", tableName, tablePath, table, tagExpression, id, context);
+        console.log("Access table: ", tableName, tablePath, table, tagExpression, id, context);
         if (tagExpression) {
             table = table.filter(function (entry) {
                 var tagContext = {};
