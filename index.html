@@ -1,14 +1,62 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Dwhelper</title>
-  <base href="/">
+<html>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+<head>
+    <title>Are you lost?</title>
+    <style>
+        @font-face {
+            font-family: 'apple_regular';
+            src: url('apple_-webfont.woff2') format('woff2'),
+                url('apple_-webfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+
+        }
+
+        html, body {
+            font-family: 'apple_regular';
+            height: 100%;
+        }
+        body {
+            background: transparent url('OnionsBg.png') 50% 50%;
+            padding: 0 120px;
+        }
+
+        #content {
+            position: relative;
+            top: 50%;
+            margin-top: -200px;
+            height: 140px;
+            background-color: rgba(255,255,255,.4);
+            text-align: center;
+            padding: 120px 50px;
+        }
+
+        #content {
+            font-weight: normal;
+            text-shadow: 0px 0px 0px black, 1px 1px 6px white;
+        }
+        h1 {
+            font-size: 29px;
+        }
+        
+        a {
+            color:maroon;
+        }
+        a:hover {
+            color:orangered;
+
+        }
+    </style>
 </head>
+
 <body>
-  <app-root></app-root>
-<script type="text/javascript" src="inline.bundle.js"></script><script type="text/javascript" src="polyfills.bundle.js"></script><script type="text/javascript" src="styles.bundle.js"></script><script type="text/javascript" src="vendor.bundle.js"></script><script type="text/javascript" src="main.bundle.js"></script></body>
+    <div id="content">
+        <h1>Are you lost?</h1>
+        <p>
+            Were you looking for <a href="https://www.youtube.com/channel/UC-GlEVUYrwyjyOzJ_ZbJnLw">ListlessOnion's
+                Youtube channel</a>?
+        </p>
+    </div>
+</body>
+
 </html>
