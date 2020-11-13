@@ -1,0 +1,112 @@
+body {
+    font-family: sans-serif;
+}
+
+#templates {
+    display: none;
+}
+
+.timer {
+    height: 40%;
+    position: relative;
+}
+
+.timer .controls {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+
+.timer .controls .flow-controls {
+    margin: auto;
+    text-align: center;
+}
+
+.timer .controls .duration-sub-controls {
+    position: absolute;
+    bottom: 0px;
+    left: 20px;
+}
+.timer .controls .duration-add-controls {
+    position: absolute;
+    bottom: 0px;
+    right: 20px;
+}
+.timer .controls .duration-sub-controls button,
+.timer .controls .duration-add-controls button {
+    color: white;
+    text-align: center;
+    line-height: 64px;
+    padding: 0px;
+    width: 64px;
+    font-size: 24px;
+}
+
+.timer .controls button {
+    background: #000;
+    opacity: .15;
+    border: 1px solid #FFF;
+    padding: 24px;
+    cursor: pointer;
+}
+.timer .controls button:hover {
+    opacity: .3;
+}
+
+.controls button.stop i {
+    display: block;
+    width: 16px;
+    height: 16px;
+    background-color: #FFF;
+}
+
+.controls button.pause i {
+    display: block;
+    width: 4px;
+    height: 16px;
+    border-left: 6px solid white;
+    border-right: 6px solid white;
+}
+
+.controls button.reverse-start i {
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-right: 16px solid white;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+.controls button.start i {
+    display: block;
+    width: 0px;
+    height: 0px;
+    border-left: 16px solid white;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+.time-gauge {
+    z-index: 1;
+    background-color: #E1E1E1;
+}
+.time-gauge, .time-gauge-bar {
+    height: 100%;
+}
+
+.timer .completion, .timer .duration {
+    opacity: .5;
+    position: absolute;
+    z-index: 2;
+    top: 15px;
+    line-height: 60px;
+    font-size: 40px;
+}
+
+.timer .completion {
+    left: 20px;
+}
+
+.timer .duration {
+    right: 20px;
+}
