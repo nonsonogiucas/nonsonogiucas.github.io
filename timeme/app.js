@@ -30,7 +30,8 @@ jQuery(function ($) {
             completion: 0,
             state: 0,
             updatedAt: 0,
-            alertLastMs: 5*60*1000,
+            alertLastMs: 5 * 60 * 1000,
+            alertLevel: "normal",
             $container: $("#templates #tpl-timer").clone(),
             setDuration: function (d) {
                 this.duration = d;
@@ -42,10 +43,12 @@ jQuery(function ($) {
             },
             pause: function () {
                 this.state = 0;
+                this.$container.attr("class", "");
             },
             stop: function () {
                 this.pause();
                 this.completion = 0;
+                this.$container.attr("class", "");
             },
             update: function (skipRendering) {
                 var now = Date.now();
@@ -63,36 +66,41 @@ jQuery(function ($) {
                     this.render();
                 }
 
-                if(this.state == 0) {
+                if (this.state == 0) {
                     this.$playButton.show();
-                    this.$reverseButton.show();
+                    // this.$reverseButton.show();
                     this.$pauseButton.hide();
                 } else {
                     this.$playButton.hide();
-                    this.$reverseButton.hide();
+                    // this.$reverseButton.hide();
                     this.$pauseButton.show();
                 }
-                if(this.completion == 0) {
+                if (this.completion == 0) {
                     this.$stopButton.hide();
                 } else {
-                    this.$stopButton.show();
+                    if (this.state == 0) {
+                        this.$stopButton.show();
+                    } else {
+                        this.$stopButton.hide();
+                    }
                 }
             },
             init: function (duration) {
+                this.$container.attr("id", "timer");
                 this.$duration = this.$container.find(".duration");
                 this.$completion = this.$container.find(".completion");
                 this.$gauge = this.$container.find(".time-gauge-bar");
                 this.$playButton = this.$container.find(".controls button.start");
-                this.$reverseButton = this.$container.find(".controls button.reverse-start");
+                //this.$reverseButton = this.$container.find(".controls button.reverse-start");
                 this.$pauseButton = this.$container.find(".controls button.pause");
                 this.$stopButton = this.$container.find(".controls button.stop");
                 var t = this;
                 this.$playButton.on('click', function () {
                     t.start();
                 });
-                this.$reverseButton.on('click', function () {
-                    t.start(true);
-                });
+                // this.$reverseButton.on('click', function () {
+                //     t.start(true);
+                // });
                 this.$pauseButton.on('click', function () {
                     t.pause();
                 });
@@ -106,13 +114,13 @@ jQuery(function ($) {
                 for (var i in subValues) {
                     var $subButton = $('<button class="duration-button">'
                         + subValues[i]
-                        + '</button>');
+                        + '\'</button>');
                     $subDurationContainer.append($subButton);
                 }
                 for (var i in addValues) {
                     var $addButton = $('<button class="duration-button">'
                         + addValues[i]
-                        + '</button>');
+                        + '\'</button>');
                     $addDurationContainer.append($addButton);
                 }
                 this.$container.find(".duration-button").on('click', function (e) {
@@ -132,17 +140,49 @@ jQuery(function ($) {
                 var c = Math.round(10000 * this.completion / this.duration) / 100;
                 this.$gauge.css("width", c + "%");
                 var alert = 0;
-                if(this.duration <= this.alertLastMs) {
-                    alert = c/100;
-                } else if(this.duration - this.completion <= this.alertLastMs) {
+                if (this.duration <= this.alertLastMs) {
+                    alert = c / 100;
+                } else if (this.duration - this.completion <= this.alertLastMs) {
                     alert = (this.completion - (this.duration - this.alertLastMs)) / this.alertLastMs;
                 }
 
-                this.$gauge.css("background-color", "rgb(" + interpolateRGB(
-                    [0, 255, 0],
-                    [255, 0, 0],
-                    alert
-                ).join(",") + ")");
+                if (this.state != 0) {
+                    if (alert > .75) {
+                        this.alertLevel = "red";
+                        this.$gauge.css("background-color", "rgb(" + interpolateRGB(
+                            [255, 165, 0],
+                            [255, 0, 0],
+                            alert * 4 - 3
+                        ).join(",") + ")");
+                    } else if (alert > .5) {
+                        this.alertLevel = "orange";
+                        this.$gauge.css("background-color", "rgb(" + interpolateRGB(
+                            [255, 255, 0],
+                            [255, 165, 0],
+                            alert * 4 - 2
+                        ).join(",") + ")");
+                    } else if (alert > .25) {
+                        this.alertLevel = "yellow";
+                        this.$gauge.css("background-color", "rgb(" + interpolateRGB(
+                            [165, 255, 0],
+                            [255, 255, 0],
+                            alert * 4 - 1
+                        ).join(",") + ")");
+                    } else if (alert > 0) {
+                        this.alertLevel = "green";
+                        this.$gauge.css("background-color", "rgb(" + interpolateRGB(
+                            [0, 255, 0],
+                            [165, 255, 0],
+                            alert * 4
+                        ).join(",") + ")");
+                    } else {
+                        this.alertLevel = "normal";
+                        this.$gauge.css("background-color", "rgb(0,255,0)");
+                    }
+                    this.$container.attr("class", this.alertLevel + "-alert");
+                }
+
+
             },
             renderTimeString: function (time) {
                 var d = new Date(time);
